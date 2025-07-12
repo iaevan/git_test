@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Label Generator</h1>
+            <p>Generate manufacturing and expiration date labels</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="input-group">
+                <label for="labelCount">How many labels do you need to print today?</label>
+                <input type="number" id="labelCount" min="1" max="500" placeholder="Enter number of labels">
+            </div>
+            
+            <div class="date-info">
+                <div class="date-display">
+                    <span class="label">Manufacturing Date:</span>
+                    <span id="mfgDate"></span>
+                </div>
+                <div class="date-display">
+                    <span class="label">Best Before Date:</span>
+                    <span id="expDate"></span>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button id="generateBtn" class="btn btn-primary">Generate PDF</button>
+                <button id="printBtn" class="btn btn-secondary" disabled>Print Labels</button>
+            </div>
+        </div>
+        
+        <div class="preview-container">
+            <h3>Label Preview</h3>
+            <div class="label-preview" id="labelPreview">
+                <div class="label-content">
+                    <div class="mfg-line">MFG - <span id="previewMfg"></span></div>
+                    <div class="exp-line">BEST BEFORE - <span id="previewExp"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
