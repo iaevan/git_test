@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Forma — launch film (reel)</title>
+    <script src="lib/gsap.min.js"></script>
+    <style>
+      :root { --ground: #f7f8fa; --ink: #18202b; --blue: #3448ed; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); }
+      #ground { position: absolute; inset: 0; background: var(--ground); overflow: hidden; }
+      .glow { position: absolute; border-radius: 50%; }
+      .g1 { width: 1500px; height: 1500px; left: -700px; top: -500px; background: radial-gradient(closest-side, rgba(184,192,255,.62), rgba(184,192,255,0)); }
+      .g2 { width: 1700px; height: 1700px; left: 100px; top: 1100px; background: radial-gradient(closest-side, rgba(52,72,237,.17), rgba(52,72,237,0)); }
+      .g3 { width: 900px; height: 900px; left: 500px; top: 200px; background: radial-gradient(closest-side, rgba(255,214,196,.42), rgba(255,214,196,0)); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="49.15" data-width="1080" data-height="1920" data-motion-blur="off">
+      <div id="ground" data-layout-ignore><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div></div>
+    <div id="p-hook" data-composition-id="p-hook" data-composition-src="compositions/p-hook.html" data-start="0" data-duration="4.75" data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-reveal" data-composition-id="p-reveal" data-composition-src="compositions/p-reveal.html" data-start="4.45" data-duration="4.4" data-track-index="2" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-landing" data-composition-id="p-landing" data-composition-src="compositions/p-landing.html" data-start="8.65" data-duration="4.7" data-track-index="3" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-drop" data-composition-id="p-drop" data-composition-src="compositions/p-drop.html" data-start="13.15" data-duration="4.2" data-track-index="4" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-wheel" data-composition-id="p-wheel" data-composition-src="compositions/p-wheel.html" data-start="17.15" data-duration="4" data-track-index="5" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-details" data-composition-id="p-details" data-composition-src="compositions/p-details.html" data-start="20.95" data-duration="5.3" data-track-index="6" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-convert" data-composition-id="p-convert" data-composition-src="compositions/p-convert.html" data-start="26.05" data-duration="6.2" data-track-index="7" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-montage" data-composition-id="p-montage" data-composition-src="compositions/p-montage.html" data-start="32.05" data-duration="4.6" data-track-index="8" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-formats" data-composition-id="p-formats" data-composition-src="compositions/p-formats.html" data-start="36.45" data-duration="3" data-track-index="9" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-privacy" data-composition-id="p-privacy" data-composition-src="compositions/p-privacy.html" data-start="39.25" data-duration="3.2" data-track-index="10" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+    <div id="p-end" data-composition-id="p-end" data-composition-src="compositions/p-end.html" data-start="42.25" data-duration="6.9" data-track-index="11" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <audio id="sfx-mix" class="clip" src="assets/sfx/mix.wav" data-start="0" data-duration="49.15" data-track-index="20" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo('.g1', { x: 0, y: 0 }, { x: 120, y: 140, duration: 49.15, ease: 'sine.inOut' }, 0);
+      tl.fromTo('.g2', { x: 0, y: 0 }, { x: -140, y: -120, duration: 49.15, ease: 'sine.inOut' }, 0);
+      tl.fromTo('.g3', { x: 0, y: 0 }, { x: -120, y: 160, duration: 49.15, ease: 'sine.inOut' }, 0);
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

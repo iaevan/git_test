@@ -1,0 +1,185 @@
+<template>
+  <style>
+
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-Medium.otf');font-weight:500}
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-Bold.otf');font-weight:700}
+#root{position:absolute;inset:0;overflow:hidden;font-family:'Forma Inter',sans-serif;color:#18202b}
+.win{position:absolute;left:180px;top:158px;width:1560px;height:878px;border-radius:26px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(24,32,43,.06),0 34px 80px -28px rgba(24,32,43,.34),0 10px 28px -12px rgba(24,32,43,.18)}
+.cam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.cam video{position:absolute;left:0;top:0;width:1280px;height:720px;display:block}
+.cur{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.cur svg{position:absolute;left:-3px;top:-2px;width:30px;height:34px;overflow:visible;filter:drop-shadow(0 3px 5px rgba(24,32,43,.35))}
+.cap{position:absolute;left:180px;top:30px;width:1560px;height:120px;display:flex;align-items:center;gap:26px;flex-wrap:nowrap;align-content:flex-end}
+.cap .step{font:600 30px 'Forma Inter',sans-serif;letter-spacing:.04em;color:#3448ed;background:rgba(52,72,237,.09);border-radius:999px;padding:6px 20px;white-space:nowrap}
+.cap .step:empty{display:none}
+.cap .t{font:700 86px/1.02 'Forma Display',sans-serif;letter-spacing:-.045em;white-space:nowrap;color:#18202b}
+.cap .t .w{display:inline-block}
+.acc{color:#3448ed}.mut{color:#6d7480}#chips{position:absolute;right:180px;top:46px;gap:18px;display:flex}
+.fc{display:flex;align-items:center;gap:12px;font:600 36px 'Forma Inter';letter-spacing:-.01em;padding:12px 26px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(24,32,43,.07),0 14px 30px -14px rgba(24,32,43,.28);opacity:0}
+.fc i{width:16px;height:16px;border-radius:50%}</style>
+  <div id="root" data-composition-id="l-montage" data-width="1920" data-height="1080">
+
+    <div class="cap" id="cap" data-layout-allow-overflow><span class="step"></span><span class="t"><span class="w">Not</span> <span class="w">just</span> <span class="w acc">images.</span></span></div>
+    <div class="win" id="win" data-layout-allow-overflow>
+      <div class="cam" id="cam" data-layout-allow-overflow>
+        <video id="vid" class="clip" src="assets/clips/montage.mp4" data-start="0" data-duration="4.6" data-media-start="0" muted playsinline></video>
+        <div class="cur" id="cur"><svg viewBox="0 0 30 34"><path d="M3 2v26.4l6.9-6.4 4.5 10 4.7-2.1-4.5-9.9H24Z" fill="#fff" stroke="#18202b" stroke-width="2.1" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div><div id="chips"><div class="fc" id="fc0"><i style="background:#6fbf9b"></i>Data</div><div class="fc" id="fc1"><i style="background:#d77aa0"></i>Audio</div><div class="fc" id="fc2"><i style="background:#e0955b"></i>Video</div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+tl.fromTo('#win',{opacity:0,y:40,scale:.975},{opacity:1,y:0,scale:1,duration:.55,ease:'expo.out'},0);
+
+tl.fromTo('#cap .step',{opacity:0,scale:.8},{opacity:1,scale:1,duration:.4,ease:'back.out(1.8)'},0.25);
+tl.fromTo('#cap .w',{opacity:0,filter:'blur(10px)',y:20},{opacity:1,filter:'blur(0px)',y:0,duration:.42,ease:'power3.out',stagger:.075},0.29);
+tl.set('#cam',{x:-218.4,y:-107,scale:1.56,transformOrigin:'0 0'},0);
+tl.set('#cur',{x:-40,y:560,opacity:1},0.108);
+tl.to('#cur',{x:-39.989,y:560,duration:0.033,ease:'none'},0.108);
+tl.to('#cur',{x:-28.105,y:560.322,duration:0.033,ease:'none'},0.141);
+tl.to('#cur',{x:61.028,y:560.792,duration:0.033,ease:'none'},0.175);
+tl.to('#cur',{x:155.997,y:550.889,duration:0.033,ease:'none'},0.208);
+tl.to('#cur',{x:229.503,y:534.433,duration:0.033,ease:'none'},0.241);
+tl.to('#cur',{x:284.658,y:513.101,duration:0.033,ease:'none'},0.275);
+tl.to('#cur',{x:329.667,y:490.647,duration:0.033,ease:'none'},0.308);
+tl.to('#cur',{x:360.253,y:473.144,duration:0.033,ease:'none'},0.341);
+tl.to('#cur',{x:383.965,y:458.593,duration:0.033,ease:'none'},0.375);
+tl.to('#cur',{x:407.554,y:443.565,duration:0.033,ease:'none'},0.408);
+tl.to('#cur',{x:417.011,y:437.416,duration:0.033,ease:'none'},0.441);
+tl.to('#cur',{x:427.452,y:430.601,duration:0.033,ease:'none'},0.475);
+tl.to('#cur',{x:432.18,y:427.503,duration:0.033,ease:'none'},0.508);
+tl.to('#cur',{x:434.1,y:426.245,duration:0.033,ease:'none'},0.541);
+tl.to('#cur',{x:434.918,y:425.711,duration:0.033,ease:'none'},0.575);
+tl.to('#cur',{x:435,y:425.65,duration:0.033,ease:'none'},0.608);
+tl.to('#cur',{x:458.995,y:430.377,duration:0.033,ease:'none'},0.641);
+tl.to('#cur',{x:494.282,y:437.329,duration:0.033,ease:'none'},0.675);
+tl.to('#cur',{x:529.569,y:444.281,duration:0.033,ease:'none'},0.708);
+tl.to('#cur',{x:564.856,y:451.232,duration:0.033,ease:'none'},0.741);
+tl.to('#cur',{x:600.144,y:458.184,duration:0.033,ease:'none'},0.775);
+tl.to('#cur',{x:635.431,y:465.136,duration:0.033,ease:'none'},0.808);
+tl.to('#cur',{x:670.718,y:472.088,duration:0.033,ease:'none'},0.841);
+tl.to('#cur',{x:706.005,y:479.039,duration:0.033,ease:'none'},0.875);
+tl.to('#cur',{x:741.292,y:485.991,duration:0.033,ease:'none'},0.908);
+tl.to('#cur',{x:776.579,y:492.943,duration:0.033,ease:'none'},0.941);
+tl.to('#cur',{x:811.866,y:499.895,duration:0.033,ease:'none'},0.975);
+tl.to('#cur',{x:847.153,y:506.846,duration:0.033,ease:'none'},1.008);
+tl.to('#cur',{x:882.44,y:513.798,duration:0.033,ease:'none'},1.041);
+tl.to('#cur',{x:917.727,y:520.75,duration:0.033,ease:'none'},1.075);
+tl.to('#cur',{x:953.014,y:527.702,duration:0.033,ease:'none'},1.108);
+tl.to('#cur',{x:988.301,y:534.654,duration:0.033,ease:'none'},1.141);
+tl.to('#cur',{x:1023.589,y:541.605,duration:0.033,ease:'none'},1.175);
+tl.to('#cur',{x:1058.876,y:548.557,duration:0.033,ease:'none'},1.208);
+tl.to('#cur',{x:1094.163,y:555.509,duration:0.033,ease:'none'},1.241);
+tl.to('#cur',{x:1129.45,y:562.461,duration:0.033,ease:'none'},1.275);
+tl.to('#cur',{x:1164.737,y:569.412,duration:0.033,ease:'none'},1.308);
+tl.to('#cur',{x:1200.024,y:576.364,duration:0.033,ease:'none'},1.341);
+tl.to('#cur',{x:1235.311,y:583.316,duration:0.033,ease:'none'},1.375);
+tl.to('#cur',{x:1270.598,y:590.268,duration:0.033,ease:'none'},1.408);
+tl.to('#cur',{x:1305.885,y:597.219,duration:0.033,ease:'none'},1.441);
+tl.to('#cur',{x:1319.981,y:599.987,duration:0.033,ease:'none'},1.475);
+tl.to('#cur',{x:1221.677,y:547.681,duration:0.033,ease:'none'},1.508);
+tl.to('#cur',{x:1087.393,y:485.994,duration:0.033,ease:'none'},1.541);
+tl.to('#cur',{x:894.645,y:424.323,duration:0.033,ease:'none'},1.575);
+tl.to('#cur',{x:783.73,y:409.44,duration:0.033,ease:'none'},1.608);
+tl.to('#cur',{x:704.073,y:406.417,duration:0.033,ease:'none'},1.641);
+tl.to('#cur',{x:623.902,y:408.576,duration:0.033,ease:'none'},1.675);
+tl.to('#cur',{x:559.599,y:412.975,duration:0.033,ease:'none'},1.708);
+tl.to('#cur',{x:513.757,y:417.229,duration:0.033,ease:'none'},1.741);
+tl.to('#cur',{x:479.162,y:420.831,duration:0.033,ease:'none'},1.775);
+tl.to('#cur',{x:459.53,y:422.953,duration:0.033,ease:'none'},1.808);
+tl.to('#cur',{x:444.49,y:424.607,duration:0.033,ease:'none'},1.841);
+tl.to('#cur',{x:438.41,y:425.28,duration:0.033,ease:'none'},1.875);
+tl.to('#cur',{x:436.145,y:425.529,duration:0.033,ease:'none'},1.908);
+tl.to('#cur',{x:435.189,y:425.633,duration:0.033,ease:'none'},1.941);
+tl.to('#cur',{x:433.302,y:424.664,duration:0.033,ease:'none'},1.975);
+tl.to('#cur',{x:414.43,y:413.713,duration:0.033,ease:'none'},2.008);
+tl.to('#cur',{x:395.558,y:402.761,duration:0.033,ease:'none'},2.041);
+tl.to('#cur',{x:376.687,y:391.81,duration:0.033,ease:'none'},2.075);
+tl.to('#cur',{x:357.815,y:380.858,duration:0.033,ease:'none'},2.108);
+tl.to('#cur',{x:338.943,y:369.907,duration:0.033,ease:'none'},2.141);
+tl.to('#cur',{x:320.072,y:358.955,duration:0.033,ease:'none'},2.175);
+tl.to('#cur',{x:301.2,y:348.004,duration:0.033,ease:'none'},2.208);
+tl.to('#cur',{x:282.328,y:337.052,duration:0.033,ease:'none'},2.241);
+tl.to('#cur',{x:263.456,y:326.101,duration:0.033,ease:'none'},2.275);
+tl.to('#cur',{x:244.585,y:315.149,duration:0.033,ease:'none'},2.308);
+tl.to('#cur',{x:225.713,y:304.198,duration:0.033,ease:'none'},2.341);
+tl.to('#cur',{x:206.841,y:293.246,duration:0.033,ease:'none'},2.375);
+tl.to('#cur',{x:187.97,y:282.294,duration:0.033,ease:'none'},2.408);
+tl.to('#cur',{x:169.098,y:271.343,duration:0.033,ease:'none'},2.441);
+tl.to('#cur',{x:150.226,y:260.391,duration:0.033,ease:'none'},2.475);
+tl.to('#cur',{x:131.355,y:249.44,duration:0.033,ease:'none'},2.508);
+tl.to('#cur',{x:112.483,y:238.488,duration:0.033,ease:'none'},2.541);
+tl.to('#cur',{x:93.611,y:227.537,duration:0.033,ease:'none'},2.575);
+tl.to('#cur',{x:74.74,y:216.585,duration:0.033,ease:'none'},2.608);
+tl.to('#cur',{x:55.868,y:205.634,duration:0.033,ease:'none'},2.641);
+tl.to('#cur',{x:36.996,y:194.682,duration:0.033,ease:'none'},2.675);
+tl.to('#cur',{x:18.125,y:183.731,duration:0.033,ease:'none'},2.708);
+tl.to('#cur',{x:-0.747,y:172.779,duration:0.033,ease:'none'},2.741);
+tl.to('#cur',{x:-19.619,y:161.828,duration:0.033,ease:'none'},2.775);
+tl.to('#cur',{x:-38.49,y:150.876,duration:0.033,ease:'none'},2.808);
+tl.to('#cur',{x:-40,y:150.007,duration:0.033,ease:'none'},2.841);
+tl.to('#cur',{x:17.06,y:210.849,duration:0.033,ease:'none'},2.875);
+tl.to('#cur',{x:101.887,y:288.507,duration:0.033,ease:'none'},2.908);
+tl.to('#cur',{x:165.507,y:331.593,duration:0.033,ease:'none'},2.941);
+tl.to('#cur',{x:235.242,y:367.652,duration:0.033,ease:'none'},2.975);
+tl.to('#cur',{x:291.632,y:388.645,duration:0.033,ease:'none'},3.008);
+tl.to('#cur',{x:335.649,y:401.736,duration:0.033,ease:'none'},3.041);
+tl.to('#cur',{x:363.429,y:408.942,duration:0.033,ease:'none'},3.075);
+tl.to('#cur',{x:394.337,y:416.396,duration:0.033,ease:'none'},3.108);
+tl.to('#cur',{x:407.736,y:419.485,duration:0.033,ease:'none'},3.141);
+tl.to('#cur',{x:419.898,y:422.247,duration:0.033,ease:'none'},3.175);
+tl.to('#cur',{x:430.349,y:424.605,duration:0.033,ease:'none'},3.208);
+tl.to('#cur',{x:432.973,y:425.195,duration:0.033,ease:'none'},3.241);
+tl.to('#cur',{x:434.407,y:425.523,duration:0.033,ease:'none'},3.275);
+tl.to('#cur',{x:435,y:425.65,duration:0.033,ease:'none'},3.308);
+tl.to('#cur',{x:443.749,y:434.651,duration:0.033,ease:'none'},3.341);
+tl.to('#cur',{x:456.615,y:447.887,duration:0.033,ease:'none'},3.375);
+tl.to('#cur',{x:469.481,y:461.123,duration:0.033,ease:'none'},3.408);
+tl.to('#cur',{x:482.348,y:474.36,duration:0.033,ease:'none'},3.441);
+tl.to('#cur',{x:495.214,y:487.596,duration:0.033,ease:'none'},3.475);
+tl.to('#cur',{x:508.08,y:500.832,duration:0.033,ease:'none'},3.508);
+tl.to('#cur',{x:520.946,y:514.069,duration:0.033,ease:'none'},3.541);
+tl.to('#cur',{x:533.812,y:527.305,duration:0.033,ease:'none'},3.575);
+tl.to('#cur',{x:546.679,y:540.541,duration:0.033,ease:'none'},3.608);
+tl.to('#cur',{x:559.545,y:553.778,duration:0.033,ease:'none'},3.641);
+tl.to('#cur',{x:572.411,y:567.014,duration:0.033,ease:'none'},3.675);
+tl.to('#cur',{x:585.277,y:580.25,duration:0.033,ease:'none'},3.708);
+tl.to('#cur',{x:598.143,y:593.487,duration:0.033,ease:'none'},3.741);
+tl.to('#cur',{x:611.01,y:606.723,duration:0.033,ease:'none'},3.775);
+tl.to('#cur',{x:623.876,y:619.96,duration:0.033,ease:'none'},3.808);
+tl.to('#cur',{x:636.742,y:633.196,duration:0.033,ease:'none'},3.841);
+tl.to('#cur',{x:649.608,y:646.432,duration:0.033,ease:'none'},3.875);
+tl.to('#cur',{x:662.474,y:659.669,duration:0.033,ease:'none'},3.908);
+tl.to('#cur',{x:675.34,y:672.905,duration:0.033,ease:'none'},3.941);
+tl.to('#cur',{x:688.207,y:686.141,duration:0.033,ease:'none'},3.975);
+tl.to('#cur',{x:701.073,y:699.378,duration:0.033,ease:'none'},4.008);
+tl.to('#cur',{x:713.939,y:712.614,duration:0.033,ease:'none'},4.041);
+tl.to('#cur',{x:726.805,y:725.85,duration:0.033,ease:'none'},4.075);
+tl.to('#cur',{x:739.671,y:739.087,duration:0.033,ease:'none'},4.108);
+tl.to('#cur',{x:752.538,y:752.323,duration:0.033,ease:'none'},4.141);
+tl.to('#cur',{x:760,y:759.997,duration:0.033,ease:'none'},4.175);
+tl.to('#cur',{x:748.35,y:737.513,duration:0.033,ease:'none'},4.208);
+tl.to('#cur',{x:696.347,y:644.815,duration:0.033,ease:'none'},4.241);
+tl.to('#cur',{x:650.689,y:582.703,duration:0.033,ease:'none'},4.275);
+tl.to('#cur',{x:606.404,y:536.87,duration:0.033,ease:'none'},4.308);
+tl.to('#cur',{x:559.379,y:499.668,duration:0.033,ease:'none'},4.341);
+tl.to('#cur',{x:523.727,y:475.982,duration:0.033,ease:'none'},4.375);
+tl.to('#cur',{x:494.364,y:458.431,duration:0.033,ease:'none'},4.408);
+tl.to('#cur',{x:474.073,y:446.964,duration:0.033,ease:'none'},4.441);
+tl.to('#cur',{x:458.222,y:438.237,duration:0.033,ease:'none'},4.475);
+tl.to('#cur',{x:446.873,y:432.073,duration:0.033,ease:'none'},4.508);
+tl.to('#cur',{x:440.316,y:428.526,duration:0.033,ease:'none'},4.541);
+tl.to('#cur',{x:437.59,y:427.057,duration:0.025,ease:'none'},4.575);
+tl.fromTo('#fc0',{opacity:0,scale:.6,y:16},{opacity:1,scale:1,y:0,duration:.42,ease:'back.out(2.2)'},0.891);
+tl.fromTo('#fc1',{opacity:0,scale:.6,y:16},{opacity:1,scale:1,y:0,duration:.42,ease:'back.out(2.2)'},2.251);
+tl.fromTo('#fc2',{opacity:0,scale:.6,y:16},{opacity:1,scale:1,y:0,duration:.42,ease:'back.out(2.2)'},3.597);
+
+tl.to('#cap,#stat,#chips',{opacity:0,filter:'blur(8px)',duration:.2,ease:'power2.in'},4.38);
+tl.to('#win',{opacity:0,scale:.985,duration:.22,ease:'power2.in'},4.38);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["l-montage"] = tl;
+  </script>
+</template>

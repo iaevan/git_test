@@ -1,0 +1,214 @@
+<template>
+  <style>
+
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-Medium.otf');font-weight:500}
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-Bold.otf');font-weight:700}
+#root{position:absolute;inset:0;overflow:hidden;font-family:'Forma Inter',sans-serif;color:#18202b}
+.win{position:absolute;left:180px;top:158px;width:1560px;height:878px;border-radius:26px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(24,32,43,.06),0 34px 80px -28px rgba(24,32,43,.34),0 10px 28px -12px rgba(24,32,43,.18)}
+.cam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.cam video{position:absolute;left:0;top:0;width:1280px;height:720px;display:block}
+.cur{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.cur svg{position:absolute;left:-3px;top:-2px;width:30px;height:34px;overflow:visible;filter:drop-shadow(0 3px 5px rgba(24,32,43,.35))}
+.cap{position:absolute;left:180px;top:30px;width:1560px;height:120px;display:flex;align-items:center;gap:26px;flex-wrap:nowrap;align-content:flex-end}
+.cap .step{font:600 30px 'Forma Inter',sans-serif;letter-spacing:.04em;color:#3448ed;background:rgba(52,72,237,.09);border-radius:999px;padding:6px 20px;white-space:nowrap}
+.cap .step:empty{display:none}
+.cap .t{font:700 86px/1.02 'Forma Display',sans-serif;letter-spacing:-.045em;white-space:nowrap;color:#18202b}
+.cap .t .w{display:inline-block}
+.acc{color:#3448ed}.mut{color:#6d7480}</style>
+  <div id="root" data-composition-id="l-details" data-width="1920" data-height="1080">
+
+    <div class="cap" id="cap" data-layout-allow-overflow><span class="step"></span><span class="t"><span class="w">A</span> <span class="w">little</span> <span class="w">more</span> <span class="w acc">control.</span></span></div>
+    <div class="win" id="win" data-layout-allow-overflow>
+      <div class="cam" id="cam" data-layout-allow-overflow>
+        <video id="vid" class="clip" src="assets/clips/details.mp4" data-start="0" data-duration="5.3" data-media-start="0.3" muted playsinline></video>
+        <div class="cur" id="cur"><svg viewBox="0 0 30 34"><path d="M3 2v26.4l6.9-6.4 4.5 10 4.7-2.1-4.5-9.9H24Z" fill="#fff" stroke="#18202b" stroke-width="2.1" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+tl.fromTo('#win',{opacity:0,y:40,scale:.975},{opacity:1,y:0,scale:1,duration:.55,ease:'expo.out'},0);
+
+tl.fromTo('#cap .step',{opacity:0,scale:.8},{opacity:1,scale:1,duration:.4,ease:'back.out(1.8)'},0.25);
+tl.fromTo('#cap .w',{opacity:0,filter:'blur(10px)',y:20},{opacity:1,filter:'blur(0px)',y:0,duration:.42,ease:'power3.out',stagger:.075},0.29);
+tl.set('#cam',{x:0,y:0,scale:1.219,transformOrigin:'0 0'},0);
+tl.to('#cam',{x:-483.6,y:-177.005,scale:1.974,duration:1,ease:'power2.inOut'},0.55);
+tl.set('#cur',{x:1329.134,y:600.709,opacity:1},0);
+tl.to('#cur',{x:1318.028,y:589.187,duration:0.033,ease:'none'},0);
+tl.to('#cur',{x:1301.125,y:571.784,duration:0.033,ease:'none'},0.033);
+tl.to('#cur',{x:1277.691,y:548.002,duration:0.033,ease:'none'},0.067);
+tl.to('#cur',{x:1244.543,y:515.499,duration:0.033,ease:'none'},0.1);
+tl.to('#cur',{x:1202.027,y:476.486,duration:0.033,ease:'none'},0.133);
+tl.to('#cur',{x:1145.565,y:430.453,duration:0.033,ease:'none'},0.167);
+tl.to('#cur',{x:1073.715,y:382.364,duration:0.033,ease:'none'},0.2);
+tl.to('#cur',{x:986.797,y:339.231,duration:0.033,ease:'none'},0.233);
+tl.to('#cur',{x:899.8,y:309.727,duration:0.033,ease:'none'},0.267);
+tl.to('#cur',{x:825.726,y:292.997,duration:0.033,ease:'none'},0.3);
+tl.to('#cur',{x:765.63,y:283.516,duration:0.033,ease:'none'},0.333);
+tl.to('#cur',{x:718.159,y:277.839,duration:0.033,ease:'none'},0.367);
+tl.to('#cur',{x:682.299,y:274.265,duration:0.033,ease:'none'},0.4);
+tl.to('#cur',{x:655.373,y:271.842,duration:0.033,ease:'none'},0.433);
+tl.to('#cur',{x:637.963,y:270.349,duration:0.033,ease:'none'},0.467);
+tl.to('#cur',{x:627.064,y:269.426,duration:0.033,ease:'none'},0.5);
+tl.to('#cur',{x:621.46,y:268.953,duration:0.033,ease:'none'},0.533);
+tl.to('#cur',{x:619.347,y:268.779,duration:0.033,ease:'none'},0.567);
+tl.to('#cur',{x:619.005,y:268.75,duration:0.033,ease:'none'},0.6);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.633);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.667);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.7);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.733);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.767);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.8);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.833);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.867);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.9);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.933);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},0.967);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.033);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.067);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.1);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.133);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.167);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.2);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.233);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.267);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.3);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.333);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.367);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.4);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.433);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.467);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.5);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.533);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.567);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.6);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.633);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.667);
+tl.to('#cur',{x:619,y:268.75,duration:0.033,ease:'none'},1.7);
+tl.to('#cur',{x:620.341,y:268.891,duration:0.033,ease:'none'},1.733);
+tl.to('#cur',{x:622.017,y:269.067,duration:0.033,ease:'none'},1.767);
+tl.to('#cur',{x:623.693,y:269.243,duration:0.033,ease:'none'},1.8);
+tl.to('#cur',{x:625.37,y:269.42,duration:0.033,ease:'none'},1.833);
+tl.to('#cur',{x:729.246,y:266.01,duration:0.033,ease:'none'},1.867);
+tl.to('#cur',{x:761.027,y:253.99,duration:0.033,ease:'none'},1.9);
+tl.to('#cur',{x:786.428,y:240.114,duration:0.033,ease:'none'},1.933);
+tl.to('#cur',{x:804.194,y:228.539,duration:0.033,ease:'none'},1.967);
+tl.to('#cur',{x:811.684,y:223.365,duration:0.033,ease:'none'},2);
+tl.to('#cur',{x:812.461,y:222.822,duration:0.033,ease:'none'},2.033);
+tl.to('#cur',{x:813.239,y:222.278,duration:0.033,ease:'none'},2.067);
+tl.to('#cur',{x:814.016,y:221.735,duration:0.033,ease:'none'},2.1);
+tl.to('#cur',{x:814.793,y:221.191,duration:0.033,ease:'none'},2.133);
+tl.to('#cur',{x:815.57,y:220.648,duration:0.033,ease:'none'},2.167);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.2);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.233);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.267);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.3);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.333);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.367);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.4);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.433);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.467);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.5);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.533);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.567);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.6);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.633);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.667);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.7);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.733);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.767);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.8);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.833);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.867);
+tl.to('#cur',{x:823,y:215.39,duration:0.033,ease:'none'},2.9);
+tl.to('#cur',{x:821.9,y:215.553,duration:0.033,ease:'none'},2.933);
+tl.to('#cur',{x:815.061,y:216.569,duration:0.033,ease:'none'},2.967);
+tl.to('#cur',{x:800.65,y:218.83,duration:0.033,ease:'none'},3);
+tl.to('#cur',{x:796.519,y:219.528,duration:0.033,ease:'none'},3.033);
+tl.to('#cur',{x:794.739,y:219.852,duration:0.033,ease:'none'},3.067);
+tl.to('#cur',{x:792.959,y:220.175,duration:0.033,ease:'none'},3.1);
+tl.to('#cur',{x:791.179,y:220.498,duration:0.033,ease:'none'},3.133);
+tl.to('#cur',{x:789.399,y:220.822,duration:0.033,ease:'none'},3.167);
+tl.to('#cur',{x:787.618,y:221.145,duration:0.033,ease:'none'},3.2);
+tl.to('#cur',{x:785.838,y:221.469,duration:0.033,ease:'none'},3.233);
+tl.to('#cur',{x:640.019,y:317.021,duration:0.033,ease:'none'},3.267);
+tl.to('#cur',{x:640.015,y:317.025,duration:0.033,ease:'none'},3.3);
+tl.to('#cur',{x:640.012,y:317.028,duration:0.033,ease:'none'},3.333);
+tl.to('#cur',{x:640.008,y:317.032,duration:0.033,ease:'none'},3.367);
+tl.to('#cur',{x:640.005,y:317.035,duration:0.033,ease:'none'},3.4);
+tl.to('#cur',{x:640.001,y:317.039,duration:0.033,ease:'none'},3.433);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.467);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.5);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.533);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.567);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.6);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.633);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.667);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.7);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.733);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.767);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.8);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.833);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.867);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.9);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.933);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},3.967);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},4);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},4.033);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},4.067);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},4.1);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},4.133);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},4.167);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},4.2);
+tl.to('#cur',{x:640,y:317.04,duration:0.033,ease:'none'},4.233);
+tl.to('#cur',{x:640.137,y:317.169,duration:0.033,ease:'none'},4.267);
+tl.to('#cur',{x:641.622,y:318.619,duration:0.033,ease:'none'},4.3);
+tl.to('#cur',{x:646.018,y:322.9,duration:0.033,ease:'none'},4.333);
+tl.to('#cur',{x:655.912,y:332.381,duration:0.033,ease:'none'},4.367);
+tl.to('#cur',{x:672.624,y:347.34,duration:0.033,ease:'none'},4.4);
+tl.to('#cur',{x:700.625,y:367.761,duration:0.033,ease:'none'},4.433);
+tl.to('#cur',{x:738.083,y:384.894,duration:0.033,ease:'none'},4.467);
+tl.to('#cur',{x:772.716,y:392.94,duration:0.033,ease:'none'},4.5);
+tl.to('#cur',{x:797.9,y:395.666,duration:0.033,ease:'none'},4.533);
+tl.to('#cur',{x:808.824,y:396.412,duration:0.033,ease:'none'},4.567);
+tl.to('#cur',{x:809.833,y:396.47,duration:0.033,ease:'none'},4.6);
+tl.to('#cur',{x:810.842,y:396.528,duration:0.033,ease:'none'},4.633);
+tl.to('#cur',{x:811.851,y:396.585,duration:0.033,ease:'none'},4.667);
+tl.to('#cur',{x:812.86,y:396.643,duration:0.033,ease:'none'},4.7);
+tl.to('#cur',{x:813.869,y:396.701,duration:0.033,ease:'none'},4.733);
+tl.to('#cur',{x:815.704,y:396.8,duration:0.033,ease:'none'},4.767);
+tl.to('#cur',{x:817.698,y:396.906,duration:0.033,ease:'none'},4.8);
+tl.to('#cur',{x:819.691,y:397.013,duration:0.033,ease:'none'},4.833);
+tl.to('#cur',{x:821.684,y:397.12,duration:0.033,ease:'none'},4.867);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},4.9);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},4.933);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},4.967);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5.033);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5.067);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5.1);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5.133);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5.167);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5.2);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5.233);
+tl.to('#cur',{x:823,y:397.19,duration:0.033,ease:'none'},5.267);
+tl.to('#cur svg',{scale:.82,transformOrigin:'3px 2px',duration:.07,ease:'power2.out'},0.821);
+tl.to('#cur svg',{scale:1,duration:.2,ease:'power3.out'},0.921);
+tl.to('#cur svg',{scale:.82,transformOrigin:'3px 2px',duration:.07,ease:'power2.out'},2.317);
+tl.to('#cur svg',{scale:1,duration:.2,ease:'power3.out'},2.417);
+tl.to('#cur svg',{scale:.82,transformOrigin:'3px 2px',duration:.07,ease:'power2.out'},3.483);
+tl.to('#cur svg',{scale:1,duration:.2,ease:'power3.out'},3.583);
+tl.to('#cur svg',{scale:.82,transformOrigin:'3px 2px',duration:.07,ease:'power2.out'},5.015);
+tl.to('#cur svg',{scale:1,duration:.2,ease:'power3.out'},5.115);
+
+
+tl.to('#cap,#stat,#chips',{opacity:0,filter:'blur(8px)',duration:.2,ease:'power2.in'},5.08);
+tl.to('#win',{opacity:0,scale:.985,duration:.22,ease:'power2.in'},5.08);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["l-details"] = tl;
+  </script>
+</template>

@@ -1,0 +1,56 @@
+<template>
+  <style>
+
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-Medium.otf');font-weight:500}
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-Bold.otf');font-weight:700}
+#root{position:absolute;inset:0;overflow:hidden;font-family:'Forma Inter',sans-serif;color:#18202b}
+.win{position:absolute;left:180px;top:158px;width:1560px;height:878px;border-radius:26px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(24,32,43,.06),0 34px 80px -28px rgba(24,32,43,.34),0 10px 28px -12px rgba(24,32,43,.18)}
+.cam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.cam video{position:absolute;left:0;top:0;width:1280px;height:720px;display:block}
+.cur{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.cur svg{position:absolute;left:-3px;top:-2px;width:30px;height:34px;overflow:visible;filter:drop-shadow(0 3px 5px rgba(24,32,43,.35))}
+.cap{position:absolute;left:180px;top:30px;width:1560px;height:120px;display:flex;align-items:center;gap:26px;flex-wrap:nowrap;align-content:flex-end}
+.cap .step{font:600 30px 'Forma Inter',sans-serif;letter-spacing:.04em;color:#3448ed;background:rgba(52,72,237,.09);border-radius:999px;padding:6px 20px;white-space:nowrap}
+.cap .step:empty{display:none}
+.cap .t{font:700 86px/1.02 'Forma Display',sans-serif;letter-spacing:-.045em;white-space:nowrap;color:#18202b}
+.cap .t .w{display:inline-block}
+.acc{color:#3448ed}.mut{color:#6d7480}
+.hk{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center}
+.hkl{font-family:'Forma Display',sans-serif;font-weight:700;letter-spacing:-.05em;line-height:.98;color:#18202b;white-space:nowrap}
+.hkl .w{display:inline-block}.hkl .mut{color:#a3a9b3}
+#hkB,#hkC,#hkD{opacity:0}
+.chip{position:absolute;left:1280px;top:228px;display:flex;align-items:center;gap:16px;background:#fff;border-radius:22px;padding:18px 26px 18px 18px;box-shadow:0 0 0 1px rgba(24,32,43,.06),0 26px 56px -20px rgba(24,32,43,.35);opacity:0}
+.chip .ico{width:56px;height:68px;border-radius:10px;background:#efeaff;position:relative}.chip .ico i{position:absolute;right:0;top:0;width:40%;height:34%;background:#d9d0fb;border-bottom-left-radius:10px}
+.chip .ct{display:flex;flex-direction:column;gap:4px}.chip b{font:600 30px 'Forma Inter';letter-spacing:-.01em}.chip span{font:500 28px 'Forma Inter';color:#6d7480}
+.chip .x{width:40px;height:40px;border-radius:50%;background:#e2604d;color:#fff;display:flex;align-items:center;justify-content:center;font:700 22px 'Forma Inter'}</style>
+  <div id="root" data-composition-id="l-hook" data-width="1920" data-height="1080">
+
+    <div class="hk" id="hkA"><div class="hkl" style="font-size:214px"><span class="w">Wrong</span> <span class="w">format.</span></div></div>
+    <div class="chip" id="chip" data-layout-ignore><div class="ico"><i></i></div><div class="ct"><b>IMG_4021.HEIC</b><span>Can’t open this file</span></div><div class="x">✕</div></div>
+    <div class="hk" id="hkB"><div class="hkl" style="font-size:150px"><span class="w">Upload</span> <span class="w">it</span> <span class="w mut">somewhere.</span></div></div>
+    <div class="hk" id="hkC"><div class="hkl" style="font-size:300px"><span class="w">Wait.</span></div></div>
+    <div class="hk" id="hkD"><div class="hkl" style="font-size:142px"><span class="w">Hope</span> <span class="w mut">nobody</span> <span class="w">looks.</span></div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+tl.fromTo('#hkA .hkl',{scale:1.04},{scale:1,duration:.7,ease:'expo.out'},0);
+tl.fromTo('#chip',{opacity:0,scale:.5,rotation:-18,y:30},{opacity:1,scale:1,rotation:7,y:0,duration:.55,ease:'back.out(2)'},.5);
+tl.to('#hkA .hkl',{opacity:0,filter:'blur(12px)',scale:1.03,duration:.2,ease:'power2.in'},1.28);
+tl.to('#chip',{opacity:0,y:-20,scale:.9,duration:.2,ease:'power2.in'},1.28);
+tl.set('#hkB',{opacity:1},1.34);
+tl.fromTo('#hkB .w',{opacity:0,filter:'blur(10px)',y:16},{opacity:1,filter:'blur(0px)',y:0,duration:.34,ease:'power3.out',stagger:.09},1.36);
+tl.to('#hkB',{opacity:0,filter:'blur(12px)',duration:.18,ease:'power2.in'},2.52);
+tl.set('#hkC',{opacity:1},2.6);
+tl.fromTo('#hkC .w',{opacity:0,scale:.8,filter:'blur(12px)'},{opacity:1,scale:1,filter:'blur(0px)',duration:.4,ease:'expo.out'},2.62);
+tl.to('#hkC',{opacity:0,filter:'blur(12px)',duration:.16,ease:'power2.in'},3.22);
+tl.set('#hkD',{opacity:1},3.28);
+tl.fromTo('#hkD .w',{opacity:0,filter:'blur(10px)',y:16},{opacity:1,filter:'blur(0px)',y:0,duration:.36,ease:'power3.out',stagger:.14},3.3);
+tl.to('#hkD',{opacity:0,filter:'blur(14px)',scale:1.03,duration:.3,ease:'power2.in'},4.42);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["l-hook"] = tl;
+  </script>
+</template>

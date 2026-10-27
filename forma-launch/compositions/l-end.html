@@ -1,0 +1,70 @@
+<template>
+  <style>
+
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-Medium.otf');font-weight:500}
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-Bold.otf');font-weight:700}
+#root{position:absolute;inset:0;overflow:hidden;font-family:'Forma Inter',sans-serif;color:#18202b}
+.win{position:absolute;left:180px;top:158px;width:1560px;height:878px;border-radius:26px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(24,32,43,.06),0 34px 80px -28px rgba(24,32,43,.34),0 10px 28px -12px rgba(24,32,43,.18)}
+.cam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.cam video{position:absolute;left:0;top:0;width:1280px;height:720px;display:block}
+.cur{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.cur svg{position:absolute;left:-3px;top:-2px;width:30px;height:34px;overflow:visible;filter:drop-shadow(0 3px 5px rgba(24,32,43,.35))}
+.cap{position:absolute;left:180px;top:30px;width:1560px;height:120px;display:flex;align-items:center;gap:26px;flex-wrap:nowrap;align-content:flex-end}
+.cap .step{font:600 30px 'Forma Inter',sans-serif;letter-spacing:.04em;color:#3448ed;background:rgba(52,72,237,.09);border-radius:999px;padding:6px 20px;white-space:nowrap}
+.cap .step:empty{display:none}
+.cap .t{font:700 86px/1.02 'Forma Display',sans-serif;letter-spacing:-.045em;white-space:nowrap;color:#18202b}
+.cap .t .w{display:inline-block}
+.acc{color:#3448ed}.mut{color:#6d7480}
+.tl2{position:absolute;left:0;right:0;top:300px;text-align:center;font-family:'Forma Display',sans-serif;font-weight:700;letter-spacing:-.05em;line-height:1.02}
+.tl2 .ln{display:block}.tl2 .w{display:inline-block}
+.cta{position:absolute;left:640px;top:595px;width:640px;height:150px;border-radius:38px;background:#3448ed;color:#fff;display:flex;align-items:center;justify-content:center;gap:22px;font:600 50px 'Forma Inter';letter-spacing:-.02em;opacity:0;box-shadow:0 30px 60px -22px rgba(52,72,237,.65),inset 0 2px 0 rgba(255,255,255,.18)}
+.cta svg{width:54px;height:54px}
+.flood{position:absolute;inset:0;background:#3448ed;clip-path:circle(0px at 960px 670px)}
+.lock{position:absolute;left:0;right:0;top:330px;display:flex;align-items:center;justify-content:center;gap:.32em;line-height:1;opacity:0}
+.mk{position:relative;width:1em;height:1.036em;margin-right:-.04em}
+.mk i{position:absolute;display:block;width:.393em;border-radius:.143em;transform-origin:50% 100%}
+.lockw .b1{background:#fff;height:.821em;top:.179em;left:.071em}.lockw .b2{background:rgba(255,255,255,.72);height:.643em;top:.071em;left:.357em}.lockw .b3{background:rgba(255,255,255,.45);height:.393em;top:0;left:.643em}
+.wm{font-family:'Forma Display',sans-serif;font-weight:700;letter-spacing:-.046em;display:flex;align-items:baseline;color:#fff;line-height:1}
+.wm .lt{display:inline-block}.lockw .dot{display:inline-block;color:#b8c0ff}
+.url{position:absolute;left:0;right:0;top:690px;text-align:center;opacity:0}
+.url .u1{font:600 84px/1.1 'Forma Display',sans-serif;letter-spacing:-.035em;color:#fff}
+.url .u2{margin-top:22px;font:500 40px 'Forma Inter';color:rgba(255,255,255,.78);letter-spacing:-.005em}.url .u2 b{margin:0 .35em;color:rgba(255,255,255,.5)}
+.ecur{opacity:0}.ecur svg{width:64px;height:72px;left:-6px;top:-4px}</style>
+  <div id="root" data-composition-id="l-end" data-width="1920" data-height="1080">
+
+    <div class="tl2" id="tl2" style="font-size:150px"><div class="ln"><span class="w">A</span> <span class="w">little</span> <span class="w">change.</span></div><div class="ln"><span class="w">A</span> <span class="w">world</span> <span class="w">of</span> <span class="w acc">possibility.</span></div></div>
+    <div class="cta" id="cta"><span>Let’s convert something</span><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></div>
+    <div class="flood" id="flood"></div>
+    <div class="lock lockw" id="lock2" style="font-size:250px"><div class="mk" id="mk2"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div><div class="wm" id="wm2"><span class="lt">f</span><span class="lt">o</span><span class="lt">r</span><span class="lt">m</span><span class="lt">a</span><span class="dot" id="dot2">.</span></div></div>
+    <div class="url" id="url"><div class="u1">forma.thezavino.com</div><div class="u2">Free to use <b>·</b> No account needed</div></div>
+    <div class="cur ecur" id="ecur"><svg viewBox="0 0 30 34"><path d="M3 2v26.4l6.9-6.4 4.5 10 4.7-2.1-4.5-9.9H24Z" fill="#fff" stroke="#18202b" stroke-width="2.1" stroke-linejoin="round"/></svg></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+tl.fromTo('#tl2 .w',{opacity:0,filter:'blur(10px)',y:22},{opacity:1,filter:'blur(0px)',y:0,duration:.46,ease:'power3.out',stagger:.085},0.15);
+tl.to('#tl2',{opacity:0,filter:'blur(12px)',duration:.24,ease:'power2.in'},2);
+tl.fromTo('#cta',{opacity:0,scale:.7,y:30},{opacity:1,scale:1,y:0,duration:.5,ease:'back.out(1.8)'},2.24);
+tl.set('#ecur',{x:1480,y:960,opacity:1},2.15);
+tl.to('#ecur',{x:1080,y:700,duration:.85,ease:'power3.out'},2.15);
+tl.to('#cta',{scale:1.035,duration:.18,ease:'power2.out'},2.9);
+tl.to('#ecur svg',{scale:.8,transformOrigin:'3px 2px',duration:.07,ease:'power2.out'},3.1);
+tl.to('#ecur svg',{scale:1,duration:.2,ease:'power3.out'},3.2);
+tl.to('#cta',{scale:.96,duration:.08,ease:'power2.out'},3.1);
+tl.to('#flood',{clipPath:'circle(2300px at 960px 670px)',duration:.74,ease:'power3.in'},3.16);
+tl.to('#cta',{opacity:0,duration:.2,ease:'power1.in'},3.4);
+tl.to('#ecur',{opacity:0,duration:.2,ease:'power1.in'},3.45);
+tl.set('#lock2',{opacity:1},3.72);
+tl.fromTo('#mk2',{rotation:-34},{rotation:-10,duration:.9,ease:'power4.out'},3.72);
+tl.fromTo('#mk2 i',{scaleY:0},{scaleY:1,duration:.6,ease:'back.out(1.6)',stagger:.09},3.72);
+tl.fromTo('#wm2 .lt',{opacity:0,filter:'blur(14px)',y:30},{opacity:1,filter:'blur(0px)',y:0,duration:.4,ease:'power3.out',stagger:.075},4.1);
+tl.fromTo('#dot2',{opacity:0,scale:0.2,y:-40},{opacity:1,scale:1,y:0,duration:.55,ease:'back.out(3)'},4.46);
+tl.to('#lock2',{y:-70,duration:.7,ease:'power3.out'},4.74);
+tl.fromTo('#url',{opacity:0,y:34,filter:'blur(10px)'},{opacity:1,y:0,filter:'blur(0px)',duration:.6,ease:'power3.out'},4.82);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["l-end"] = tl;
+  </script>
+</template>

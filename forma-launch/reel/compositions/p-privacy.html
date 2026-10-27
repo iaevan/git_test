@@ -1,0 +1,48 @@
+<template>
+  <style>
+
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-Medium.otf');font-weight:500}
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-Bold.otf');font-weight:700}
+#root{position:absolute;inset:0;overflow:hidden;font-family:'Forma Inter',sans-serif;color:#18202b}
+.win{position:absolute;left:40px;top:440px;width:1000px;height:890px;border-radius:34px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(24,32,43,.06),0 34px 80px -28px rgba(24,32,43,.34),0 10px 28px -12px rgba(24,32,43,.18)}
+.cam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.cam video{position:absolute;left:0;top:0;width:1280px;height:720px;display:block}
+.cur{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.cur svg{position:absolute;left:-3px;top:-2px;width:33px;height:37.4px;overflow:visible;filter:drop-shadow(0 3px 5px rgba(24,32,43,.35))}
+.cap{position:absolute;left:60px;top:176px;width:960px;height:236px;display:flex;align-items:flex-end;gap:0px;flex-wrap:wrap;align-content:flex-end}
+.cap .step{font:600 40px 'Forma Inter',sans-serif;letter-spacing:.04em;color:#3448ed;background:rgba(52,72,237,.09);border-radius:999px;padding:8px 24px;white-space:nowrap}
+.cap .step:empty{display:none}
+.cap .t{font:700 116px/1.02 'Forma Display',sans-serif;letter-spacing:-.045em;white-space:normal;color:#18202b}
+.cap .t .w{display:inline-block}
+.acc{color:#3448ed}.mut{color:#6d7480}
+.ph{position:absolute;left:0;right:0;top:200px;text-align:center;font:700 116px/1.0 'Forma Display',sans-serif;letter-spacing:-.05em;color:#18202b}
+.ph .w{display:inline-block}.ph .w{display:block}
+.lift{position:absolute;left:120.75px;top:816.65px;width:838.5px;height:206.7px;border-radius:54.6px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(24,32,43,.06),0 50px 100px -30px rgba(24,32,43,.42),0 14px 34px -12px rgba(24,32,43,.2)}
+.lcam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.lcam video{position:absolute;left:0;top:0;width:1280px;height:720px;display:block}
+.pc{position:absolute;left:0;right:0;top:1190px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;padding:0 40px}
+.pill{display:flex;align-items:center;gap:12px;font:600 40px 'Forma Inter';letter-spacing:-.01em;padding:12px 26px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px rgba(24,32,43,.07),0 14px 30px -14px rgba(24,32,43,.28);opacity:0}
+.pill i{width:18px;height:18px;border-radius:50%;background:#3448ed}</style>
+  <div id="root" data-composition-id="p-privacy" data-width="1080" data-height="1920">
+
+    <div class="ph" id="ph"><span class="w">Your files<br>never leave<br>your device.</span></div>
+    <div class="lift" id="lift" data-layout-allow-overflow><div class="lcam" id="lcam" data-layout-allow-overflow><video id="vid" class="clip" src="assets/clips/landing.mp4" data-start="0" data-duration="3.2" data-media-start="0" muted playsinline></video></div></div>
+    <div class="pc" id="pc"><div class="pill" id="pl0"><i></i>No uploads.</div><div class="pill" id="pl1"><i></i>No server copies.</div><div class="pill" id="pl2"><i></i>No account.</div></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+tl.set('#lcam',{x:-3708.9,y:-787.8,scale:3.9,transformOrigin:'0 0'},0);
+tl.fromTo('#ph .w',{opacity:0,filter:'blur(10px)',y:20},{opacity:1,filter:'blur(0px)',y:0,duration:.46,ease:'power3.out',stagger:.07},.15);
+tl.fromTo('#lift',{opacity:0,scale:.78,y:50},{opacity:1,scale:1,y:0,duration:.7,ease:'expo.out'},.55);
+tl.fromTo('#pl0',{opacity:0,scale:.6,y:18},{opacity:1,scale:1,y:0,duration:.42,ease:'back.out(2.2)'},1.35);
+tl.fromTo('#pl1',{opacity:0,scale:.6,y:18},{opacity:1,scale:1,y:0,duration:.42,ease:'back.out(2.2)'},1.7);
+tl.fromTo('#pl2',{opacity:0,scale:.6,y:18},{opacity:1,scale:1,y:0,duration:.42,ease:'back.out(2.2)'},2.05);
+tl.to('#ph,#lift,#pc',{opacity:0,filter:'blur(10px)',duration:.22,ease:'power2.in'},2.96);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["p-privacy"] = tl;
+  </script>
+</template>

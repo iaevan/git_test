@@ -1,0 +1,55 @@
+<template>
+  <style>
+
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-Medium.otf');font-weight:500}
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-Bold.otf');font-weight:700}
+#root{position:absolute;inset:0;overflow:hidden;font-family:'Forma Inter',sans-serif;color:#18202b}
+.win{position:absolute;left:40px;top:440px;width:1000px;height:890px;border-radius:34px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(24,32,43,.06),0 34px 80px -28px rgba(24,32,43,.34),0 10px 28px -12px rgba(24,32,43,.18)}
+.cam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.cam video{position:absolute;left:0;top:0;width:1280px;height:720px;display:block}
+.cur{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.cur svg{position:absolute;left:-3px;top:-2px;width:33px;height:37.4px;overflow:visible;filter:drop-shadow(0 3px 5px rgba(24,32,43,.35))}
+.cap{position:absolute;left:60px;top:176px;width:960px;height:236px;display:flex;align-items:flex-end;gap:0px;flex-wrap:wrap;align-content:flex-end}
+.cap .step{font:600 40px 'Forma Inter',sans-serif;letter-spacing:.04em;color:#3448ed;background:rgba(52,72,237,.09);border-radius:999px;padding:8px 24px;white-space:nowrap}
+.cap .step:empty{display:none}
+.cap .t{font:700 116px/1.02 'Forma Display',sans-serif;letter-spacing:-.045em;white-space:normal;color:#18202b}
+.cap .t .w{display:inline-block}
+.acc{color:#3448ed}.mut{color:#6d7480}</style>
+  <div id="root" data-composition-id="p-wheel" data-width="1080" data-height="1920">
+
+    <div class="cap" id="cap" data-layout-allow-overflow><span class="step">02</span><span class="t"><span class="w">Give</span> <span class="w">it</span> <span class="w">a</span> <span class="w acc">direction.</span></span></div>
+    <div class="win" id="win" data-layout-allow-overflow>
+      <div class="cam" id="cam" data-layout-allow-overflow>
+        <video id="vid" class="clip" src="assets/clips/wheel.mp4" data-start="0" data-duration="4" data-media-start="0.5" muted playsinline></video>
+        <div class="cur" id="cur"><svg viewBox="0 0 30 34"><path d="M3 2v26.4l6.9-6.4 4.5 10 4.7-2.1-4.5-9.9H24Z" fill="#fff" stroke="#18202b" stroke-width="2.1" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+tl.fromTo('#win',{opacity:0,y:40,scale:.975},{opacity:1,y:0,scale:1,duration:.55,ease:'expo.out'},0);
+
+tl.fromTo('#cap .step',{opacity:0,scale:.8},{opacity:1,scale:1,duration:.4,ease:'back.out(1.8)'},0.25);
+tl.fromTo('#cap .w',{opacity:0,filter:'blur(10px)',y:20},{opacity:1,filter:'blur(0px)',y:0,duration:.42,ease:'power3.out',stagger:.075},0.29);
+tl.set('#cam',{x:-464.25,y:-84.25,scale:1.45,transformOrigin:'0 0'},0);
+tl.to('#cam',{x:-555.44,y:-111.16,scale:1.58,duration:1,ease:'power2.inOut'},0.2);
+tl.set('#cur',{x:876.614,y:431.497,opacity:1},0);
+tl.to('#cur',{x:861.532,y:430.782,duration:0.033,ease:'none'},0);
+tl.to('#cur',{x:850.365,y:430.295,duration:0.033,ease:'none'},0.033);
+tl.to('#cur',{x:843.149,y:429.979,duration:0.033,ease:'none'},0.067);
+tl.to('#cur',{x:838.515,y:429.783,duration:0.033,ease:'none'},0.1);
+tl.to('#cur',{x:836.09,y:429.681,duration:0.033,ease:'none'},0.133);
+tl.to('#cur',{x:835.14,y:429.64,duration:0.033,ease:'none'},0.167);
+tl.to('#cur',{x:835,y:429.64,duration:0.033,ease:'none'},0.2);
+tl.to('#cur',{x:835,y:429.64,duration:0.017,ease:'none'},0.233);
+
+
+tl.to('#cap,#stat,#chips',{opacity:0,filter:'blur(8px)',duration:.2,ease:'power2.in'},3.78);
+tl.to('#win',{opacity:0,scale:.985,duration:.22,ease:'power2.in'},3.78);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["p-wheel"] = tl;
+  </script>
+</template>

@@ -1,0 +1,6 @@
+node_modules/
+.hyperframes/
+reel/.hyperframes/
+renders/*.log
+tools/recorder/out/
+renders/.done

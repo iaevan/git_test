@@ -1,0 +1,47 @@
+<template>
+  <style>
+
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-Medium.otf');font-weight:500}
+@font-face{font-family:'Forma Inter';src:url('assets/fonts/Inter-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-SemiBold.otf');font-weight:600}
+@font-face{font-family:'Forma Display';src:url('assets/fonts/InterDisplay-Bold.otf');font-weight:700}
+#root{position:absolute;inset:0;overflow:hidden;font-family:'Forma Inter',sans-serif;color:#18202b}
+.win{position:absolute;left:40px;top:440px;width:1000px;height:890px;border-radius:34px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(24,32,43,.06),0 34px 80px -28px rgba(24,32,43,.34),0 10px 28px -12px rgba(24,32,43,.18)}
+.cam{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0}
+.cam video{position:absolute;left:0;top:0;width:1280px;height:720px;display:block}
+.cur{position:absolute;left:0;top:0;width:0;height:0;opacity:0}
+.cur svg{position:absolute;left:-3px;top:-2px;width:33px;height:37.4px;overflow:visible;filter:drop-shadow(0 3px 5px rgba(24,32,43,.35))}
+.cap{position:absolute;left:60px;top:176px;width:960px;height:236px;display:flex;align-items:flex-end;gap:0px;flex-wrap:wrap;align-content:flex-end}
+.cap .step{font:600 40px 'Forma Inter',sans-serif;letter-spacing:.04em;color:#3448ed;background:rgba(52,72,237,.09);border-radius:999px;padding:8px 24px;white-space:nowrap}
+.cap .step:empty{display:none}
+.cap .t{font:700 116px/1.02 'Forma Display',sans-serif;letter-spacing:-.045em;white-space:normal;color:#18202b}
+.cap .t .w{display:inline-block}
+.acc{color:#3448ed}.mut{color:#6d7480}
+.lock{position:absolute;left:0;right:0;top:560px;display:flex;align-items:center;justify-content:center;gap:.32em;line-height:1}
+.mk{position:relative;width:1em;height:1.036em;margin-right:-.04em}
+.mk i{position:absolute;display:block;width:.393em;border-radius:.143em;transform-origin:50% 100%}
+.b1{background:#3448ed;height:.821em;top:.179em;left:.071em}.b2{background:#6b7afa;height:.643em;top:.071em;left:.357em}.b3{background:#b8c0ff;height:.393em;top:0;left:.643em}
+.wm{font-family:'Forma Display',sans-serif;font-weight:700;letter-spacing:-.046em;display:flex;align-items:baseline;color:#18202b;line-height:1}
+.wm .lt{display:inline-block}.dot{display:inline-block;color:#3448ed}
+.tag{position:absolute;left:0;right:0;top:860px;text-align:center;font-family:'Forma Display',sans-serif;font-weight:600;letter-spacing:-.035em;line-height:1.08}
+.tag .w{display:inline-block}</style>
+  <div id="root" data-composition-id="p-reveal" data-width="1080" data-height="1920">
+
+    <div class="lock" id="lock" style="font-size:222px"><div class="mk" id="mk"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div><div class="wm" id="wm"><span class="lt">f</span><span class="lt">o</span><span class="lt">r</span><span class="lt">m</span><span class="lt">a</span><span class="dot" id="dot">.</span></div></div>
+    <div class="tag" id="tag" style="font-size:84px"><span class="w">A</span> <span class="w acc">fresh</span> <span class="w acc">start</span><br><span class="w">for</span> <span class="w">your</span> <span class="w">files.</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+tl.fromTo('#mk',{rotation:-34},{rotation:-10,duration:.9,ease:'power4.out'},.0);
+tl.fromTo('#mk i',{scaleY:0},{scaleY:1,duration:.6,ease:'back.out(1.6)',stagger:.09},.0);
+tl.fromTo('#wm .lt',{opacity:0,filter:'blur(14px)',y:30},{opacity:1,filter:'blur(0px)',y:0,duration:.4,ease:'power3.out',stagger:.075},.42);
+tl.fromTo('#dot',{opacity:0,scale:0.2,y:-40},{opacity:1,scale:1,y:0,duration:.55,ease:'back.out(3)'},.85);
+tl.fromTo('#tag .w',{opacity:0,filter:'blur(10px)',y:18},{opacity:1,filter:'blur(0px)',y:0,duration:.42,ease:'power3.out',stagger:.08},1.45);
+tl.to('#lock',{y:-90,duration:.7,ease:'power3.out'},1.35);
+tl.to('#lock, #tag',{opacity:0,filter:'blur(14px)',duration:.3,ease:'power2.in'},3.85);
+    window.__timelines = window.__timelines || {};
+    window.__timelines["p-reveal"] = tl;
+  </script>
+</template>
