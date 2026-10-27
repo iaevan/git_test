@@ -34,12 +34,6 @@ tl.set(bgL, { display: 'none' }, 9.2);
   tl.to(s.cam, { x: -W * 1.06, duration: .55, ease: 'io' }, 1.85);
   blurWin(1.85, 2.4, 10, 1);
 
-  sfx(.04, 'pop', { n: 'E5', g: .7 });
-  sfx(.28, 'pop', { n: 'A5', g: .8 });
-  sfx(.55, 'whoosh', { d: .5, dir: 1, g: .5 });
-  sfx(1.0, 'thud', { g: .8 });
-  sfx(1.04, 'bonk', { g: .9 });
-  sfx(1.85, 'whoosh', { d: .5, dir: -1, g: .75 });
 })();
 
 /* ── S2 · "Upload. Wait. Sign up." (the usual routine) ────── */
@@ -66,19 +60,15 @@ tl.set(bgL, { display: 'none' }, 9.2);
     gsap.set(st, { scaleX: 0 });
     const t0 = 2.08 + i * .5;
     tl.fromTo(el, { opacity: 0, x: W * .5, filter: 'blur(26px)' }, { opacity: 1, x: 0, filter: 'blur(0px)', duration: .75, ease: 'forma', immediateRender: false }, t0);
-    sfx(t0 + .04, 'pop', { n: ['A4', 'C#5', 'E5'][i], g: .75 });
-    sfx(t0, 'swish', { g: .35, dir: 1 });
     // strike-through, fast, one after another
     const ts = 3.5 + i * .1;
     tl.to(st, { scaleX: 1, duration: .16, ease: 'power3.out' }, ts);
     tl.to(el, { opacity: .5, duration: .2, ease: 'power2.out' }, ts + .05);
-    sfx(ts, 'strike', { g: .6, p: i });
   });
 
   // push up to the next scene
   tl.to(s.cam, { y: -H * 1.06, duration: .55, ease: 'io' }, 3.9);
   blurWin(3.9, 4.45, 10, 1);
-  sfx(3.9, 'whoosh', { d: .5, dir: 1, g: .7 });
 })();
 
 /* ── S3 · "There's a better way." → text selection becomes the brand flood ─ */
@@ -88,12 +78,11 @@ let FLOOD = { x: W / 2, y: H / 2 };
   gsap.set(s.cam, { y: H * 1.06 });
   tl.to(s.cam, { y: 0, duration: .55, ease: 'io' }, 3.9);
 
-  const head = T(s.cam, ['There’s a', 'better way.'], { size: V(184, 200) });
+  const head = T(s.cam, ['There’s an', 'easier way.'], { size: V(184, 200) });
   place(head.el, W / 2, V(900, 520));
   const w = head.words;           // There’s, a, better, way.
   [4.0, 4.25, 4.5, 4.75].forEach((t, i) => {
     blurIn(w[i], t, { dur: .8, b: 22, y: 44 });
-    sfx(t + .02, 'pop', { n: ['C#5', 'E5', 'A5', 'C#6'][i], g: .7 });
   });
 
   // selection box around "better"
@@ -103,12 +92,10 @@ let FLOOD = { x: W / 2, y: H / 2 };
   sel.innerHTML = '<i class="h" style="left:-14px;top:-14px"></i><i class="h" style="right:-14px;bottom:-14px"></i>';
   gsap.set(sel, { opacity: 0 });
   tl.fromTo(sel, { opacity: 0, scaleX: .85, scaleY: .7 }, { opacity: 1, scaleX: 1, scaleY: 1, duration: .4, ease: 'back.out(2)', immediateRender: false }, 5.0);
-  sfx(5.0, 'select', { g: .8 });
   tl.to(sel, { backgroundColor: BLUE, duration: .22, ease: 'power2.out' }, 5.5);
   tl.to(w[2], { color: '#fff', duration: .22, ease: 'power2.out' }, 5.5);
   tl.to(sel.querySelectorAll('.h'), { opacity: 0, scale: .4, duration: .2 }, 5.5);
   FLOOD = { x: r.x, y: r.y };
-  sfx(4.0, 'riser', { d: 2.0, g: .8 });
 })();
 
 /* ── S4 · logo reveal on brand indigo → iris closes onto the app header ─ */
@@ -127,7 +114,7 @@ let APP = null, S5SCENE = null;
 
   // shock rings on the hit
   [0, .1].forEach((d, i) => {
-    const ring = mk('div', '', s.cam, { position: 'absolute', left: '0', top: '0', width: '360px', height: '360px', borderRadius: '50%', border: (i ? 2 : 4) + 'px solid rgba(255,255,255,.55)' });
+    const ring = mk('div', '', s.cam, { position: 'absolute', left: '0', top: '0', width: '360px', height: '360px', borderRadius: '50%', border: (i ? 2 : 3) + 'px solid rgba(255,255,255,.32)' });
     gsap.set(ring, { x: W / 2, y: V(700, 520), xPercent: -50, yPercent: -50, opacity: 0 });
     tl.fromTo(ring, { scale: .25, opacity: .9 }, { scale: 6.5 + i, opacity: 0, duration: 1.5, ease: 'expo.out', immediateRender: false }, 6.0 + d);
   });
@@ -144,12 +131,8 @@ let APP = null, S5SCENE = null;
   tl.fromTo(lg.mark, { rotation: -40 }, { rotation: -10, duration: .9, ease: 'forma', immediateRender: false }, 5.98);
   tl.to(lg.letters, { yPercent: 0, duration: .75, ease: 'forma', stagger: .045 }, 6.16);
   tl.to(lg.dot, { scale: 1, duration: .5, ease: 'back.out(4)' }, 6.55);
-  flash(5.98, .5, .4);
-  punch(6.0, .05);
-  sfx(6.0, 'impact', { g: 1 });
-  [['A4', 5.98], ['C#5', 6.05], ['E5', 6.12]].forEach(([n, t]) => sfx(t, 'pop', { n, g: .75 }));
-  sfx(6.2, 'swish', { g: .45, dir: 1 });
-  sfx(6.55, 'sparkle', { g: .6 });
+  flash(5.98, .18, .35);
+  punch(6.0, .02);
 
   // tagline (mirrors the site's headline)
   const tag = T(s.cam, V(['Convert files.', 'On your', 'own device.'], ['Convert files.', 'On your own device.']), { size: V(158, 150), cls: 'light', ls: '-.055em' });
@@ -159,14 +142,12 @@ let APP = null, S5SCENE = null;
   // lockup lifts + shrinks, tagline arrives
   tl.to(lg.el, { y: V(520, 260), scale: V(.56, .5), duration: .85, ease: 'forma' }, 6.95);
   blurIn(tag.words, 7.2, { stagger: .12, dur: .85, b: 18 });
-  [7.2, 7.32, 7.44, 7.56, 7.68].forEach((t, i) => sfx(t, 'pop', { n: ['A5', 'C#6', 'E5', 'A5', 'E6'][i], g: .4 }));
 
   // → iris closes onto the header logo location
   const dest = measure(APP.logo.el, 8.9);
   blurOut(tag.words, 8.25, { dur: .4, y: -20 });
   tl.to(lg.el, { x: dest.x, y: dest.y, scale: dest.h / (f * 1.036), duration: .6, ease: 'io' }, 8.3);
   tl.to(s.el, { clipPath: CLIP(0, dest.x, dest.y), duration: .62, ease: 'io' }, 8.4);
-  sfx(8.3, 'whoosh', { d: .6, dir: -1, g: .65 });
   blurWin(8.3, 9.0, 8, .8);
   APP.destLogo = dest;
 })();

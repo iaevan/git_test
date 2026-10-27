@@ -1,10 +1,30 @@
 #!/usr/bin/env python3
-"""Two-pass, linear (no pumping) loudness normalisation to -14 LUFS / -1.5 dBTP.  Usage: loudnorm.py in.wav out.wav"""
-import json, subprocess, sys
+"""Master to -14 LUFS with true-peak <= ~-1.5 dB:  gain -> transparent limiter -> verify (iterated).
+   (Plain loudnorm falls back to dynamic mode on material with sparse peaks, so we do the gain ourselves.)
+   Usage: loudnorm.py in.wav out.wav"""
+import os, re, subprocess, sys, tempfile
+import numpy as np, soundfile as sf
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'audio'))
+from dsp import limiter
+
 src, dst = sys.argv[1], sys.argv[2]
-p1 = subprocess.run(['ffmpeg', '-nostats', '-i', src, '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
-j = json.loads(p1[p1.index('{'):p1.rindex('}') + 1])
-f = ('loudnorm=I=-14:TP=-1.5:LRA=11:measured_I=%s:measured_TP=%s:measured_LRA=%s:measured_thresh=%s:offset=%s:linear=true:print_format=summary'
-     % (j['input_i'], j['input_tp'], j['input_lra'], j['input_thresh'], j['target_offset']))
-r = subprocess.run(['ffmpeg', '-nostats', '-y', '-i', src, '-af', f, '-ar', '48000', '-c:a', 'pcm_s24le', dst], capture_output=True, text=True)
-print(r.stderr[r.stderr.rindex('Input Integrated'):] if 'Input Integrated' in r.stderr else r.stderr[-400:])
+x, sr = sf.read(src)
+
+def measure(a):
+    with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as f:
+        sf.write(f.name, a, sr, subtype='PCM_24')
+        r = subprocess.run(['ffmpeg', '-nostats', '-i', f.name, '-af', 'ebur128=peak=true', '-f', 'null', '-'], capture_output=True, text=True).stderr
+    os.unlink(f.name)
+    s = r[r.rindex('Summary:'):]
+    return float(re.search(r'I:\s+(-?[\d.]+) LUFS', s).group(1)), float(re.search(r'Peak:\s+(-?[\d.]+) dBFS', s).group(1))
+
+CEIL = .80                                   # ~ -1.9 dBFS sample peak
+y = x
+for _ in range(4):
+    I, TP = measure(y)
+    if abs(-14 - I) < .15 and TP <= -1.4:
+        break
+    y = limiter(y * 10 ** ((-14 - I) / 20), CEIL, look_ms=4, rel_ms=120)
+I, TP = measure(y)
+sf.write(dst, y, sr, subtype='PCM_24')
+print('Output Integrated: %.1f LUFS   True Peak: %.1f dBTP' % (I, TP))

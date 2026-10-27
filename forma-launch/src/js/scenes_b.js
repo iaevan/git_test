@@ -33,10 +33,6 @@
   const spin = () => wheel.setPos(wp.p);
   tl.fromTo(wheel.el, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: .9, ease: 'forma', immediateRender: false }, 8.9);
   tl.fromTo(wp, { p: 4.4 }, { p: 2, duration: 1.0, ease: 'forma', onUpdate: spin, immediateRender: false }, 8.9);
-  sfx(8.55, 'swish', { g: .3, dir: 1 });
-  sfx(8.9, 'tick', { g: .8 }); sfx(9.02, 'tick', { g: .7 });
-  [8.58, 8.72].forEach((t, i) => sfx(t + .03, 'pop', { n: ['A4', 'E5'][i], g: .45 }));
-  sfx(8.9, 'pop', { n: 'C#5', g: .5 });
 
   /* ── 9.5 · drag a file in ─────────────────────────────── */
   const chip = mk('div', 'paper', app.root);
@@ -54,7 +50,6 @@
   tl.to(chip, { y: hoverD.y, duration: 1.15, ease: 'power2.out' }, 9.6);
   tl.to(chip, { rotation: -3, scale: .72, duration: 1.15, ease: 'power2.out' }, 9.6);
   cursor.move(9.6, cs(hoverD).x, cs(hoverD).y, 1.15);
-  sfx(9.55, 'whoosh', { d: .9, dir: 1, g: .35 });
   // dropzone wakes up as the file nears
   tl.to(app.src, { scale: 1.05, borderColor: BLUE_, boxShadow: '0 0 0 6px #3448ed1f, 0 28px 40px -16px #3448ed44, inset 0 1px #fff', duration: .35, ease: 'forma' }, 10.45);
   tl.to(app.capEmpty, { opacity: 1, duration: .1 }, 10.45);
@@ -74,11 +69,6 @@
   // the wheel "lights up" — a soft pulse across the cards
   tl.fromTo(wheel.el, { filter: 'brightness(1)' }, { filter: 'brightness(1.05) saturate(1.25)', duration: .3, yoyo: true, repeat: 1, ease: 'power2.out', immediateRender: false }, 11.15);
   tl.fromTo(app.glow, { scale: .9 }, { scale: 1.12, duration: .7, ease: 'forma', immediateRender: false }, 11.1);
-  sfx(10.45, 'swish', { g: .25, dir: 1 });
-  sfx(11.0, 'drop', { g: .9 });
-  sfx(11.1, 'sparkle', { g: .55 });
-  sfx(11.32, 'pop', { n: 'E5', g: .55 });
-  sfx(11.4, 'pop', { n: 'A5', g: .5 });
 
   // cursor heads to the wheel
   const wheelD = { x: AL.wheel.x + 10, y: AL.wheel.y + 30 };
@@ -112,7 +102,7 @@
       let lo = 0, hi = 1;
       for (let i = 0; i < 36; i++) { const mid = (lo + hi) / 2; const p = a + (b - a) * E(mid); if ((dir > 0 && p < k) || (dir < 0 && p > k)) lo = mid; else hi = mid; }
       const tc = t0 + d * hi;
-      if (tc - lastTick >= .055) { sfx(tc, 'tick', { g: o.g || 1 }); lastTick = tc; }   // same 55 ms throttle the app uses
+      if (tc - lastTick >= .09) { sfx(tc, 'tick', { g: o.g || 1.15 }); lastTick = tc; }   // the app's tick, thinned out so it stays a soft texture
     }
     return t0 + d;
   }
@@ -127,15 +117,12 @@
     prev = to;
   });
   // the flurry back to WebP — decelerating riffle
-  flick(16.7, 1.3, 10, 2, 'power3.out', { g: .9 });
+  flick(16.7, 1.3, 10, 2, 'power3.out', { g: 1.05 });
   setCopy(2, 17.55);
-  sfx(16.7, 'whoosh', { d: 1.0, dir: -1, g: .5 });
   // landing: the selected WebP card settles with a lock
   const webp = wheel.cards[2];
   tl.fromTo(webp, { scale: 1.07 }, { scale: 1, duration: .5, ease: 'back.out(3)', immediateRender: false }, 17.95);
   // (wheel.setPos sets scale each update; tween above runs after final update so it wins at the end)
-  sfx(18.0, 'lock', { g: .9 });
-  sfx(18.02, 'sparkle', { g: .4 });
 
   // slow living camera while the wheel spins
   tl.to(app.rig, { rotation: V(-1, -1.2), duration: 5.5, ease: 'sine.inOut' }, 12.4);
@@ -144,7 +131,6 @@
   /* ── 18.2 · step 03 — and it's yours to go ───────────── */
   tl.to(app.root, { x: 0, y: 0, scale: K, duration: .9, ease: 'forma' }, 18.2);
   swap(app.kicker[1], app.kicker[2], 18.35, { yo: -10, yi: 12 });
-  sfx(18.35, 'pop', { n: 'A5', g: .5 });
 
   const ctaD = { x: AL.cta.x, y: AL.cta.y };
   cursor.move(18.6, ctaD.x * K + 18, ctaD.y * K + 8, .75);
@@ -154,7 +140,6 @@
   cursor.click(pressT, ctaD.x * K + 18, ctaD.y * K + 8);
   tl.to(app.ctaBtn, { scale: .95, duration: .08, ease: 'power2.out' }, pressT);
   tl.to(app.ctaBtn, { scale: 1, duration: .4, ease: 'back.out(3)' }, pressT + .08);
-  sfx(pressT, 'click', { g: .9 });
   // → "Converting…"
   swap(app.lb[0], app.lb[1], pressT + .05, { yo: 0, yi: 0, dur: .15, dur2: .2, delay: .05, stagger: 0 });
   swap(app.ir.arrow, app.ir.spin, pressT + .05, { yo: 0, yi: 0, dur: .12, dur2: .15, delay: .03, stagger: 0 });
@@ -183,17 +168,14 @@
       app.resPct.textContent = (97.0 * cnt.v).toFixed(1) + '% smaller';
     },
   }, rT + .7);
-  sfx(rT, 'success', { g: .9 });
-  sfx(rT + .35, 'swish', { g: .3, dir: 1 });
-  for (let i = 0; i < 9; i++) sfx(rT + .72 + i * .1, 'count', { g: .45, i });
 
   /* ── 21.1 · the payoff: "97% smaller" ─────────────────── */
   const veil = mk('div', 'fill', cam, { background: 'rgba(255,255,255,.93)', opacity: 0 });
-  const bigSize = V(470, 400);
+  const bigSize = V(340, 290);
   const big = T(cam, ['97%'], { size: bigSize, weight: 700, color: BLUE_, ls: '-.06em' });
-  const small = T(cam, ['smaller.'], { size: V(190, 170), weight: 600 });
-  const note = T(cam, ['765.1 KiB  →  23.2 KiB'], { size: V(54, 42), cls: 'soft', weight: 500 });
-  place(big.el, W / 2, V(800, 420)); place(small.el, W / 2, V(1080, 650)); place(note.el, W / 2, V(1290, 820));
+  const small = T(cam, ['smaller.'], { size: V(116, 100), weight: 600 });
+  const note = T(cam, ['765.1 KiB  →  23.2 KiB'], { size: V(46, 36), cls: 'soft', weight: 500 });
+  place(big.el, W / 2, V(860, 450)); place(small.el, W / 2, V(1080, 650)); place(note.el, W / 2, V(1200, 760));
   gsap.set(big.el, { opacity: 0 });
   tl.fromTo(veil, { opacity: 0 }, { opacity: 1, duration: .35, ease: 'power2.out', immediateRender: false }, 21.1);
   tl.fromTo(big.el, { opacity: 0, scale: .6, y: 60 }, { opacity: 1, scale: 1, y: 0, duration: .8, ease: 'back.out(1.6)', immediateRender: false }, 21.25);
@@ -202,19 +184,6 @@
   tl.fromTo(pc, { v: 0 }, { v: 97, duration: .95, ease: 'power3.out', immediateRender: false, onUpdate: () => { big.words[0].textContent = Math.round(pc.v) + '%'; } }, 21.3);
   blurIn(small.words, 22.1, { dur: .7, b: 14 });
   blurIn(note.words, 22.4, { dur: .6, y: 16, b: 10 });
-  for (let i = 0; i < 12; i++) sfx(21.3 + i * .075, 'count', { g: .5, i: i + 2 });
-  sfx(22.1, 'boom', { g: .9 });
-  sfx(22.12, 'sparkle', { g: .6 });
-  punch(22.1, .04);
-  // confetti of brand-colored bits
-  const cols = ['#3448ed', '#6b7afa', '#b8c0ff', '#f4caad', '#8dbba2', '#aa96e3'];
-  for (let i = 0; i < 18; i++) {
-    const a = (i / 18) * Math.PI * 2 + (i % 3) * .2, r = V(520, 520) * (.55 + (i % 4) * .18);
-    const b = mk('div', '', cam, { position: 'absolute', left: '0', top: '0', width: (14 + (i % 3) * 8) + 'px', height: (14 + (i % 3) * 8) + 'px', borderRadius: (i % 2 ? '50%' : '5px'), background: cols[i % 6] });
-    const cx = W / 2, cy = V(800, 430);
-    gsap.set(b, { x: cx, y: cy, opacity: 0 });
-    tl.fromTo(b, { opacity: 1, x: cx, y: cy, scale: .4, rotation: 0 }, { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r * .8 + 40, scale: 1, rotation: 200 * (i % 2 ? 1 : -1), opacity: 0, duration: 1.1, ease: 'power3.out', immediateRender: false }, 22.1);
-  }
   blurOut([big.el].concat(small.words, note.words), 23.0, { dur: .4, y: -30 });
   tl.to(veil, { opacity: 0, duration: .4, ease: 'power2.in' }, 23.05);
 
@@ -226,8 +195,6 @@
   tl.to(app.ctaBtn, { scale: 1, duration: .4, ease: 'back.out(3)' }, 24.03);
   swap(app.lb[2], app.lb[3], 24.0, { yo: 0, yi: 0, dur: .15, dur2: .25, delay: .05, stagger: 0 });
   swap(app.il, app.ir.check, 24.0, { yo: 0, yi: 0, dur: .15, dur2: .25, delay: .05, stagger: 0 });
-  sfx(23.95, 'click', { g: .9 });
-  sfx(24.05, 'download', { g: .9 });
   // the finished file leaves the button and drops off-screen
   const dl = mk('div', 'chip', cam);
   dl.style.padding = '12px 22px 12px 12px';
@@ -238,6 +205,5 @@
   tl.to(dl, { y: H + 200 - dc.y, rotation: 6, duration: .7, ease: 'power3.in' }, 24.45);
   tl.to(dl, { opacity: 0, duration: .15 }, 25.0);
   blurWin(24.45, 25.15, 8, .9);
-  sfx(24.45, 'whoosh', { d: .6, dir: -1, g: .5 });
   window.DL_BTN_AT = dc;
 })();

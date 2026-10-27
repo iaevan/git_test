@@ -29,8 +29,6 @@ let PRIV;
     'radial-gradient(70% 46% at 50% 34%, #28337f 0%, rgba(40,51,127,0) 70%), radial-gradient(60% 40% at 50% 100%, #1a2050 0%, rgba(26,32,80,0) 70%), #0a0e1c');
   gsap.set(s.el, { clipPath: CLIPC(0, D.x, D.y) });
   tl.fromTo(s.el, { clipPath: CLIPC(0, D.x, D.y) }, { clipPath: CLIPC(2600, D.x, D.y), duration: .66, ease: 'power3.in', immediateRender: false }, 24.74);
-  sfx(24.74, 'whoosh', { d: .66, dir: 1, g: .55 });
-  sfx(25.4, 'boom', { g: .85 });
   flash(25.4, .18, .4);
 
   const TX = V(540, 520), TY = V(640, 540);
@@ -40,7 +38,6 @@ let PRIV;
     place(ring, TX, TY, { opacity: 0 });
     const t = 25.5 + i * 1.0;
     tl.fromTo(ring, { scale: .55, opacity: .85 }, { scale: V(3.5, 3.1), opacity: 0, duration: 1.9, ease: 'expo.out', immediateRender: false }, t);
-    sfx(t, 'ring', { g: .22 });
   }
   // the fingerprint tile + two orbiting tiles
   const core = mk('div', 'gtile core', s.cam); core.innerHTML = icon('fingerprint', 128, 1.15);
@@ -55,15 +52,13 @@ let PRIV;
   popIn(file, 25.9, { from: .3, rot0: 40, rot1: 9, dur: .8 });
   tl.to(lock, { y: -16, duration: 1.2, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 26.6);
   tl.to(file, { y: 16, duration: 1.3, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 26.6);
-  sfx(25.45, 'pop', { n: 'A4', g: .8 }); sfx(25.75, 'pop', { n: 'E5', g: .6 }); sfx(25.9, 'pop', { n: 'A5', g: .6 });
 
   // headline
-  const head = T(s.cam, ['Your files.', 'Your business.'], { size: V(176, 150), cls: 'light' + (R ? '' : ' l') });
+  const head = T(s.cam, ['Your files', 'stay on', 'your device.'], { size: V(150, 122), cls: 'light' + (R ? '' : ' l') });
   place(head.el, V(540, 1320), V(1330, 470));
   head.words.forEach((w, i) => { if (i >= 2) w.style.color = '#aab3ff'; });
   blurIn(head.words.slice(0, 2), 25.95, { dur: .8, stagger: .1 });
-  blurIn(head.words.slice(2), 26.35, { dur: .8, stagger: .1 });
-  sfx(25.98, 'pop', { n: 'C#5', g: .5 }); sfx(26.38, 'pop', { n: 'E5', g: .5 });
+  blurIn(head.words.slice(2), 26.3, { dur: .8, stagger: .1 });
 
   // then the three "no"s
   blurOut(head.words, 27.3, { dur: .45, y: -40 });
@@ -75,17 +70,11 @@ let PRIV;
     place(el, x0, y0 + gap * i, { scale: sc, opacity: 0 });
     const t = 27.5 + i * .42;
     blurIn(el, t, { y: 60, dur: .7, s: sc * .9, to: sc });
-    sfx(t + .03, 'lock', { g: .7 }); sfx(t + .05, 'pop', { n: ['E5', 'A5', 'C#6'][i], g: .5 });
   });
-  const cap = T(s.cam, ['On your device. In your hands.'], { size: V(50, 42), cls: 'light', weight: 500, color: '#aab3ff' });
-  place(cap.el, V(540, 520), V(1700, 860));
-  blurIn(cap.words, 28.85, { dur: .7, stagger: .05, y: 20, b: 10 });
-  sfx(28.9, 'sparkle', { g: .5 });
   const rs = rng(7);
-  for (let i = 0; i < 7; i++) sparkleAt(s.cam, V(150, 160) + rs() * (W - V(300, 320)), V(230, 120) + rs() * V(600, 700), 26.2 + i * .35, 26 + rs() * 22, '#c3cbff');
+  for (let i = 0; i < 3; i++) sparkleAt(s.cam, V(150, 160) + rs() * (W - V(300, 320)), V(230, 120) + rs() * V(600, 700), 26.2 + i * .35, 26 + rs() * 22, '#c3cbff');
 
   whipOut(s, 30.0, 'y', -1);
-  sfx(30.0, 'whoosh', { d: .55, dir: 1, g: .7 });
 })();
 
 /* ── S9 · "53 formats. One little wheel." ─────────────────── */
@@ -116,7 +105,6 @@ let WALL;
     const t = 30.45 + o.d * .95;
     tl.fromTo(o.c, { opacity: 0, scale: .25, y: 110, rotation: o.rot + (r() - .5) * 50, filter: 'blur(10px)' },
       { opacity: 1, scale: 1, y: 0, rotation: o.rot, filter: 'blur(0px)', duration: .75, ease: 'back.out(1.5)', immediateRender: false }, t);
-    if (t + .12 - lastT >= .055) { sfx(t + .12, 'tick', { g: .8 }); lastT = t + .12; }
   });
   // the wall sits on a gently tilted plane (3D depth) and drifts while the cards land
   gsap.set(grid, { transformPerspective: 1700, rotationX: V(18, 14), rotationZ: V(-5, -3), scale: V(1.22, 1.16), transformOrigin: '50% 50%' });
@@ -133,12 +121,7 @@ let WALL;
   const cnt = { v: 0 };
   tt.words[0].textContent = '0';
   tl.fromTo(cnt, { v: 0 }, { v: 53, duration: .9, ease: 'power3.out', immediateRender: false, onUpdate: () => { tt.words[0].textContent = Math.round(cnt.v); } }, 31.1);
-  for (let i = 0; i < 9; i++) sfx(31.12 + i * .1, 'count', { g: .5, i: i + 3 });
-  sfx(31.05, 'swish', { g: .4, dir: 1 });
-  sfx(32.1, 'pop', { n: 'A5', g: .5 });
-  punch(32.05, .02);
   tl.to(panel, { y: -10, duration: 1.5, ease: 'sine.inOut' }, 32.2);
 
   whipOut(s, 33.7, 'x', -1);
-  sfx(33.7, 'whoosh', { d: .55, dir: -1, g: .7 });
 })();

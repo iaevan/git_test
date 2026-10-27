@@ -16,7 +16,6 @@ let CONTROL;
   place(sub.el, V(540, 520), V(580, 650));
   if (R) sub.el.style.display = 'none';      // the sheet repeats this line; keep the reel clean
   else blurIn(sub.words, 34.5, { dur: .7, stagger: .05, y: 18, b: 10 });
-  sfx(33.95, 'pop', { n: 'E5', g: .5 }); sfx(34.2, 'pop', { n: 'A5', g: .5 });
 
   // the details sheet (remade from the real app)
   const SX = V(540, 1340), SY = V(1135, 540), SS = V(1.8, 1.5);
@@ -31,8 +30,6 @@ let CONTROL;
     '</div><div class="done">Done ' + icon('check', 17, 2.2) + '</div>';
   place(sheet, SX, SY, { scale: SS, opacity: 0 });
   tl.fromTo(sheet, { y: 520, opacity: 0, rotation: 4, scale: SS * .9 }, { y: 0, opacity: 1, rotation: 0, scale: SS, duration: .95, ease: 'forma', immediateRender: false }, 33.95);
-  sfx(33.98, 'swish', { g: .45, dir: 1 });
-  sfx(34.35, 'drop', { g: .5 });
 
   const tg = qa(sheet, '.tg'), knobs = tg.map((t) => t.firstChild);
   const f1 = sheet.querySelector('.f1'), f2 = sheet.querySelector('.f2');
@@ -49,13 +46,11 @@ let CONTROL;
     tl.to(knobs[i], { x: 20, duration: .32, ease: 'back.out(2.6)' }, tc + .03);
     tl.to(tg[i], { backgroundColor: '#4f5bd5', duration: .2 }, tc + .03);
     tl.to(field, { height: hh, opacity: 1, duration: .6, ease: 'forma' }, tc + .12);
-    sfx(tc, 'click', { g: .8 }); sfx(tc + .04, 'toggle', { on: 1, g: .8 });
   }
   function roll(el, from, to, t) {
     const o = { v: from };
     tl.fromTo(o, { v: from }, { v: to, duration: .4, ease: 'power2.out', immediateRender: false, onUpdate: () => { el.textContent = Math.round(o.v); } }, t);
     tl.fromTo(el.parentNode, { borderColor: '#dfe2ea' }, { borderColor: '#4f5bd5', duration: .15, yoyo: true, repeat: 1, repeatDelay: .45, immediateRender: false }, t - .05);
-    for (let k = 0; k < 3; k++) sfx(t + k * .09, 'type', { g: .6, i: k });
   }
   toggle(0, 34.7, f1, h1);
   roll(v1, 1200, 800, 35.3);
@@ -67,7 +62,6 @@ let CONTROL;
   chip.querySelector('.ic').style.background = '#e9eafd'; chip.querySelector('.ic').style.color = '#4a56c9';
   place(chip, V(760, 1030), V(700, 840), { scale: V(1.6, 1.3), opacity: 0 });
   popIn(chip, 36.55, { from: .6, to: V(1.6, 1.3), y: 30, dur: .7, ease: 'back.out(2)' });
-  sfx(36.55, 'pop', { n: 'E5', g: .6 }); sfx(36.62, 'sparkle', { g: .5 });
   chip.style.zIndex = 5;
 
   // Done
@@ -75,11 +69,9 @@ let CONTROL;
   cursor.move(36.5, dm.x, dm.y, .45);
   cursor.click(37.0, dm.x, dm.y);
   tl.to(done, { scale: .95, duration: .08 }, 37.0); tl.to(done, { scale: 1, duration: .35, ease: 'back.out(3)' }, 37.08);
-  sfx(37.0, 'click', { g: .8 });
   cursor.hide(37.2);
 
   whipOut(s, 37.3, 'y', 1);
-  sfx(37.3, 'whoosh', { d: .55, dir: 1, g: .7 });
 })();
 
 /* ── S11 · Free, no account ───────────────────────────────── */
@@ -94,7 +86,6 @@ let FREE;
   const sub = T(s.cam, ['No account needed.'], { size: V(82, 70), cls: 'soft', weight: 500 });
   place(sub.el, V(540, 560), V(490, 560));
   blurIn(sub.words, 37.95, { dur: .7, stagger: .08, y: 22, b: 12 });
-  sfx(37.62, 'pop', { n: 'A4', g: .5 }); sfx(37.98, 'pop', { n: 'E5', g: .5 });
 
   const card = mk('div', 'price', s.cam);
   const items = ['Image, document, data & media conversion', 'Resize and quality controls', 'Real output previews', 'Local presets and session activity', 'Your files stay on your device'];
@@ -107,10 +98,8 @@ let FREE;
   const CS = V(1.62, 1.38);
   place(card, V(540, 1390), V(1190, 540), { scale: CS, opacity: 0 });
   tl.fromTo(card, { y: 700, rotation: 6, opacity: 0, scale: CS * .92 }, { y: 0, rotation: 0, opacity: 1, scale: CS, duration: 1.0, ease: 'forma', immediateRender: false }, 37.65);
-  sfx(37.68, 'swish', { g: .45, dir: 1 }); sfx(38.1, 'drop', { g: .5 });
   const usd = card.querySelector('.usd');
   tl.fromTo(usd, { scale: .6, opacity: 0, transformOrigin: '0% 80%' }, { scale: 1, opacity: 1, duration: .6, ease: 'back.out(2.4)', immediateRender: false }, 38.1);
-  sfx(38.1, 'pop', { n: 'A5', g: .7 });
   qa(card, 'li').forEach((li, i) => {
     const t = 38.45 + i * .2;
     const ck = li.querySelector('.ck'), lt = li.querySelector('.lt');
@@ -118,15 +107,12 @@ let FREE;
     tl.to(li, { opacity: 1, duration: .25 }, t);
     tl.to(ck, { scale: 1, duration: .4, ease: 'back.out(3)' }, t);
     tl.to(ck, { color: '#2f8a5b', duration: .25 }, t);
-    sfx(t, 'toggle', { on: 1, g: .6, i });
-    sfx(t + .02, 'pop', { n: ['A4', 'C#5', 'E5', 'A5', 'C#6'][i], g: .3 });
   });
   const badge = card.querySelector('.badge');
   tl.fromTo(badge, { scale: 1 }, { scale: 1.14, duration: .25, yoyo: true, repeat: 1, ease: 'power2.out', immediateRender: false }, 38.3);
   tl.fromTo(card, { y: 0 }, { y: -12, duration: 1.2, ease: 'sine.inOut', yoyo: true, repeat: 1, immediateRender: false }, 39.5);
 
   whipOut(s, 40.55, 'x', -1);
-  sfx(40.55, 'whoosh', { d: .55, dir: -1, g: .7 });
 })();
 
 /* ── S12 · A fresh start is one file away → click floods back to brand indigo ─ */
@@ -138,11 +124,10 @@ let CTA;
   const wand = mk('div', 'wandtile', s.cam); wand.innerHTML = icon('wand', 50, 1.5);
   place(wand, V(540, 960), V(380, 205), { rotation: -6, opacity: 0 });
   popIn(wand, 41.0, { from: .3, rot0: -40, rot1: -6, dur: .8 });
-  const head = T(s.cam, ['A fresh start is', 'one file away.'], { size: V(120, 150) });
+  const head = T(s.cam, ['Convert your', 'first file.'], { size: V(138, 150) });
   place(head.el, V(540, 960), V(640, 470));
-  blurIn(head.words.slice(0, 4), 41.15, { dur: .8, stagger: .1 });
-  blurIn(head.words.slice(4), 41.55, { dur: .8, stagger: .1 });
-  sfx(41.0, 'pop', { n: 'A5', g: .6 }); sfx(41.2, 'pop', { n: 'C#5', g: .5 }); sfx(41.6, 'pop', { n: 'E5', g: .5 });
+  blurIn(head.words.slice(0, 2), 41.15, { dur: .8, stagger: .1 });
+  blurIn(head.words.slice(2), 41.55, { dur: .8, stagger: .1 });
 
   const png = mk('div', 'ftile', s.cam, { color: '#5e5a8a' }); png.textContent = '.png';
   const webp = mk('div', 'ftile', s.cam, { color: '#566a5e' }); webp.textContent = '.webp';
@@ -157,17 +142,14 @@ let CTA;
     place(arr, 540, 1010, { opacity: 0 });
     blurIn(arr, 41.9, { dur: .6, x: -30, y: 0 });
   }
-  sfx(41.35, 'whoosh', { d: .6, dir: 1, g: .4 }); sfx(41.5, 'whoosh', { d: .6, dir: -1, g: .4 });
-  sfx(42.1, 'drop', { g: .5 }); sfx(42.2, 'drop', { g: .45 });
 
   const btn = mk('div', 'btn', s.cam);
   btn.style.fontSize = '13px'; btn.style.height = '48px'; btn.style.padding = '0 26px'; btn.style.borderRadius = '25px';
-  btn.innerHTML = 'Let’s make it happen' + icon('arrowUpRight', 16, 2.2);
+  btn.innerHTML = 'Open Forma' + icon('arrowUpRight', 16, 2.2);
   btn.style.position = 'absolute';
   const BS = V(2.35, 2.5), BX = V(540, 960), BY = V(1290, 740);
   place(btn, BX, BY, { scale: BS, opacity: 0 });
   popIn(btn, 42.35, { from: BS * .6, to: BS, y: 40, dur: .7, ease: 'back.out(2)' });
-  sfx(42.35, 'pop', { n: 'A5', g: .7 }); sfx(42.4, 'sparkle', { g: .4 });
   const note = mk('div', '', s.cam, { position: 'absolute', display: 'flex', alignItems: 'center', gap: '12px', color: '#5f6671', fontFamily: 'var(--font)', fontSize: V(32, 26) + 'px', whiteSpace: 'nowrap' });
   note.innerHTML = icon('lock', V(32, 26), 1.8) + 'Files stay on your device';
   place(note, V(540, 960), V(1460, 880), { opacity: 0 });
@@ -181,9 +163,7 @@ let CTA;
   cursor.click(45.3, bm.x + 40, bm.y + 14);
   tl.to(btn, { scale: BS * .95, duration: .08, ease: 'power2.out' }, 45.3);
   tl.to(btn, { scale: BS, duration: .4, ease: 'back.out(3)' }, 45.38);
-  sfx(45.3, 'click', { g: .9 });
   cursor.hide(45.5);
-  sfx(43.0, 'riser', { d: 3.0, g: .85 });
 
   window.CTA_BTN = { x: bm.x, y: bm.y };
 })();
@@ -196,7 +176,7 @@ let CTA;
   tl.fromTo(s.el, { clipPath: CLIPC(0, B.x, B.y) }, { clipPath: CLIPC(2600, B.x, B.y), duration: .68, ease: 'power3.in', immediateRender: false }, 45.32);
   const T0 = 46.0;
   [0, .12].forEach((d, i) => {
-    const ring = mk('div', '', s.cam, { position: 'absolute', width: '360px', height: '360px', borderRadius: '50%', border: (i ? 2 : 4) + 'px solid rgba(255,255,255,.55)' });
+    const ring = mk('div', '', s.cam, { position: 'absolute', width: '360px', height: '360px', borderRadius: '50%', border: (i ? 2 : 3) + 'px solid rgba(255,255,255,.32)' });
     place(ring, W / 2, V(720, 430), { opacity: 0 });
     tl.fromTo(ring, { scale: .25, opacity: .9 }, { scale: 6.5 + i, opacity: 0, duration: 1.6, ease: 'expo.out', immediateRender: false }, T0 + d);
   });
@@ -211,28 +191,23 @@ let CTA;
   tl.fromTo(lg.mark, { rotation: -40 }, { rotation: -10, duration: .9, ease: 'forma', immediateRender: false }, T0 - .02);
   tl.to(lg.letters, { yPercent: 0, duration: .75, ease: 'forma', stagger: .045 }, T0 + .16);
   tl.to(lg.dot, { scale: 1, duration: .5, ease: 'back.out(4)' }, T0 + .55);
-  flash(T0 - .02, .5, .4);
-  punch(T0, .05);
-  sfx(T0, 'impact', { g: 1 });
-  [['A4', T0 - .02], ['C#5', T0 + .05], ['E5', T0 + .12]].forEach(([n, t]) => sfx(t, 'pop', { n, g: .75 }));
-  sfx(T0 + .2, 'swish', { g: .45, dir: 1 }); sfx(T0 + .55, 'sparkle', { g: .6 });
+  flash(T0 - .02, .18, .35);
+  punch(T0, .02);
 
-  const tag = T(s.cam, ['A little change.', 'A world of possibility.'], { size: V(82, 74), cls: 'light', weight: 500 });
+  const tag = T(s.cam, ['Convert files', 'on your own device.'], { size: V(84, 74), cls: 'light', weight: 500 });
   place(tag.el, W / 2, V(1060, 640));
-  tag.words.forEach((w, i) => { if (i >= 3) w.style.color = '#bfc7ff'; });
-  blurIn(tag.words.slice(0, 3), 47.1, { dur: .8, stagger: .1, y: 26, b: 14 });
-  blurIn(tag.words.slice(3), 47.6, { dur: .8, stagger: .1, y: 26, b: 14 });
-  sfx(47.12, 'pop', { n: 'E5', g: .5 }); sfx(47.62, 'pop', { n: 'A5', g: .5 });
+  tag.words.forEach((w, i) => { if (i >= 2) w.style.color = '#bfc7ff'; });
+  blurIn(tag.words.slice(0, 2), 47.1, { dur: .8, stagger: .1, y: 26, b: 14 });
+  blurIn(tag.words.slice(2), 47.55, { dur: .8, stagger: .1, y: 26, b: 14 });
 
   const url = mk('div', 'urlpill', s.cam);
   url.innerHTML = 'forma.thezavino.com' + icon('arrowUpRight', 44, 2);
   place(url, W / 2, V(1330, 830), { opacity: 0 });
   popIn(url, 48.3, { from: .7, dur: .7, y: 30, ease: 'back.out(2)' });
-  sfx(48.3, 'pop', { n: 'C#6', g: .6 }); sfx(48.36, 'sparkle', { g: .6 });
   const rs = rng(99);
-  for (let i = 0; i < 9; i++) sparkleAt(s.cam, 120 + rs() * (W - 240), V(300, 120) + rs() * V(1300, 800), 46.7 + i * .45, 26 + rs() * 24, '#fff');
+  for (let i = 0; i < 3; i++) sparkleAt(s.cam, 120 + rs() * (W - 240), V(300, 120) + rs() * V(1300, 800), 46.7 + i * .45, 26 + rs() * 24, '#fff');
   tl.fromTo(s.cam, { scale: 1 }, { scale: 1.05, duration: 6, ease: 'none', immediateRender: false }, 46.0);
   // the lockup breathes on the beat (every second beat)
-  [48.0, 49.0, 50.0, 51.0].forEach((t) => { tl.fromTo(lg.el, { scale: 1.04 }, { scale: 1, duration: .55, ease: 'expo.out', immediateRender: false }, t); sfx(t, 'ring', { g: .16 }); });
+  [48.0, 49.0, 50.0, 51.0].forEach((t) => { tl.fromTo(lg.el, { scale: 1.04 }, { scale: 1, duration: .55, ease: 'expo.out', immediateRender: false }, t); });
   tl.to(url, { y: -10, duration: 1.3, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 49.0);
 })();

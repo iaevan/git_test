@@ -242,3 +242,22 @@ def limiter(x, ceiling=0.9, look_ms=3.0, rel_ms=90.0, blk=48):
     sm = np.minimum(sm, np.minimum(np.roll(g, 1), np.roll(g, -1)))
     gain = np.interp(np.arange(len(pk)), (np.arange(nb) + .5) * blk, sm)
     return x * (gain[:, None] if x.ndim > 1 else gain)
+
+
+def compress(x, thresh_db=-20.0, ratio=2.5, attack_ms=12.0, release_ms=180.0, makeup_db=0.0, blk=48):
+    """gentle feed-forward bus compressor (stereo-linked, block-rate gain computer + smoothed gain)."""
+    n = len(x)
+    lvl = np.max(np.abs(x), axis=1) if x.ndim > 1 else np.abs(x)
+    nb = n // blk
+    pk = lvl[:nb * blk].reshape(nb, blk).max(axis=1)
+    db = 20 * np.log10(pk + 1e-9)
+    over = np.maximum(db - thresh_db, 0)
+    gr = -over * (1 - 1 / ratio)                       # dB of gain reduction wanted
+    a = np.exp(-blk / (SR * attack_ms / 1000)); r = np.exp(-blk / (SR * release_ms / 1000))
+    sm = np.empty(nb); cur = 0.0
+    for i in range(nb):
+        cur = a * cur + (1 - a) * gr[i] if gr[i] < cur else r * cur + (1 - r) * gr[i]
+        sm[i] = cur
+    g = 10 ** ((sm + makeup_db) / 20)
+    gain = np.interp(np.arange(n), (np.arange(nb) + .5) * blk, g)
+    return x * (gain[:, None] if x.ndim > 1 else gain)
