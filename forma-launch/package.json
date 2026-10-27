@@ -1,0 +1,15 @@
+{
+  "name": "forma-launch-film",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Forma launch film — a deterministic HTML/CSS/GSAP motion-graphics project rendered frame-by-frame, with a synthesised score and frame-locked SFX.",
+  "scripts": {
+    "build": "./build.sh",
+    "preview": "node tools/preview.cjs",
+    "cues": "node tools/cues.cjs reel"
+  },
+  "dependencies": {
+    "gsap": "3.13.0",
+    "sharp": "^0.35.5"
+  }
+}
