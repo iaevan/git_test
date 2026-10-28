@@ -83,7 +83,7 @@
       if ((C.style ?? "box") === "box") {
         const w = og.measureText(ln).width + size * 0.7;
         og.fillStyle = C.box ?? "rgba(20,20,20,0.62)";
-        og.fillRect(W / 2 - w / 2, y - lh / 2 + size * 0.04, w, lh - size * 0.08);
+        og.beginPath(); og.roundRect(W / 2 - w / 2, y - lh / 2 + size * 0.04, w, lh - size * 0.08, (lh - size * 0.08) * (C.radius ?? 0.5)); og.fill();   // (patch) rounded
       } else {
         og.shadowColor = "rgba(0,0,0,0.75)";
         og.shadowBlur = size * 0.35;
@@ -134,8 +134,8 @@
       }
       fg.restore();
     }
-    painter.paint(flat, S.look, tick);
-    og.drawImage(glc, 0, 0);
+    if (S.look.mode === "clean") { og.drawImage(flat, 0, 0); }          // (patch) no paint pass: crisp vector-style frames
+    else { painter.paint(flat, S.look, tick); og.drawImage(glc, 0, 0); }
     caption(captionFor(time, b));
   }
 

@@ -82,7 +82,8 @@ function browser(k, o) { // (x,y) = centre; w,h px
 }
 function ad(k, o) { // a pop-up ad. (x,y) = centre
   const g = k.g, w = (o.w || 420) * k.u, h = (o.h || 300) * k.u;
-  g.save(); g.translate(o.x, o.y); g.rotate(o.rot || 0);
+  const pop = o.pop === undefined ? 1 : o.pop; if (pop <= 0.001) return;
+  g.save(); g.translate(o.x, o.y); g.rotate(o.rot || 0); g.scale(pop, pop);
   g.shadowColor = "rgba(20,20,40,0.38)"; g.shadowBlur = w * 0.06; g.shadowOffsetY = w * 0.035;
   rr(g, -w / 2, -h / 2, w, h, w * 0.05, o.color || P.yellow); g.shadowColor = "transparent";
   rr(g, -w / 2, -h / 2, w, h * 0.2, w * 0.05, P.ink);
@@ -112,16 +113,22 @@ function cloud(k, o) { // (x,y) centre; s width px
   g.beginPath(); g.arc(o.x - s * 0.22, o.y + s * 0.04, s * 0.2, 0, 7); g.arc(o.x, o.y - s * 0.08, s * 0.26, 0, 7); g.arc(o.x + s * 0.25, o.y + s * 0.03, s * 0.21, 0, 7); g.fill();
   rr(g, o.x - s * 0.42, o.y + s * 0.02, s * 0.86, s * 0.23, s * 0.115, o.color || "#fff");
 }
-function lock(k, o) { // padlock. (x,y) centre of body; s = body width px
-  const g = k.g, s = o.s * k.u, col = o.color || P.red;
+function lock(k, o) { // padlock. (x,y) = centre of the body's top edge area; s = body width px
+  const g = k.g, s = o.s * k.u, col = o.color || P.red, sh = o.shackle || "#c3c8d8", top = -s * 0.3, rad = s * 0.3, lw = s * 0.16;
   g.save(); g.translate(o.x, o.y);
-  g.lineWidth = s * 0.17; g.lineCap = "round"; g.strokeStyle = o.shackle || "#c3c8d8";
+  g.lineWidth = lw; g.lineCap = "round"; g.lineJoin = "round"; g.strokeStyle = sh;
   g.beginPath();
-  if (o.open) { g.arc(s * 0.18, -s * 0.5, s * 0.3, Math.PI, 0); g.lineTo(s * 0.48, -s * 0.5 + s * 0.12); }
-  else { g.arc(0, -s * 0.5, s * 0.3, Math.PI, 0); g.lineTo(s * 0.3, -s * 0.42); }
-  g.moveTo(-s * 0.3, -s * 0.5); g.lineTo(-s * 0.3, -s * 0.28); g.stroke();
-  rr(g, -s / 2, -s * 0.3, s, s * 0.8, s * 0.12, col);
-  circle(g, 0, s * 0.06, s * 0.09, P.ink); rr(g, -s * 0.035, s * 0.08, s * 0.07, s * 0.2, s * 0.03, P.ink);
+  if (o.open) {                                  // lifted off the body: the left leg stays seated, the right leg hangs free
+    const cy = top - s * 0.62;
+    g.moveTo(-rad, top + s * 0.06); g.lineTo(-rad, cy); g.arc(0, cy, rad, Math.PI, 0); g.lineTo(rad, cy + s * 0.2);
+  } else {                                       // closed: both legs seated in the body
+    const cy = top - s * 0.28;
+    g.moveTo(-rad, top + s * 0.06); g.lineTo(-rad, cy); g.arc(0, cy, rad, Math.PI, 0); g.lineTo(rad, top + s * 0.06);
+  }
+  g.stroke();
+  rr(g, -s / 2, top, s, s * 0.8, s * 0.14, col);
+  rr(g, -s * 0.43, top + s * 0.06, s * 0.86, s * 0.07, s * 0.035, "rgba(255,255,255,0.2)");
+  circle(g, 0, s * 0.06, s * 0.095, P.ink); rr(g, -s * 0.037, s * 0.08, s * 0.074, s * 0.21, s * 0.03, P.ink);
   g.restore();
 }
 function magnifier(k, o) {
@@ -147,6 +154,32 @@ function dropCard(k, o) {
   if (!o.noText) txt(g, o.text || "Drop something in", o.x, o.y + h * 0.22, w * 0.085, P.ink, 700);
   return { x, y, w, h };
 }
+
+/** easeOutBack 0→1 (with a little overshoot) from time ta over dur seconds; 0 before ta */
+const popS = (k, ta, dur) => { const x = clamp01((k.t - ta) / (dur || 0.3)); if (x <= 0) return 0; const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+/** a person seen from behind (over-the-shoulder): (x,y) = where the shoulders meet the frame bottom; s = head radius px */
+function viewer(k, o) {
+  const g = k.g, s = (o.s || 125) * k.u, body = o.body || P.indigo, hair = o.hair || "#2b1f1a", skin = "#c08a63", rim = o.rim || "rgba(255,255,255,0.35)";
+  g.save(); g.translate(o.x, o.y);
+  if (o.style === "long") rr(g, -s * 1.05, -s * 2.3, s * 2.1, s * 3.6, s * 0.9, hair);
+  // shoulders
+  g.fillStyle = body; g.beginPath(); g.moveTo(-s * 2.9, s * 3.2); g.quadraticCurveTo(-s * 2.9, -s * 0.1, -s * 1.3, -s * 0.5); g.lineTo(s * 1.3, -s * 0.5); g.quadraticCurveTo(s * 2.9, -s * 0.1, s * 2.9, s * 3.2); g.closePath(); g.fill();
+  g.strokeStyle = rim; g.lineWidth = 5 * k.u; g.beginPath(); g.moveTo(-s * 2.9, s * 2.0); g.quadraticCurveTo(-s * 2.9, -s * 0.1, -s * 1.3, -s * 0.5); g.stroke();
+  // neck + head (back of the head is hair)
+  rr(g, -s * 0.4, -s * 1.05, s * 0.8, s * 0.8, s * 0.22, skin);
+  if (o.hood) { g.fillStyle = body; g.beginPath(); g.ellipse(0, -s * 1.75, s * 1.22, s * 1.4, 0, 0, 7); g.fill(); g.strokeStyle = rim; g.beginPath(); g.ellipse(0, -s * 1.75, s * 1.22, s * 1.4, 0, Math.PI * 1.08, Math.PI * 1.5); g.stroke(); }
+  else {
+    g.fillStyle = hair; g.beginPath(); g.ellipse(0, -s * 1.75, s * 1.02, s * 1.18, 0, 0, 7); g.fill();
+    if (o.style === "bun") circle(g, 0, -s * 3.0, s * 0.5, hair);
+    g.strokeStyle = rim; g.lineWidth = 5 * k.u; g.beginPath(); g.ellipse(0, -s * 1.75, s * 1.02, s * 1.18, 0, Math.PI * 1.1, Math.PI * 1.55); g.stroke();
+  }
+  g.restore();
+}
+/** a couple of big, soft, slowly drifting discs behind light scenes */
+function blobs(k, cols) {
+  const g = k.g; cols.forEach((c, i) => { const x = k.X(0.15 + i * 0.35) + Math.sin(k.t * 0.5 + i * 2) * 40 * k.u, y = k.Y(0.18 + (i % 2) * 0.5) + Math.cos(k.t * 0.4 + i) * 30 * k.u; circle(g, x, y, (300 + i * 60) * k.u, k.alpha(c, 0.35)); });
+}
+
 const bgRoom = (k, top, bottom, deskY, desk) => { k.sky({ stops: [top, bottom] }); k.g.fillStyle = desk; k.g.fillRect(0, k.Y(deskY), k.W, k.H - k.Y(deskY)); k.g.fillStyle = "rgba(0,0,0,0.12)"; k.g.fillRect(0, k.Y(deskY), k.W, 10 * k.u); };
 /** over-the-shoulder: a back-view head and shoulders at the bottom of the frame */
 const overShoulder = (k, o) => k.person({ x: o.x ?? 0.5, y: o.y ?? 1.86, h: o.h ?? 1.0, facing: "back", pose: "stand", hair: o.hair || "long", top: o.top || P.indigo, hairColor: o.hairColor || "#2a1d16", skin: "#b9825a", silhouette: o.silhouette || null, rim: o.rim || null });
@@ -154,15 +187,24 @@ const overShoulder = (k, o) => k.person({ x: o.x ?? 0.5, y: o.y ?? 1.86, h: o.h 
 window.SCENES = {
   // ───────────── 1 · "Need a quick file conversion?" ─────────────
   "desk-need": (k) => {
-    bgRoom(k, "#f7ead2", "#efd9b4", 0.66, P.wood);
-    // window with soft sky
-    rr(k.g, k.X(0.08), k.Y(0.06), k.X(0.28), k.Y(0.2), 18 * k.u, "#cfe3ff"); rr(k.g, k.X(0.08), k.Y(0.06), k.X(0.28), k.Y(0.2), 18 * k.u, null, "#fff", 12 * k.u);
+    const g = k.g;
+    k.sky({ stops: ["#fbf0dc", "#f2e1c3"] });
+    // window with sun and a cloud, a plant, the desk
+    rr(g, k.X(0.07), k.Y(0.05), k.X(0.34), k.Y(0.24), 22 * k.u, "#ffffff");
+    rr(g, k.X(0.085), k.Y(0.063), k.X(0.31), k.Y(0.214), 14 * k.u, "#bcd9ff");
+    circle(g, k.X(0.3), k.Y(0.12), 46 * k.u, "#fff2c2"); cloud(k, { x: k.X(0.2), y: k.Y(0.19), s: 190, color: "#ffffff" });
+    g.fillStyle = "#ffffff"; g.fillRect(k.X(0.235), k.Y(0.063), 10 * k.u, k.Y(0.214)); g.fillRect(k.X(0.085), k.Y(0.163), k.X(0.31), 10 * k.u);
+    k.g.fillStyle = P.wood; g.fillRect(0, k.Y(0.66), k.W, k.H); g.fillStyle = "rgba(255,255,255,0.18)"; g.fillRect(0, k.Y(0.66), k.W, 14 * k.u);
+    // plant
+    rr(g, k.X(0.8), k.Y(0.585), 120 * k.u, 110 * k.u, 22 * k.u, "#e07a5f");
+    [[-40, -150, -0.5], [0, -190, 0], [40, -150, 0.5]].forEach(([dx, dy, r]) => { g.save(); g.translate(k.X(0.8) + 60 * k.u + dx * k.u, k.Y(0.585) + dy * k.u * 0.2); g.rotate(r); g.fillStyle = "#4caf78"; g.beginPath(); g.ellipse(0, -60 * k.u, 34 * k.u, 90 * k.u, 0, 0, 7); g.fill(); g.restore(); });
+    rr(g, k.X(0.06), k.Y(0.6), 90 * k.u, 100 * k.u, 18 * k.u, "#ffffff"); rr(g, k.X(0.06) + 90 * k.u, k.Y(0.625), 26 * k.u, 50 * k.u, 13 * k.u, null, "#ffffff", 9 * k.u);
     const s = laptop(k, { x: k.X(0.5), y: k.Y(0.43), w: 800, bg: P.paper });
     const f = bob(k, 10, 2.2);
     fileCard(k, { x: s.x + s.w * 0.3, y: s.y + s.h * 0.5 + f, s: 240, label: "PNG", photo: true, rot: -0.06 });
-    txt(k.g, "→", s.x + s.w * 0.55, s.y + s.h * 0.5, 120 * k.u, P.indigo, 800);
-    circle(k.g, s.x + s.w * 0.78, s.y + s.h * 0.5 + f, 92 * k.u, P.mist); txt(k.g, "?", s.x + s.w * 0.78, s.y + s.h * 0.52 + f, 130 * k.u, P.indigo, 800);
-    overShoulder(k, { top: P.indigo });
+    txt(g, "→", s.x + s.w * 0.55, s.y + s.h * 0.5, 120 * k.u, P.indigo, 800);
+    const q = 0.92 + 0.08 * Math.sin(k.t * 3); circle(g, s.x + s.w * 0.78, s.y + s.h * 0.5 + f, 92 * k.u * q, P.mist); txt(g, "?", s.x + s.w * 0.78, s.y + s.h * 0.52 + f, 130 * k.u, P.indigo, 800);
+    viewer(k, { x: k.X(0.5), y: k.Y(0.93), s: 135, body: P.indigo, style: "long" });
   },
   // ───────────── 2 · "So you open a free converter website." ─────────────
   "search-page": (k) => {
@@ -195,13 +237,12 @@ window.SCENES = {
     k.sky({ stops: ["#e9edf7", "#d7dcec"] });
     const b = browser(k, { x: k.X(0.5), y: k.Y(0.42), w: 940, h: 1250, url: "free-converter.biz" });
     rr(k.g, b.x, b.y, b.w, b.h * 0.1, 0, P.orange); txt(k.g, "FREE FILE CONVERTER", b.x + b.w / 2, b.y + b.h * 0.05, 52 * k.u, "#fff", 800);
-    const sh = (i) => Math.sin(k.t * 9 + i) * 5 * k.u;
-    const a = ease(k.p * 2.2);
-    ad(k, { x: b.x + b.w * 0.28, y: b.y + b.h * 0.28 + sh(1), w: 470, h: 340, color: P.yellow, text: "FREE!!", rot: -0.08 });
-    if (k.p > 0.18) ad(k, { x: b.x + b.w * 0.7, y: b.y + b.h * 0.42 + sh(2), w: 480, h: 350, color: "#ff8fb1", text: "WIN $$$", cta: "CLAIM", rot: 0.07 });
-    if (k.p > 0.4) ad(k, { x: b.x + b.w * 0.34, y: b.y + b.h * 0.62 + sh(3), w: 500, h: 360, color: "#8ee0c2", text: "HOT!", cta: "OPEN", rot: -0.04 });
-    if (k.p > 0.62) ad(k, { x: b.x + b.w * 0.72, y: b.y + b.h * 0.8 + sh(4), w: 420, h: 300, color: "#b9a8ff", text: "SALE", rot: 0.1 });
-    rr(k.g, b.x, b.y + b.h - 90 * k.u, b.w, 90 * k.u, 0, (Math.floor(k.t * 4) % 2) ? P.red : P.yellow);
+    const sh = (i) => Math.sin(k.t * 9 + i) * 4 * k.u;
+    ad(k, { x: b.x + b.w * 0.28, y: b.y + b.h * 0.28 + sh(1), w: 470, h: 340, color: P.yellow, text: "FREE!!", rot: -0.08, pop: popS(k, 0.05) });
+    ad(k, { x: b.x + b.w * 0.7, y: b.y + b.h * 0.42 + sh(2), w: 480, h: 350, color: "#ff8fb1", text: "WIN $$$", cta: "CLAIM", rot: 0.07, pop: popS(k, 0.5) });
+    ad(k, { x: b.x + b.w * 0.34, y: b.y + b.h * 0.62 + sh(3), w: 500, h: 360, color: "#8ee0c2", text: "HOT!", cta: "OPEN", rot: -0.04, pop: popS(k, 0.95) });
+    ad(k, { x: b.x + b.w * 0.72, y: b.y + b.h * 0.8 + sh(4), w: 420, h: 300, color: "#b9a8ff", text: "SALE", rot: 0.1, pop: popS(k, 1.4) });
+    rr(k.g, b.x, b.y + b.h - 90 * k.u, b.w, 90 * k.u, 0, (Math.floor(k.t * 3) % 2) ? P.red : P.yellow);
     txt(k.g, "★ CLICK HERE ★", b.x + b.w / 2, b.y + b.h - 45 * k.u, 46 * k.u, P.ink, 800);
   },
   "ads-2": (k) => {
@@ -209,8 +250,8 @@ window.SCENES = {
     const b = browser(k, { x: k.X(0.5), y: k.Y(0.42), w: 940, h: 1250, url: "free-converter.biz", bg: "#fff3d6" });
     const cols = [P.yellow, "#ff8fb1", "#8ee0c2", "#b9a8ff", P.orange, "#7fc4ff", P.red], txts = ["FREE!!", "WIN $$$", "HOT!", "SALE", "NEW!", "100%", "BONUS"];
     for (let i = 0; i < 7; i++) {
-      const row = Math.floor(i / 2), col = i % 2, sh = Math.sin(k.t * (7 + i) + i) * 6 * k.u;
-      ad(k, { x: b.x + b.w * (col ? 0.68 : 0.32) + (row % 2 ? 40 * k.u : -30 * k.u) + sh, y: b.y + b.h * (0.12 + row * 0.2) + sh * 0.6, w: 520, h: 380, color: cols[i], text: txts[i], rot: (i % 2 ? 1 : -1) * (0.05 + i * 0.012), size: 0.28 });
+      const row = Math.floor(i / 2), col = i % 2, sh = Math.sin(k.t * (6 + i) + i) * 4 * k.u;
+      ad(k, { x: b.x + b.w * (col ? 0.68 : 0.32) + (row % 2 ? 40 * k.u : -30 * k.u) + sh, y: b.y + b.h * (0.12 + row * 0.2) + sh * 0.6, w: 520, h: 380, color: cols[i], text: txts[i], rot: (i % 2 ? 1 : -1) * (0.05 + i * 0.012), size: 0.28, pop: popS(k, i * 0.16) });
     }
   },
   // ───────────── 4 · "Sometimes they even want you to sign up." ─────────────
@@ -235,7 +276,7 @@ window.SCENES = {
     rr(g, s.x + s.w * 0.2, s.y + s.h * 0.62, s.w * 0.6, s.h * 0.2, s.h * 0.1, P.orange); txt(g, "UPLOAD", s.x + s.w / 2, s.y + s.h * 0.72, s.h * 0.1, "#fff", 800);
     fileCard(k, { x: s.x + s.w / 2, y: s.y + s.h * 0.3, s: 150, label: "PNG", photo: true });
     const e = ease(k.p); cursor(k, s.x + s.w * (0.85 - 0.28 * e), s.y + s.h * (1.0 - 0.28 * e), 70);
-    overShoulder(k, { top: "#4a56c9", rim: "#7c8cff" });
+    viewer(k, { x: k.X(0.5), y: k.Y(0.95), s: 135, body: "#3b47b8", style: "long", hair: "#1a1410", rim: "rgba(140,160,255,0.7)" });
   },
   // ───────────── 6 · "They make you upload your file to their servers." ─────────────
   "upload-beam": (k) => {
@@ -255,7 +296,6 @@ window.SCENES = {
     k.sky({ stops: ["#0c0f26", "#1a1f4a"] });
     [0.2, 0.5, 0.8].forEach((x, i) => server(k, { x: k.X(x), y: k.Y(0.45), w: 300, h: 760, units: 7, ph: i * 2, led: i === 1 ? P.red : P.green }));
     const t = ease(k.p * 1.6); fileCard(k, { x: k.X(-0.05 + 0.55 * t), y: k.Y(0.35) + bob(k, 6, 3), s: 220, label: "PNG", photo: true, rot: -0.1 + t * 0.2 });
-    k.g.fillStyle = "rgba(0,0,0,0.25)"; k.g.fillRect(0, k.Y(0.82), k.W, k.H);
   },
   // ───────────── 7 · "Your photos. Your documents. On a stranger's computer." ─────────────
   "server-files": (k) => {
@@ -274,18 +314,18 @@ window.SCENES = {
     [0.12, 0.88].forEach((x, i) => server(k, { x: k.X(x), y: k.Y(0.4), w: 260, h: 700, units: 6, ph: i * 3 }));
     const s = laptop(k, { x: k.X(0.5), y: k.Y(0.34), w: 520, bg: "#202658", glow: "rgba(255,90,100,0.35)" });
     [0, 1, 2].forEach((i) => fileCard(k, { x: s.x + s.w * (0.22 + i * 0.28), y: s.y + s.h * 0.5, s: 130, label: ["PNG", "PDF", "DOCX"][i], photo: i === 0 }));
-    k.person({ x: 0.5, y: 1.62, h: 0.95, facing: "back", pose: "stand", hair: "hood", top: "#1a1d33", silhouette: "#0a0c20", rim: "#ff5a64" });
     glowSpot(k, k.X(0.5), k.Y(0.36), 520 * k.u, P.red, 0.12);
+    viewer(k, { x: k.X(0.5), y: k.Y(0.96), s: 140, body: "#14172e", hood: true, rim: "rgba(255,90,100,0.85)" });
   },
   // ───────────── 8 · "That's not very private." ─────────────
   "lock-open": (k) => {
     k.sky({ stops: ["#1a0d1c", "#3a1230"] });
-    glowSpot(k, k.X(0.5), k.Y(0.4), 700 * k.u, P.red, 0.35);
+    glowSpot(k, k.X(0.5), k.Y(0.42), 700 * k.u, P.red, 0.35);
     const g = k.g;
-    [0, 1, 2, 3, 4].forEach((i) => { const t = (k.t * 0.25 + i * 0.2) % 1; fileCard(k, { x: k.X(0.2 + i * 0.15), y: k.Y(0.18 + t * 0.55), s: 110, label: ["PNG", "PDF", "JPG", "DOCX", "PNG"][i], rot: Math.sin(i + k.t) * 0.4, photo: i % 2 === 0 }); });
-    lock(k, { x: k.X(0.5), y: k.Y(0.42) + bob(k, 8, 2), s: 520, open: true, color: P.red });
+    [0, 1, 2, 3, 4].forEach((i) => { const t = (k.t * 0.25 + i * 0.2) % 1; fileCard(k, { x: k.X([0.13, 0.87, 0.2, 0.8, 0.12][i]), y: k.Y(0.18 + t * 0.55), s: 110, label: ["PNG", "PDF", "JPG", "DOCX", "PNG"][i], rot: Math.sin(i + k.t) * 0.4, photo: i % 2 === 0 }); });
+    lock(k, { x: k.X(0.5), y: k.Y(0.53) + bob(k, 8, 2), s: 440, open: true, color: P.red });
     // eye
-    const ex = k.X(0.5), ey = k.Y(0.12);
+    const ex = k.X(0.5), ey = k.Y(0.1);
     g.save(); g.fillStyle = "#fff"; g.beginPath(); g.moveTo(ex - 150 * k.u, ey); g.quadraticCurveTo(ex, ey - 130 * k.u, ex + 150 * k.u, ey); g.quadraticCurveTo(ex, ey + 130 * k.u, ex - 150 * k.u, ey); g.fill(); circle(g, ex + Math.sin(k.t * 1.5) * 26 * k.u, ey, 52 * k.u, P.redDeep); circle(g, ex + Math.sin(k.t * 1.5) * 26 * k.u, ey, 22 * k.u, P.ink); g.restore();
   },
   // ───────────── 9 · "That's why we built Forma." ─────────────
@@ -307,10 +347,11 @@ window.SCENES = {
     const done = ease((k.p - 0.25) * 3); fileCard(k, { x: s.x + s.w * 0.73, y: s.y + s.h * 0.56, s: 170, label: "WEBP", photo: true, scale: 0.85 + 0.15 * done });
     circle(g, s.x + s.w * 0.88, s.y + s.h * 0.34, 34 * k.u * done, P.green); if (done > 0.3) { g.strokeStyle = "#fff"; g.lineWidth = 8 * k.u; g.lineCap = "round"; g.beginPath(); g.moveTo(s.x + s.w * 0.86, s.y + s.h * 0.345); g.lineTo(s.x + s.w * 0.875, s.y + s.h * 0.375); g.lineTo(s.x + s.w * 0.905, s.y + s.h * 0.32); g.stroke(); }
     rr(g, s.x + s.w * 0.3, s.y + s.h * 0.82, s.w * 0.4, s.h * 0.12, s.h * 0.06, P.indigo); txt(g, "Convert", s.x + s.w / 2, s.y + s.h * 0.88, s.h * 0.075, "#fff", 800);
-    overShoulder(k, { top: "#6b7afa", hair: "bun" });
+    viewer(k, { x: k.X(0.5), y: k.Y(0.99), s: 135, body: "#6b7afa", style: "bun", hair: "#2b1f1a" });
   },
   "phone-forma": (k) => {
     k.sky({ stops: ["#e9ecff", "#cdd5ff"] });
+    blobs(k, ["#b8c0ff", "#ffd9e6", "#c9f0e0"]);
     const g = k.g, s = phone(k, { x: k.X(0.5), y: k.Y(0.42) + bob(k, 8, 1.6), h: 1100, bg: "#f7f8ff" });
     mark(k, { x: s.x + s.w * 0.12, y: s.y + s.h * 0.07, s: 54 }); txt(g, "forma.", s.x + s.w * 0.26, s.y + s.h * 0.073, 46 * k.u, P.ink, 800, "left");
     const t = clamp01(k.p * 1.4);
@@ -322,6 +363,7 @@ window.SCENES = {
   // ───────────── 11 · "Nothing gets sent anywhere. It all happens inside your computer, or your phone." ─────────────
   "bubble-laptop": (k) => {
     k.sky({ stops: ["#dfe8ff", "#f4f1ff"] });
+    blobs(k, ["#b8c0ff", "#ffd9e6", "#c9f0e0"]);
     const g = k.g, cx = k.X(0.5), cy = k.Y(0.4), R = 470 * k.u;
     const gr = g.createRadialGradient(cx, cy, R * 0.2, cx, cy, R); gr.addColorStop(0, "rgba(255,255,255,0.0)"); gr.addColorStop(1, "rgba(52,72,237,0.32)");
     g.fillStyle = gr; g.beginPath(); g.arc(cx, cy, R, 0, 7); g.fill(); g.strokeStyle = P.indigo; g.lineWidth = 12 * k.u; g.stroke();
@@ -332,6 +374,7 @@ window.SCENES = {
   },
   "no-cloud": (k) => {
     k.sky({ stops: ["#dfe8ff", "#f4f1ff"] });
+    blobs(k, ["#b8c0ff", "#ffd9e6", "#c9f0e0"]);
     const g = k.g, cx = k.X(0.5), cy = k.Y(0.26);
     cloud(k, { x: cx, y: cy, s: 700, color: "#c3c9e6" });
     g.save(); g.strokeStyle = P.red; g.lineWidth = 56 * k.u; g.lineCap = "round"; const e = ease(k.p * 2.4);
@@ -345,6 +388,7 @@ window.SCENES = {
   },
   "bubble-phone": (k) => {
     k.sky({ stops: ["#dfe8ff", "#f4f1ff"] });
+    blobs(k, ["#b8c0ff", "#ffd9e6", "#c9f0e0"]);
     const g = k.g, cx = k.X(0.5), cy = k.Y(0.4), R = 470 * k.u;
     const gr = g.createRadialGradient(cx, cy, R * 0.2, cx, cy, R); gr.addColorStop(0, "rgba(255,255,255,0.0)"); gr.addColorStop(1, "rgba(52,72,237,0.32)");
     g.fillStyle = gr; g.beginPath(); g.arc(cx, cy, R, 0, 7); g.fill(); g.strokeStyle = P.indigo; g.lineWidth = 12 * k.u; g.stroke();
@@ -356,14 +400,14 @@ window.SCENES = {
   // ───────────── 12 · "And converters are hard to find, too." ─────────────
   "search-many": (k) => {
     k.sky({ stops: ["#e9edf7", "#d7dcec"] });
-    const b = browser(k, { x: k.X(0.5), y: k.Y(0.42), w: 940, h: 1250, url: "file converter" }), g = k.g;
+    const b = browser(k, { x: k.X(0.5), y: k.Y(0.44), w: 940, h: 1250, url: "file converter" }), g = k.g;
     const names = ["WebP converter", "PNG converter", "JPG to PDF", "HEIC to JPG", "MP4 to GIF", "WAV to MP3"], cs = [P.green, P.indigo, P.red, P.orange, "#a05be0", "#1ba5b8"];
     names.forEach((n, i) => {
       const yy = b.y + b.h * (0.09 + i * 0.15), a = ease(k.p * 3 - i * 0.25);
       g.globalAlpha = a; rr(g, b.x + b.w * 0.06, yy - 50 * k.u, b.w * 0.88, 110 * k.u, 26 * k.u, "#f3f5fc");
       circle(g, b.x + b.w * 0.14, yy + 5 * k.u, 30 * k.u, cs[i]); txt(g, n, b.x + b.w * 0.22, yy + 5 * k.u, 50 * k.u, P.indigo, 700, "left"); g.globalAlpha = 1;
     });
-    ["?", "?", "?"].forEach((q, i) => txt(g, q, k.X(0.1 + i * 0.4), k.Y(0.76 + 0.02 * Math.sin(k.t * 3 + i)), 150 * k.u, P.red, 800));
+    [[0.1, 0.05], [0.9, 0.06], [0.5, 0.045]].forEach(([x, y], i) => txt(g, "?", k.X(x), k.Y(y) + Math.sin(k.t * 3 + i) * 8 * k.u, 130 * k.u, P.red, 800));
   },
   // ───────────── 13 · "A WebP converter. A PNG converter. A different tool for every format." ─────────────
   "tool-webp": (k) => toolPage(k, "WEBP", "WebP converter", P.green, "#e8f8ee"),
@@ -380,12 +424,14 @@ window.SCENES = {
   // ───────────── 14 · "Forma has just one input. Drop in any file." ─────────────
   "one-input": (k) => {
     k.sky({ stops: ["#e9ecff", "#cfd6ff"]});
+    blobs(k, ["#b8c0ff", "#ffd9e6", "#c9f0e0"]);
     glowSpot(k, k.X(0.5), k.Y(0.38), 800 * k.u, P.indigo2, 0.28);
     dropCard(k, { x: k.X(0.5), y: k.Y(0.38) + bob(k, 8, 1.6), w: 860 });
     mark(k, { x: k.X(0.5), y: k.Y(0.1), s: 110 });
   },
   "files-fall": (k) => {
     k.sky({ stops: ["#e9ecff", "#cfd6ff"] });
+    blobs(k, ["#b8c0ff", "#ffd9e6", "#c9f0e0"]);
     glowSpot(k, k.X(0.5), k.Y(0.5), 800 * k.u, P.indigo2, 0.28);
     const c = dropCard(k, { x: k.X(0.5), y: k.Y(0.5), w: 860, noPlus: true, noText: true });
     const kinds = ["PNG", "MP4", "PDF", "MP3", "DOCX", "GIF", "JPG"];
@@ -409,12 +455,13 @@ window.SCENES = {
   // ───────────── 16 · "Forma. Convert files on your own device." ─────────────
   "end-card": (k) => {
     k.sky({ stops: ["#3448ed", "#5667ff", "#8d9bff"] });
-    k.stars({ n: 40, y1: 0.4, size: 3 }); glowSpot(k, k.X(0.5), k.Y(0.36), 800 * k.u, "#ffffff", 0.18);
-    mark(k, { x: k.X(0.5), y: k.Y(0.28), s: 360, colors: ["#ffffff", "#dfe4ff", "#b8c0ff"] });
-    txt(k.g, "forma.", k.X(0.5), k.Y(0.45), 220 * k.u, "#fff", 800);
-    txt(k.g, "Convert files on your own device", k.X(0.5), k.Y(0.54), 60 * k.u, "#e6e9ff", 600);
-    rr(k.g, k.X(0.2), k.Y(0.6), k.X(0.6), 120 * k.u, 60 * k.u, "rgba(255,255,255,0.18)", "rgba(255,255,255,0.7)", 5 * k.u);
-    txt(k.g, "forma.thezavino.com", k.X(0.5), k.Y(0.6) + 60 * k.u, 54 * k.u, "#fff", 700);
+    glowSpot(k, k.X(0.5), k.Y(0.4), 900 * k.u, "#ffffff", 0.2);
+    const a1 = ease(k.p * 4), a2 = ease(k.p * 4 - 0.8), a3 = ease(k.p * 4 - 1.6);
+    mark(k, { x: k.X(0.5), y: k.Y(0.3) + (1 - a1) * 40 * k.u, s: 380, colors: ["#ffffff", "#dfe4ff", "#b8c0ff"], grow: a1 });
+    k.g.globalAlpha = a2; txt(k.g, "forma.", k.X(0.5), k.Y(0.5), 230 * k.u, "#fff", 800);
+    txt(k.g, "Convert files on your own device", k.X(0.5), k.Y(0.585), 52 * k.u, "#e6e9ff", 600); k.g.globalAlpha = a3;
+    rr(k.g, k.X(0.18), k.Y(0.645), k.X(0.64), 124 * k.u, 62 * k.u, "rgba(255,255,255,0.16)", "rgba(255,255,255,0.75)", 5 * k.u);
+    txt(k.g, "forma.thezavino.com", k.X(0.5), k.Y(0.645) + 62 * k.u, 56 * k.u, "#fff", 700); k.g.globalAlpha = 1;
   },
 };
 

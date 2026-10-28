@@ -3,19 +3,7 @@
   "brief": "Free converter sites: ads, sign-ups, and worst of all you upload your file to their servers. Forma converts on your own device, and has one input for every format.",
   "format": "9:16",
   "look": {
-    "base": "gouache",
-    "brush": 7,
-    "swirl": 0.12,
-    "length": 2.4,
-    "boil": 0.38,
-    "respect": 1,
-    "saturation": 1.08,
-    "contrast": 1.04,
-    "paper": 0.5,
-    "grain": 0.22,
-    "vignette": 0.12,
-    "bloom": 0.06,
-    "layers": 1
+    "mode": "clean"
   },
   "voice": {
     "clips": [
@@ -43,12 +31,13 @@
   "pause": 0.28,
   "captions": {
     "style": "box",
-    "size": 54,
+    "size": 52,
     "weight": 700,
     "y": 0.79,
     "box": "rgba(18,22,60,0.78)",
     "color": "#ffffff",
-    "font": "\"Inter\",\"Helvetica Neue\",Arial,sans-serif"
+    "font": "\"Inter\",\"Helvetica Neue\",Arial,sans-serif",
+    "radius": 0.5
   },
   "lines": [
     {
@@ -165,5 +154,93 @@
       "hold": 0.5
     }
   ],
-  "tail": 0.9
+  "tail": 0.9,
+  "fps": 30,
+  "twos": 1,
+  "cues": [
+    {
+      "shot": 4,
+      "offset": 0.05,
+      "name": "pop",
+      "gain": 0.6
+    },
+    {
+      "shot": 4,
+      "offset": 0.5,
+      "name": "pop",
+      "gain": 0.6
+    },
+    {
+      "shot": 4,
+      "offset": 0.95,
+      "name": "pop",
+      "gain": 0.6
+    },
+    {
+      "shot": 6,
+      "offset": 0.05,
+      "name": "panel-in",
+      "gain": 0.6
+    },
+    {
+      "shot": 8,
+      "offset": 0.1,
+      "name": "whoosh",
+      "gain": 0.7
+    },
+    {
+      "shot": 9,
+      "offset": 0.8,
+      "name": "land",
+      "gain": 0.5
+    },
+    {
+      "shot": 12,
+      "offset": 0.0,
+      "name": "land-light",
+      "gain": 0.6
+    },
+    {
+      "shot": 13,
+      "offset": 0.0,
+      "name": "whoosh-short",
+      "gain": 0.5
+    },
+    {
+      "shot": 13,
+      "offset": 0.4,
+      "name": "sparkle",
+      "gain": 0.8
+    },
+    {
+      "shot": 14,
+      "offset": 0.95,
+      "name": "confirm",
+      "gain": 0.6
+    },
+    {
+      "shot": 17,
+      "offset": 0.2,
+      "name": "swipe",
+      "gain": 0.5
+    },
+    {
+      "shot": 22,
+      "offset": 0.0,
+      "name": "swish",
+      "gain": 0.4
+    },
+    {
+      "shot": 23,
+      "offset": 0.1,
+      "name": "chime",
+      "gain": 0.6
+    },
+    {
+      "shot": 26,
+      "offset": 0.1,
+      "name": "chime",
+      "gain": 0.7
+    }
+  ]
 }

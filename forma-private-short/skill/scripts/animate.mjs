@@ -307,7 +307,7 @@ function soundtrack(dir, s, tl, voices) {
   if (mood !== "none") {
     mf = path.join(a, "music.wav");
     const own = mood && !MOODS.includes(mood) && !PRESETS[mood];
-    renderSoundtrack({ duration: tl.duration, preset: own ? "tender" : mood, music: own ? path.resolve(dir, mood) : "auto", cues: [], outroAt: tl.duration - 1.5, musicStart: m.start }, mf, { seed: m.seed ?? 11 });
+    renderSoundtrack({ duration: tl.duration, preset: own ? "tender" : mood, music: own ? path.resolve(dir, mood) : "auto", cues: (s.cues || []).map((c) => ({ name: c.name, gain: c.gain, at: c.at ?? tl.beats[c.shot - 1].start + (c.offset || 0) })), outroAt: tl.duration - 1.5, musicStart: m.start }, mf, { seed: m.seed ?? 11 });
   }
   const mixed = path.join(a, "mix.wav");
   const vol = typeof m === "object" && m.volume != null ? m.volume : hasVoice ? 0.42 : 0.9;
