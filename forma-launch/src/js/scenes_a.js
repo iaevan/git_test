@@ -141,7 +141,7 @@ let APP = null, S5SCENE = null;
   tag.words.forEach((wd, i) => { if (i >= 2) wd.style.color = '#bfc7ff'; });
   // lockup lifts + shrinks, tagline arrives
   tl.to(lg.el, { y: V(520, 260), scale: V(.56, .5), duration: .85, ease: 'forma' }, 6.95);
-  blurIn(tag.words, 7.2, { stagger: .12, dur: .85, b: 18 });
+  blurIn(tag.words, 7.2, { stagger: .1, dur: .8, b: 18 });
 
   // → iris closes onto the header logo location
   const dest = measure(APP.logo.el, 8.9);

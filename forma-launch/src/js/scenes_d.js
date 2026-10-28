@@ -99,6 +99,7 @@ let FREE;
   place(card, V(540, 1390), V(1190, 540), { scale: CS, opacity: 0 });
   tl.fromTo(card, { y: 700, rotation: 6, opacity: 0, scale: CS * .92 }, { y: 0, rotation: 0, opacity: 1, scale: CS, duration: 1.0, ease: 'forma', immediateRender: false }, 37.65);
   const usd = card.querySelector('.usd');
+  gsap.set(usd, { opacity: 0 });                    // hidden until its own pop-in (no flash when the card arrives)
   tl.fromTo(usd, { scale: .6, opacity: 0, transformOrigin: '0% 80%' }, { scale: 1, opacity: 1, duration: .6, ease: 'back.out(2.4)', immediateRender: false }, 38.1);
   qa(card, 'li').forEach((li, i) => {
     const t = 38.45 + i * .2;

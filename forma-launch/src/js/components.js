@@ -55,7 +55,7 @@
         }
         const n = Math.max(-3, Math.min(3, d));
         gsap.set(c, {
-          visibility: 'visible',
+          visibility: 'inherit',               // NOT 'visible': an explicit 'visible' child still draws inside a hidden scene
           x: n * n * o.xk,
           y: o.step * n,
           rotation: -n * 12,

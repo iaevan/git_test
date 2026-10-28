@@ -183,7 +183,7 @@
   big.words[0].textContent = '0%';
   tl.fromTo(pc, { v: 0 }, { v: 97, duration: .95, ease: 'power3.out', immediateRender: false, onUpdate: () => { big.words[0].textContent = Math.round(pc.v) + '%'; } }, 21.3);
   blurIn(small.words, 22.1, { dur: .7, b: 14 });
-  blurIn(note.words, 22.4, { dur: .6, y: 16, b: 10 });
+  blurIn(note.words, 22.3, { dur: .5, y: 16, b: 10, stagger: .03 });   // done by 22.98, exit starts 23.0
   blurOut([big.el].concat(small.words, note.words), 23.0, { dur: .4, y: -30 });
   tl.to(veil, { opacity: 0, duration: .4, ease: 'power2.in' }, 23.05);
 

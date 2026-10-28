@@ -53,6 +53,11 @@ Pieces:
 * `tools/render.cjs` — deterministic frame renderer (parallel Chromium, temporal supersampling → x264).
 * `tools/preview.cjs` + `tools/sheet.py` — render stills at timestamps / contact sheets for review.
 * `tools/determinism.cjs` — proves frames are a pure function of time (parallel rendering is safe).
+* **Artifact audits** (run before every render, `node tools/<name>.cjs <reel|land>`):
+  * `leaks.cjs` — elements that are drawn while their scene is hidden (CSS `visibility` is inherited, not cumulative: a child with an explicit `visibility:visible` still draws inside a hidden scene — use `inherit`).
+  * `stuck.cjs` — elements still visible after their exit animation has finished, and elements visible before their own entrance.
+  * `audit.cjs` — tweens fighting over one element/property where the earlier-created tween finishes last (it re-asserts its end value after the exit and leaves the element on screen).
+  * `vislog.cjs` — per-element visibility log across the timeline, for tracing a specific stray element.
 * `audio/` — `dsp.py`, `sfx.py` (soft SFX incl. the app tick), `music.py` (score), `mix.py` (placement, reverb sends, ducking), `analyze.py` (spectrogram QA). `tools/loudnorm.py` masters to −14 LUFS.
 
 Requires the **Inter** font installed (the site's UI face on non-Apple systems), Chromium via Playwright, ffmpeg.
