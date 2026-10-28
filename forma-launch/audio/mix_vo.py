@@ -56,7 +56,8 @@ for n, ln in enumerate(lines):
     a = max(0, idx[0] - int(.045 * SR)); b = min(len(x), idx[-1] + int(.12 * SR))
     x = x[a:b]
     x = hp(x, 85, 2)
-    x = x + .55 * lp(hp(x, 120, 1), 320, 1) - .30 * hp(x, 4800, 1)       # warmth: +body around 120–320 Hz, take the edge off above ~5 kHz
+    if man['voice'].get('eq') == 'warm':
+        x = x + .55 * lp(hp(x, 120, 1), 320, 1) - .30 * hp(x, 4800, 1)   # warmth: +body around 120–320 Hz, take the edge off above ~5 kHz
     act = x[rms_env(x) > np.max(rms_env(x)) * 10 ** (-24 / 20)]
     x = x * (TARGET_RMS / (np.sqrt(np.mean(act ** 2)) + 1e-9))        # even level from line to line
     x = compress(x, thresh_db=-20, ratio=2.2, attack_ms=8, release_ms=140, makeup_db=1.5)

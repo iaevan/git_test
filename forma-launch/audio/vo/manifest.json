@@ -1,79 +1,76 @@
 {
-  "engine": "Higgsfield \u00b7 Eleven v4 (elevenlabs_v4), preset voice Nora, stability 0.5",
+  "engine": "Higgsfield \u00b7 Eleven v4 (elevenlabs_v4), preset voice Bella, stability 0.35",
   "voice": {
-    "name": "Nora",
-    "voice_id": "d081b915-6623-4a44-bacf-80d0f1c90a03",
-    "gender": "female"
+    "name": "Bella",
+    "voice_id": "eba85120-4ed5-5202-a6f6-696e2c6fe2b6",
+    "gender": "female",
+    "eq": "neutral"
   },
   "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/",
   "clips": {
     "remember": {
       "text": "Remember converting a file?",
-      "id": "hf_20261028_124840_a6a58962-d394-4b57-9dee-b2f8a155a99b"
+      "id": "hf_20261028_133626_350c5f05-f5d3-460f-b072-3ab29977d5d6"
     },
     "pain_short_a": {
       "text": "Every site wants you to upload it, or sign up first.",
-      "id": "hf_20261028_124840_cfc99eb0-dcdd-49af-9cfe-649b19392ff5"
-    },
-    "pain_short_b": {
-      "text": "Every site wants an upload, or a sign-up.",
-      "id": "hf_20261028_124840_450ae02d-df34-4102-a61d-4182ae989702"
+      "id": "hf_20261028_133628_f167916a-2564-4a95-a1d1-97ca70d51d3d"
     },
     "pain_upload": {
       "text": "Every site wants you to upload it.",
-      "id": "hf_20261028_124840_26b7da93-e0f5-433f-b5c5-b56b85b0f7d6"
+      "id": "hf_20261028_133627_39e5162e-dee3-4f7d-a030-63c10aa08e1f"
     },
     "pain_signup": {
       "text": "Or sign up first.",
-      "id": "hf_20261028_124848_121486c7-f8b3-401d-b293-fe294bf7efca"
+      "id": "hf_20261028_133626_f2a30da0-b3d7-4217-b832-fd52294b4458"
     },
     "pain_handover": {
       "text": "Just to hand over your files.",
-      "id": "hf_20261028_124847_06ec1723-e1e5-4bb3-8f58-35ea3bc54873"
+      "id": "hf_20261028_133637_2ddf4d7b-1cb4-4d97-a202-abf9ec8018e2"
     },
     "pivot": {
       "text": "There has to be an easier way.",
-      "id": "hf_20261028_124846_5b9f47b3-9f02-4c0f-8d2e-cd96535b7cf4"
+      "id": "hf_20261028_133637_9412d6bb-4349-4809-b18d-7b51973bd44e"
     },
     "forma": {
       "text": "Here's Forma. It converts your files right on your device.",
-      "id": "hf_20261028_124848_f70b8426-f3c4-43f9-aead-a8372ff15350"
+      "id": "hf_20261028_133637_261e3655-8367-4760-b6ae-1a2140059119"
     },
     "drop": {
       "text": "Just drop in an image, a video, anything.",
-      "id": "hf_20261028_124855_fe10f4e3-860d-4bef-b578-78e9bd00d326"
+      "id": "hf_20261028_133637_2fe5dad8-3d7a-45fb-abbb-0119a3c19e44"
     },
     "formats": {
       "text": "Fifty-three formats to pick from.",
-      "id": "hf_20261028_124856_046d3bc4-5694-4cb9-8aef-7ead4924f47b"
+      "id": "hf_20261028_133644_685fa450-5a9f-4516-b54d-55605c9866da"
     },
     "click": {
       "text": "One click, and it's done.",
-      "id": "hf_20261028_124855_dc872e76-8cf4-488b-819f-08e9ab78798b"
+      "id": "hf_20261028_133644_542ec60c-f537-4f46-be4f-4abd14e250e1"
     },
     "smaller": {
       "text": "That's ninety-seven percent smaller.",
-      "id": "hf_20261028_124855_cf7eaf66-b700-47f9-8e7e-bece0c276f2e"
+      "id": "hf_20261028_133644_c3d92e6a-4656-4f73-b1b4-9fe6c6c86e1e"
     },
     "private": {
       "text": "No more uploads. Everything stays on your device.",
-      "id": "hf_20261028_124902_fa0ba7a2-cdfd-4888-b234-82d1fd748306"
+      "id": "hf_20261028_133644_7ac82330-1213-4566-9790-23b464a270f6"
     },
     "controls": {
       "text": "Want it resized? Compressed? You get more control, when you need it.",
-      "id": "hf_20261028_124902_723c3cc2-2816-49ae-b341-3290c74a1bbb"
+      "id": "hf_20261028_133652_adf63f6a-30c2-4d8c-af33-9583c36c21ee"
     },
     "free": {
       "text": "And it's free. No account needed.",
-      "id": "hf_20261028_124902_c7e249fe-3233-411a-acd4-25039f59afd3"
+      "id": "hf_20261028_133651_a958b703-e3f0-488f-940a-ebceed5c9899"
     },
     "cta": {
       "text": "So next time, skip the upload. Open Forma.",
-      "id": "hf_20261028_124902_76209504-4eba-40db-8bf6-2f8c9fbc259f"
+      "id": "hf_20261028_133651_168f84e8-3e4a-414c-afef-df0cbc277190"
     },
     "end": {
       "text": "Forma. Convert files on your own device.",
-      "id": "hf_20261028_124908_876b63f4-02e1-445b-b66f-aea0af20ebf8"
+      "id": "hf_20261028_133652_21acf5f2-900e-46b9-bffc-38b0426aaaa2"
     }
   },
   "scripts": {

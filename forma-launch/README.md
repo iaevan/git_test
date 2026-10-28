@@ -43,7 +43,7 @@ The first two have no voice: a synthesised 120 BPM score plus frame-locked UI so
 
 ## Voice-over
 
-Generated with **Higgsfield** (Eleven v4 via `generate_audio`, preset voice *Nora*, stability 0.5). Nora was picked by measurement from 13 female presets as the lowest-pitched, slowest and darkest-sounding (≈176 Hz, ≈2.6 words/s) — the closest thing to "warm and slow" on offer; Jade and Jessica are not in the voice list the API exposes. The mix adds a little body at 120–320 Hz and takes the edge off above ~5 kHz.
+Generated with **Higgsfield** (Eleven v4 via `generate_audio`, preset voice *Bella*, stability 0.35 for a lively, natural read). Bella was picked by measurement from 15 young-sounding female presets as the best mix of *energetic* and *smooth*: pitch ≈ 235 Hz (a young woman's range), the most intonation movement of the set (≈6 semitones), the quickest pace (≈3.1 words/s), a clean, un-harsh tone. (An earlier take used the calmer *Nora*; it read as too mellow.) No tone-shaping EQ is applied — just a high-pass, a light compressor and a touch of room.
 
 It is written as a short story rather than captions for the screen: the pain with converter sites (they want your file uploaded, or a sign-up first — just to hand over your files), the answer, the proof, the extras. Two scripts share one library of clips (`audio/vo/manifest.json`):
 
@@ -80,7 +80,7 @@ From "Here's Forma" on the script is identical in both (the long cut is the same
 | 0:41 | So next time, skip the upload. Open Forma. | call to action |
 | 0:46 | Forma. Convert files on your own device. | end card |
 
-`audio/vo_fetch.py` downloads the clips; `audio/mix_vo.py <short|long> …` trims each clip to its speech, levels it, applies a light compressor, the warm EQ and a small room, fits it to its window with a pitch-preserving tempo change (natural pace; at most ×1.12, in practice one line at ×1.09), places the first word on its beat and ducks the score (−5 dB) and SFX (−3 dB) underneath, with the voice about 10 dB over the bed. Mastered to −14 LUFS. QA: a speech recogniser run over each finished mix (music and SFX included) hears every scripted line at its beat and nothing else.
+`audio/vo_fetch.py` downloads the clips; `audio/mix_vo.py <short|long> …` trims each clip to its speech, levels it, applies a light compressor (and an optional warm EQ, off for Bella) and a small room, fits it to its window with a pitch-preserving tempo change (natural pace; at most ×1.12 — with Bella every line fits untouched), places the first word on its beat and ducks the score (−5 dB) and SFX (−3 dB) underneath, with the voice about 10 dB over the bed. Mastered to −14 LUFS. QA: a speech recogniser run over each finished mix (music and SFX included) hears every scripted line at its beat and nothing else.
 
 ### The extended intro
 

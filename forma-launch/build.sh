@@ -12,8 +12,8 @@ voiceover() {   # ./build.sh voice   (needs out/mix_music.wav, out/mix_sfx.wav a
   python3 tools/loudnorm.py out/vo_short.wav out/forma-soundtrack-vo-short.wav
   tools/mux.sh out/forma-reel-silent.mp4      out/forma-soundtrack-vo-short.wav dist/forma-launch-reel-1080x1920-voiceover.mp4
   tools/mux.sh out/forma-landscape-silent.mp4 out/forma-soundtrack-vo-short.wav dist/forma-launch-landscape-1920x1080-voiceover.mp4
-  ffmpeg -y -v error -i out/forma-soundtrack-vo-short.wav -c:a aac -b:a 256k dist/audio/forma-full-mix-voiceover-nora.m4a
-  ffmpeg -y -v error -i out/vo_short_voice.wav -af volume=4dB -c:a aac -b:a 192k dist/audio/forma-voiceover-only-nora.m4a
+  ffmpeg -y -v error -i out/forma-soundtrack-vo-short.wav -c:a aac -b:a 256k dist/audio/forma-full-mix-voiceover-bella.m4a
+  ffmpeg -y -v error -i out/vo_short_voice.wav -af volume=4dB -c:a aac -b:a 192k dist/audio/forma-voiceover-only-bella.m4a
 }
 
 longcut() {     # ./build.sh long   — extended pain intro (58 s): cues, score, both renders, narration
