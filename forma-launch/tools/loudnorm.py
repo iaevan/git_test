@@ -20,10 +20,12 @@ def measure(a):
 
 CEIL = .80                                   # ~ -1.9 dBFS sample peak
 y = x
-for _ in range(4):
+for _ in range(8):
     I, TP = measure(y)
     if abs(-14 - I) < .15 and TP <= -1.4:
         break
+    if TP > -1.4 and abs(-14 - I) < .3:
+        CEIL *= .96                          # inter-sample peaks above the target: pull the ceiling down a little
     y = limiter(y * 10 ** ((-14 - I) / 20), CEIL, look_ms=4, rel_ms=120)
 I, TP = measure(y)
 sf.write(dst, y, sr, subtype='PCM_24')

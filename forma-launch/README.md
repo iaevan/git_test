@@ -6,8 +6,11 @@ A 52-second SaaS launch film for [forma.thezavino.com](https://forma.thezavino.c
 |---|---|---|
 | `dist/forma-launch-reel-1080x1920.mp4` | 1080×1920, 60 fps | Reels / TikTok / Shorts |
 | `dist/forma-launch-landscape-1920x1080.mp4` | 1920×1080, 60 fps | YouTube / X / LinkedIn / site hero |
+| `dist/forma-launch-reel-1080x1920-voiceover.mp4` | 1080×1920, 60 fps | the reel **with voice-over** (female voice) |
+| `dist/forma-launch-landscape-1920x1080-voiceover.mp4` | 1920×1080, 60 fps | the landscape cut **with voice-over** (female voice) |
+| `dist/forma-launch-reel-1080x1920-voiceover-male.mp4` | 1080×1920, 60 fps | the reel with the alternate (male) voice |
 
-No voice-over. A synthesised 120 BPM score plus frame-locked UI sound effects — including the app's own wheel tick.
+The first two have no voice: a synthesised 120 BPM score plus frame-locked UI sound effects — including the app's own wheel tick. The `-voiceover` cuts add a calm narration on top of exactly the same picture and bed.
 
 Everything is **built in code**: the Forma UI (logo, file cards, format wheel, workspace, details sheet, price card…) is remade as HTML/CSS and animated with one deterministic GSAP timeline. Design tokens, copy and artwork were lifted from the live site/app.
 
@@ -39,12 +42,38 @@ Everything is **built in code**: the Forma UI (logo, file cards, format wheel, w
 * **Music** — a warm 120 BPM half-time score in A major: soft FM electric piano, kalimba, round sine bass, sine pad and quiet kick/snap/shaker, arranged to the picture (neutral open fifths for the problem → the major third arrives with the logo → drum-free breakdown for privacy → gentle second section → one-breath build → soft end-card chord). Mastered to −14 LUFS, true-peak ≈ −2 dB.
 * **Stems** — `dist/audio/` has the full mix, **music-only** and **SFX-only** so the balance can be changed (or SFX dropped) in any editor.
 
+## Voice-over
+
+Generated with **Higgsfield** (Eleven v4 via `generate_audio`, stability 0.7): 14 short lines, one clip each, in two preset voices — *Ainsley* (female, default) and *Grady* (male). The script follows the product's own copy and the beat of the picture:
+
+| time | line |
+|---|---|
+| 0:00 | Wrong format. Again. |
+| 0:02 | Upload. Wait. Sign up. |
+| 0:04 | There's an easier way. |
+| 0:06 | Meet Forma. Convert files, on your own device. |
+| 0:09 | Drop something in. *(step 01)* |
+| 0:12 | Give it a direction. *(step 02)* |
+| 0:18 | And it's yours to go. *(step 03)* |
+| 0:21 | Ninety-seven percent smaller. |
+| 0:25 | Your files never leave your device. |
+| 0:30 | Fifty-three formats. One little wheel. |
+| 0:34 | A little more control, when you want it. |
+| 0:37 | Free to use. No account needed. |
+| 0:41 | Convert your first file. |
+| 0:46 | Forma. Convert files on your own device. |
+
+`audio/vo/manifest.json` holds the script, the start time and the latest allowed end of every line and the Higgsfield clip ids; `audio/vo_fetch.py` downloads them and `audio/mix_vo.py` does the rest: trims each clip to its speech, levels it, applies a light compressor and a small room, fits it to its window with a pitch-preserving tempo change (×1.04 everywhere, up to ×1.2 only where a beat is tight), places it so the first word lands on the beat, and ducks the score (−5 dB) and SFX (−3 dB) underneath. Voice sits about 10 dB over the bed while it speaks. Mastered with the same −14 LUFS tool. To use another voice, change the voice id in the manifest, regenerate the clips in Higgsfield and rerun `./build.sh voice`.
+
+QA: a speech-recogniser run over the finished mix (music and SFX included) hears every scripted line at its beat, with no stray speech.
+
 ## Rebuild
 
 ```bash
 npm install                       # gsap + sharp
 pip install numpy scipy soundfile matplotlib pillow
 ./build.sh                        # cues → score+SFX → render both cuts → mux   (~35–45 min / 4 cores)
+./build.sh voice [ainsley|grady]  # only the voice-over cuts: needs the renders + score stems from a previous build
 ```
 
 Pieces:
