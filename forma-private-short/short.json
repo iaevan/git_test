@@ -1,0 +1,169 @@
+{
+  "title": "Forma - No upload. One input.",
+  "brief": "Free converter sites: ads, sign-ups, and worst of all you upload your file to their servers. Forma converts on your own device, and has one input for every format.",
+  "format": "9:16",
+  "look": {
+    "base": "gouache",
+    "brush": 7,
+    "swirl": 0.12,
+    "length": 2.4,
+    "boil": 0.38,
+    "respect": 1,
+    "saturation": 1.08,
+    "contrast": 1.04,
+    "paper": 0.5,
+    "grain": 0.22,
+    "vignette": 0.12,
+    "bloom": 0.06,
+    "layers": 1
+  },
+  "voice": {
+    "clips": [
+      "voice/01.wav",
+      "voice/02.wav",
+      "voice/03.wav",
+      "voice/04.wav",
+      "voice/05.wav",
+      "voice/06.wav",
+      "voice/07.wav",
+      "voice/08.wav",
+      "voice/09.wav",
+      "voice/10.wav",
+      "voice/11.wav",
+      "voice/12.wav",
+      "voice/13.wav",
+      "voice/14.wav",
+      "voice/15.wav",
+      "voice/16.wav"
+    ]
+  },
+  "music": {
+    "mood": "playful"
+  },
+  "pause": 0.28,
+  "captions": {
+    "style": "box",
+    "size": 54,
+    "weight": 700,
+    "y": 0.79,
+    "box": "rgba(18,22,60,0.78)",
+    "color": "#ffffff",
+    "font": "\"Inter\",\"Helvetica Neue\",Arial,sans-serif"
+  },
+  "lines": [
+    {
+      "say": "Need a quick file conversion?",
+      "scene": "desk-need",
+      "move": "push"
+    },
+    {
+      "say": "So you open a free converter website.",
+      "scene": [
+        "search-page",
+        "converter-site"
+      ],
+      "move": "push",
+      "caption": "So you open a free / converter website."
+    },
+    {
+      "say": "Ads. Pop-ups. Ads on top of ads.",
+      "scene": [
+        "ads-1",
+        "ads-2"
+      ],
+      "move": "push",
+      "caption": "Ads. Pop-ups. / Ads on top of ads."
+    },
+    {
+      "say": "Sometimes they even want you to sign up.",
+      "scene": "signup-modal",
+      "move": "push"
+    },
+    {
+      "say": "But here's the real catch.",
+      "scene": "pause-dark",
+      "move": "push",
+      "hold": 0.25
+    },
+    {
+      "say": "They make you upload your file to their servers.",
+      "scene": [
+        "upload-beam",
+        "server-hall"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "Your photos. Your documents. On a stranger's computer.",
+      "scene": [
+        "server-files",
+        "stranger"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "That's not very private.",
+      "scene": "lock-open",
+      "move": "push",
+      "hold": 0.3
+    },
+    {
+      "say": "That's why we built Forma.",
+      "scene": "dawn-logo",
+      "move": "push"
+    },
+    {
+      "say": "A web app that converts files right on your own device.",
+      "scene": [
+        "laptop-forma",
+        "phone-forma"
+      ],
+      "move": "push",
+      "caption": "A web app that converts files / right on your own device."
+    },
+    {
+      "say": "Nothing gets sent anywhere. It all happens inside your computer, or your phone.",
+      "scene": [
+        "bubble-laptop",
+        "no-cloud",
+        "bubble-phone"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "And converters are hard to find, too.",
+      "scene": "search-many",
+      "move": "push"
+    },
+    {
+      "say": "A WebP converter. A PNG converter. A different tool for every format.",
+      "scene": [
+        "tool-webp",
+        "tool-png",
+        "tool-grid"
+      ],
+      "move": "push",
+      "caption": "A WebP converter. / A PNG converter. / A different tool for every format."
+    },
+    {
+      "say": "Forma has just one input. Drop in any file.",
+      "scene": [
+        "one-input",
+        "files-fall"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "Less searching. Less friction.",
+      "scene": "happy-person",
+      "move": "push"
+    },
+    {
+      "say": "Forma. Convert files on your own device.",
+      "scene": "end-card",
+      "move": "push",
+      "hold": 0.5
+    }
+  ],
+  "tail": 0.9
+}

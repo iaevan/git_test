@@ -1,0 +1,22 @@
+{
+  "engine": "Higgsfield · Eleven v4 (elevenlabs_v4), preset voice Bella, stability 0.35",
+  "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/",
+  "lines": [
+    {"say": "Need a quick file conversion?", "id": "hf_20261028_151856_4b4623ec-de50-4bd4-bd1d-50654cf7bb05"},
+    {"say": "So you open a free converter website.", "id": "hf_20261028_151855_bc43cd44-e91a-4b20-a7b0-af35de91031a"},
+    {"say": "Ads. Pop-ups. Ads on top of ads.", "id": "hf_20261028_151855_57dcfbcd-9137-427b-bbfb-7683822fed02"},
+    {"say": "Sometimes they even want you to sign up.", "id": "hf_20261028_151856_db4da85d-d4ef-4692-aed8-a370fea8e843"},
+    {"say": "But here's the real catch.", "id": "hf_20261028_151913_6a4c4373-0b8a-41f2-95a5-c6cebf5ce2f9"},
+    {"say": "They make you upload your file to their servers.", "id": "hf_20261028_151903_313afbd8-8df5-4f20-8fb1-ecf4b48f8677"},
+    {"say": "Your photos. Your documents. On a stranger's computer.", "id": "hf_20261028_151903_a29eb227-8ccb-4041-8fa3-a60ff64c72b0"},
+    {"say": "That's not very private.", "id": "hf_20261028_151902_974c0ba3-e251-4444-9319-0d224ff2c597"},
+    {"say": "That's why we built Forma.", "id": "hf_20261028_151907_8e7f548f-9619-4d9c-8657-d7f6b86f8734"},
+    {"say": "A web app that converts files right on your own device.", "id": "hf_20261028_151914_2991608d-2b8a-4862-a80c-3a839079bdfb"},
+    {"say": "Nothing gets sent anywhere. It all happens inside your computer, or your phone.", "id": "hf_20261028_151907_79917080-63c1-4919-802e-488c0c0a90b9"},
+    {"say": "And converters are hard to find, too.", "id": "hf_20261028_151907_cb995833-3090-4c55-b445-17d9b3be5712"},
+    {"say": "A WebP converter. A PNG converter. A different tool for every format.", "id": "hf_20261028_151929_91c7044a-eba4-4eef-947c-5ed4ca3664e2"},
+    {"say": "Forma has just one input. Drop in any file.", "id": "hf_20261028_151929_1faf8e17-4ee2-44bf-9c22-5dc2ff1a4703"},
+    {"say": "Less searching. Less friction.", "id": "hf_20261028_151930_39027ab2-21bd-464a-b953-05d5ccc4dda2"},
+    {"say": "Forma. Convert files on your own device.", "id": "hf_20261028_151930_a17fb101-1227-4c98-8247-d2ea7ba212cc"}
+  ]
+}
