@@ -34,10 +34,30 @@
   window.CUES = [];
   window.BLURS = [];
 
+  // ── optional intro stretch ───────────────────────────────
+  // ?intro=6 pushes everything after the "problem" scenes 6 s later (3 bars at 120 BPM) so the pain gets room to breathe.
+  // Scenes authored AFTER ripple() keep their original times; every timeline/cue/blur/measure call is mapped through TM.
+  window.SHIFT = +(P.get('intro') || 0);
+  window.LONG = SHIFT > 0;
+  const TSH = { t0: Infinity, d: 0 };
+  window.TM = function (t) { return t >= TSH.t0 - 1e-9 ? t + TSH.d : t; };
+  window.ripple = function (t0, d) {
+    if (!d) return;
+    TSH.t0 = t0; TSH.d = d;
+    [['to', 2], ['set', 2], ['fromTo', 3]].forEach(function (m) {
+      const orig = tl[m[0]].bind(tl);
+      tl[m[0]] = function () {
+        const a = Array.prototype.slice.call(arguments);
+        if (typeof a[m[1]] === 'number') a[m[1]] = TM(a[m[1]]);
+        return orig.apply(null, a);
+      };
+    });
+  };
+
   /** register a sound cue at time t */
-  window.sfx = function (t, name, o) { CUES.push(Object.assign({ t: +t.toFixed(4), name }, o || {})); };
+  window.sfx = function (t, name, o) { CUES.push(Object.assign({ t: +TM(t).toFixed(4), name }, o || {})); };
   /** ask the renderer for extra sub-frames (motion blur) in a window */
-  window.blurWin = function (t0, t1, n, shutter) { BLURS.push({ t0, t1, n: n || 8, shutter: shutter || 1 }); };
+  window.blurWin = function (t0, t1, n, shutter) { BLURS.push({ t0: TM(t0), t1: TM(t1), n: n || 8, shutter: shutter || 1 }); };
 
   // ── DOM helpers ──────────────────────────────────────────
   window.mk = function (tag, cls, parent, css) {
@@ -166,7 +186,7 @@
   /** measure an element's center in stage px at timeline time t */
   window.measure = function (el, t) {
     const prev = tl.time();
-    tl.time(t, true);
+    tl.time(TM(t), true);
     const r = el.getBoundingClientRect();
     tl.time(prev, true);
     return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height, l: r.left, t: r.top };

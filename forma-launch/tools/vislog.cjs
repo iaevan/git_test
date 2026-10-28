@@ -6,7 +6,7 @@ const { chromium } = require('playwright'); const path = require('path');
   const W = fmt === 'reel' ? 1080 : 1920, H = fmt === 'reel' ? 1920 : 1080;
   const b = await chromium.launch({ args: ['--allow-file-access-from-files'] });
   const p = await (await b.newContext({ viewport: { width: W, height: H } })).newPage();
-  await p.goto('file://' + path.resolve(__dirname, '../src/index.html') + '?fmt=' + fmt);
+  await p.goto('file://' + path.resolve(__dirname, '../src/index.html') + '?fmt=' + fmt + (process.env.INTRO ? '&intro=' + process.env.INTRO : ''));
   await p.waitForFunction('window.__ready === true');
   const log = await p.evaluate((step) => {
     const sel = '.wi, .a-step, .a-pair, .a-desc, .a-sub, .a-link, .a-post, .a-foot, .res, .cap, .fcard, .paper, .sculpt, .toast, .row-pill, .chip, .btn, .sheet, .price, .gtile, .ftile, .wandtile, .urlpill, .logo, .sel, .token, .pill, .conn, .browse, img, #cursor, .ripple, #flash';

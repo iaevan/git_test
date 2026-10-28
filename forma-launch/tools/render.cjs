@@ -20,7 +20,7 @@ const W = fmt === 'reel' ? 1080 : 1920, H = fmt === 'reel' ? 1920 : 1080;
 
 (async () => {
   const browser = await chromium.launch({ args: ['--force-color-profile=srgb', '--font-render-hinting=none', '--allow-file-access-from-files', '--disable-lcd-text'] });
-  const url = 'file://' + path.resolve(__dirname, '../src/index.html') + '?fmt=' + fmt;
+  const url = 'file://' + path.resolve(__dirname, '../src/index.html') + '?fmt=' + fmt + (process.env.INTRO ? '&intro=' + process.env.INTRO : '');
   const pages = [];
   for (let i = 0; i < WORKERS; i++) {
     const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });

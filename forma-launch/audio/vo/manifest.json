@@ -1,96 +1,220 @@
 {
-  "engine": "Higgsfield \u00b7 Eleven v4 (elevenlabs_v4), stability 0.5",
-  "voices": {
-    "ainsley": {
-      "voice_id": "731b4ffe-e95e-59f4-8c00-81608936091f",
-      "gender": "female"
+  "engine": "Higgsfield \u00b7 Eleven v4 (elevenlabs_v4), preset voice Nora, stability 0.5",
+  "voice": {
+    "name": "Nora",
+    "voice_id": "d081b915-6623-4a44-bacf-80d0f1c90a03",
+    "gender": "female"
+  },
+  "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/",
+  "clips": {
+    "remember": {
+      "text": "Remember converting a file?",
+      "id": "hf_20261028_124840_a6a58962-d394-4b57-9dee-b2f8a155a99b"
+    },
+    "pain_short_a": {
+      "text": "Every site wants you to upload it, or sign up first.",
+      "id": "hf_20261028_124840_cfc99eb0-dcdd-49af-9cfe-649b19392ff5"
+    },
+    "pain_short_b": {
+      "text": "Every site wants an upload, or a sign-up.",
+      "id": "hf_20261028_124840_450ae02d-df34-4102-a61d-4182ae989702"
+    },
+    "pain_upload": {
+      "text": "Every site wants you to upload it.",
+      "id": "hf_20261028_124840_26b7da93-e0f5-433f-b5c5-b56b85b0f7d6"
+    },
+    "pain_signup": {
+      "text": "Or sign up first.",
+      "id": "hf_20261028_124848_121486c7-f8b3-401d-b293-fe294bf7efca"
+    },
+    "pain_handover": {
+      "text": "Just to hand over your files.",
+      "id": "hf_20261028_124847_06ec1723-e1e5-4bb3-8f58-35ea3bc54873"
+    },
+    "pivot": {
+      "text": "There has to be an easier way.",
+      "id": "hf_20261028_124846_5b9f47b3-9f02-4c0f-8d2e-cd96535b7cf4"
+    },
+    "forma": {
+      "text": "Here's Forma. It converts your files right on your device.",
+      "id": "hf_20261028_124848_f70b8426-f3c4-43f9-aead-a8372ff15350"
+    },
+    "drop": {
+      "text": "Just drop in an image, a video, anything.",
+      "id": "hf_20261028_124855_fe10f4e3-860d-4bef-b578-78e9bd00d326"
+    },
+    "formats": {
+      "text": "Fifty-three formats to pick from.",
+      "id": "hf_20261028_124856_046d3bc4-5694-4cb9-8aef-7ead4924f47b"
+    },
+    "click": {
+      "text": "One click, and it's done.",
+      "id": "hf_20261028_124855_dc872e76-8cf4-488b-819f-08e9ab78798b"
+    },
+    "smaller": {
+      "text": "That's ninety-seven percent smaller.",
+      "id": "hf_20261028_124855_cf7eaf66-b700-47f9-8e7e-bece0c276f2e"
+    },
+    "private": {
+      "text": "No more uploads. Everything stays on your device.",
+      "id": "hf_20261028_124902_fa0ba7a2-cdfd-4888-b234-82d1fd748306"
+    },
+    "controls": {
+      "text": "Want it resized? Compressed? You get more control, when you need it.",
+      "id": "hf_20261028_124902_723c3cc2-2816-49ae-b341-3290c74a1bbb"
+    },
+    "free": {
+      "text": "And it's free. No account needed.",
+      "id": "hf_20261028_124902_c7e249fe-3233-411a-acd4-25039f59afd3"
+    },
+    "cta": {
+      "text": "So next time, skip the upload. Open Forma.",
+      "id": "hf_20261028_124902_76209504-4eba-40db-8bf6-2f8c9fbc259f"
+    },
+    "end": {
+      "text": "Forma. Convert files on your own device.",
+      "id": "hf_20261028_124908_876b63f4-02e1-445b-b66f-aea0af20ebf8"
     }
   },
-  "lines": [
-    {
-      "i": 0,
-      "t": 0.2,
-      "end": 2.25,
-      "text": "Remember converting a file?",
-      "ainsley": "hf_20261028_112950_733017c4-5f58-4b56-bba8-1e6a2de2b345"
-    },
-    {
-      "i": 1,
-      "t": 2.35,
-      "end": 6.15,
-      "text": "Upload it. Sign up. Just to hand over your files.",
-      "ainsley": "hf_20261028_112950_d6ae6cc4-d830-430c-8406-e048c37b21d3"
-    },
-    {
-      "i": 2,
-      "t": 6.3,
-      "end": 10.2,
-      "text": "Here's Forma. It converts your files right on your device.",
-      "ainsley": "hf_20261028_112959_c32e6918-c7a5-4f44-8e7b-abc10f21cb3f"
-    },
-    {
-      "i": 3,
-      "t": 10.4,
-      "end": 13.9,
-      "text": "Just drop in an image, a video, anything.",
-      "ainsley": "hf_20261028_112950_8d949594-d9ba-49b2-80b8-b285a45357ac"
-    },
-    {
-      "i": 4,
-      "t": 14.1,
-      "end": 17.6,
-      "text": "Fifty-three formats to pick from.",
-      "ainsley": "hf_20261028_112959_7cd3d39d-ef40-4633-9d56-434d589251be"
-    },
-    {
-      "i": 5,
-      "t": 18.45,
-      "end": 20.9,
-      "text": "One click, and it's done.",
-      "ainsley": "hf_20261028_112950_c58c18fa-4c9d-4f3f-b9be-54247a6c18cc"
-    },
-    {
-      "i": 6,
-      "t": 21.1,
-      "end": 23.7,
-      "text": "That's ninety-seven percent smaller.",
-      "ainsley": "hf_20261028_113101_06381df0-2205-4992-9d98-a9d80e08d0fc"
-    },
-    {
-      "i": 7,
-      "t": 25.3,
-      "end": 29.5,
-      "text": "No more uploads. Everything stays on your device.",
-      "ainsley": "hf_20261028_112959_3bb32108-38b6-4fe7-ac09-fa25452faf29"
-    },
-    {
-      "i": 8,
-      "t": 34.0,
-      "end": 38.3,
-      "text": "Want it resized? Compressed? You get more control, when you need it.",
-      "ainsley": "hf_20261028_113006_b23b745b-4089-4764-814d-f55bbb11d554"
-    },
-    {
-      "i": 9,
-      "t": 38.5,
-      "end": 40.9,
-      "text": "And it's free. No account needed.",
-      "ainsley": "hf_20261028_113006_4f48932b-71cf-4dfd-96c0-22f8183aab13"
-    },
-    {
-      "i": 10,
-      "t": 41.5,
-      "end": 45.2,
-      "text": "So next time, skip the upload. Open Forma.",
-      "ainsley": "hf_20261028_113006_ecae8a2f-0500-4223-842e-2837f3a05e56"
-    },
-    {
-      "i": 11,
-      "t": 46.7,
-      "end": 51.5,
-      "text": "Forma. Convert files on your own device.",
-      "ainsley": "hf_20261028_113007_4cd09b2e-411a-4272-88de-2f850792d5d9"
-    }
-  ],
-  "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/"
+  "scripts": {
+    "short": [
+      {
+        "clip": "remember",
+        "t": 0.2,
+        "end": 2.25
+      },
+      {
+        "clip": "pain_short_a",
+        "t": 2.25,
+        "end": 6.2
+      },
+      {
+        "clip": "forma",
+        "t": 6.3,
+        "end": 10.2
+      },
+      {
+        "clip": "drop",
+        "t": 10.4,
+        "end": 13.9
+      },
+      {
+        "clip": "formats",
+        "t": 14.1,
+        "end": 17.6
+      },
+      {
+        "clip": "click",
+        "t": 18.45,
+        "end": 20.9
+      },
+      {
+        "clip": "smaller",
+        "t": 21.1,
+        "end": 23.7
+      },
+      {
+        "clip": "private",
+        "t": 25.3,
+        "end": 29.5
+      },
+      {
+        "clip": "controls",
+        "t": 33.95,
+        "end": 38.65
+      },
+      {
+        "clip": "free",
+        "t": 38.7,
+        "end": 41.3
+      },
+      {
+        "clip": "cta",
+        "t": 41.5,
+        "end": 45.2
+      },
+      {
+        "clip": "end",
+        "t": 46.7,
+        "end": 51.5
+      }
+    ],
+    "long": [
+      {
+        "clip": "remember",
+        "t": 0.2,
+        "end": 2.25
+      },
+      {
+        "clip": "pain_upload",
+        "t": 2.4,
+        "end": 5.2
+      },
+      {
+        "clip": "pain_signup",
+        "t": 5.45,
+        "end": 7.0
+      },
+      {
+        "clip": "pain_handover",
+        "t": 7.2,
+        "end": 9.6
+      },
+      {
+        "clip": "pivot",
+        "t": 10.0,
+        "end": 12.12
+      },
+      {
+        "clip": "forma",
+        "t": 12.3,
+        "end": 16.2
+      },
+      {
+        "clip": "drop",
+        "t": 16.4,
+        "end": 19.9
+      },
+      {
+        "clip": "formats",
+        "t": 20.1,
+        "end": 23.6
+      },
+      {
+        "clip": "click",
+        "t": 24.45,
+        "end": 26.9
+      },
+      {
+        "clip": "smaller",
+        "t": 27.1,
+        "end": 29.7
+      },
+      {
+        "clip": "private",
+        "t": 31.3,
+        "end": 35.5
+      },
+      {
+        "clip": "controls",
+        "t": 39.95,
+        "end": 44.65
+      },
+      {
+        "clip": "free",
+        "t": 44.7,
+        "end": 47.3
+      },
+      {
+        "clip": "cta",
+        "t": 47.5,
+        "end": 51.2
+      },
+      {
+        "clip": "end",
+        "t": 52.7,
+        "end": 57.5
+      }
+    ]
+  }
 }

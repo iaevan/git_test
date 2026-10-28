@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Lay the Higgsfield voice-over on top of the existing score + SFX stems.
 
-   python3 audio/mix_vo.py <voice> <out.wav>
-   needs: out/mix_music.wav, out/mix_sfx.wav (from mix.py) and out/vo/<voice>/NN.mp3 (from vo_fetch.py)
+   python3 audio/mix_vo.py <script: short|long> <out.wav> <stems prefix, e.g. ../out/mix>
+   needs: <prefix>_music.wav, <prefix>_sfx.wav (from mix.py) and out/vo/<clip>.mp3 (from vo_fetch.py)
+   scripts: "short" = original 52 s timing, "long" = extended intro (58 s)
 
    Each line is trimmed to its speech, levelled, lightly compressed/EQ'd and placed so that the first word
    lands on the beat in manifest.json.  Music and SFX duck softly under the voice (attack before the first
@@ -13,12 +14,13 @@ import soundfile as sf
 from scipy.ndimage import uniform_filter1d
 from dsp import *
 
-voice, out_path = sys.argv[1], sys.argv[2]
+script, out_path, stems = sys.argv[1], sys.argv[2], sys.argv[3]
 here = os.path.dirname(os.path.abspath(__file__))
 root = os.path.join(here, '..', 'out')
 man = json.load(open(os.path.join(here, 'vo', 'manifest.json')))
+lines = [dict(l, text=man['clips'][l['clip']]['text']) for l in man['scripts'][script]]
 
-music, sr = sf.read(os.path.join(root, 'mix_music.wav')); sfx, _ = sf.read(os.path.join(root, 'mix_sfx.wav'))
+music, sr = sf.read(stems + '_music.wav'); sfx, _ = sf.read(stems + '_sfx.wav')
 assert sr == SR
 N = len(music)
 
@@ -39,9 +41,9 @@ ir = make_ir(.55, .01, 5, damp=5000)                       # a small, soft room 
 dry = np.zeros((N, 2)); send = np.zeros((N, 2))
 spans = []                                                 # (start, end) of audible speech, for ducking
 TARGET_RMS = 10 ** (-20 / 20)                              # active-speech RMS before the bus gain
-BASE_TEMPO, MAX_TEMPO = 1.0, 1.18                          # natural pace; stretch only where a beat demands it
-for ln in man['lines']:
-    src = os.path.join(root, 'vo', voice, '%02d.mp3' % ln['i'])
+BASE_TEMPO, MAX_TEMPO = 1.0, 1.12                          # natural pace; stretch only where a beat demands it
+for n, ln in enumerate(lines):
+    src = os.path.join(root, 'vo', ln['clip'] + '.mp3')
     x = decode(src)
     e = rms_env(x)
     idx = np.where(e > e.max() * 10 ** (-28 / 20))[0]
@@ -53,7 +55,8 @@ for ln in man['lines']:
     idx = np.where(e > thr)[0]
     a = max(0, idx[0] - int(.045 * SR)); b = min(len(x), idx[-1] + int(.12 * SR))
     x = x[a:b]
-    x = hp(x, 90, 2)
+    x = hp(x, 85, 2)
+    x = x + .55 * lp(hp(x, 120, 1), 320, 1) - .30 * hp(x, 4800, 1)       # warmth: +body around 120–320 Hz, take the edge off above ~5 kHz
     act = x[rms_env(x) > np.max(rms_env(x)) * 10 ** (-24 / 20)]
     x = x * (TARGET_RMS / (np.sqrt(np.mean(act ** 2)) + 1e-9))        # even level from line to line
     x = compress(x, thresh_db=-20, ratio=2.2, attack_ms=8, release_ms=140, makeup_db=1.5)
@@ -64,7 +67,7 @@ for ln in man['lines']:
     place(dry, x, t0, 1.0)
     place(send, x, t0, 1.0)
     spans.append((ln['t'] - .05, ln['t'] + (idx[-1] - idx[0]) / SR + .10))
-    print('line %2d  %5.2f s  speech %.2f s  tempo x%.2f  ends %.2f (limit %.2f)  %s' % (ln['i'], ln['t'], (idx[-1] - idx[0]) / SR, tempo, ln['t'] + (idx[-1] - idx[0]) / SR, ln['end'], ln['text']))
+    print('line %2d  %5.2f s  speech %.2f s  tempo x%.2f  ends %.2f (limit %.2f)  %s' % (n, ln['t'], (idx[-1] - idx[0]) / SR, tempo, ln['t'] + (idx[-1] - idx[0]) / SR, ln['end'], ln['text']))
 
 wet = reverb(send, ir)[:N]
 vo = dry + wet * .09

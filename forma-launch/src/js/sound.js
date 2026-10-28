@@ -12,8 +12,10 @@
   c(1.85, 'swoosh', { d: .5, dir: -1, g: .9 });            // whip to the next beat
 
   // 0:02 — the usual routine
-  [2.1, 2.6, 3.1].forEach((t, i) => c(t, 'pop', { n: ['A4', 'B4', 'C#5'][i], g: .6 }));
-  c(3.5, 'swoosh', { d: .3, dir: 1, g: .5 });              // the three lines struck through
+  if (!LONG) {                                            // (the extended cut places these in scenes_a.js)
+    [2.1, 2.6, 3.1].forEach((t, i) => c(t, 'pop', { n: ['A4', 'B4', 'C#5'][i], g: .6 }));
+    c(3.5, 'swoosh', { d: .3, dir: 1, g: .5 });            // the three lines struck through
+  }
   c(3.9, 'swoosh', { d: .5, dir: 1, g: .9 });
 
   // 0:04 — "There's an easier way."

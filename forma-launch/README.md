@@ -4,14 +4,14 @@ A 52-second SaaS launch film for [forma.thezavino.com](https://forma.thezavino.c
 
 | file | size | use |
 |---|---|---|
-| `dist/forma-launch-reel-1080x1920.mp4` | 1080×1920, 60 fps | Reels / TikTok / Shorts |
-| `dist/forma-launch-landscape-1920x1080.mp4` | 1920×1080, 60 fps | YouTube / X / LinkedIn / site hero |
-| `dist/forma-launch-reel-1080x1920-voiceover.mp4` | 1080×1920, 60 fps | the reel **with voice-over** (narrated) |
-| `dist/forma-launch-landscape-1920x1080-voiceover.mp4` | 1920×1080, 60 fps | the landscape cut **with voice-over** (narrated) |
+| `dist/forma-launch-reel-1080x1920.mp4` | 1080×1920, 60 fps, 52 s | Reels / TikTok / Shorts — no voice |
+| `dist/forma-launch-landscape-1920x1080.mp4` | 1920×1080, 60 fps, 52 s | YouTube / X / LinkedIn / site hero — no voice |
+| `dist/forma-launch-reel-1080x1920-voiceover.mp4` | 1080×1920, 52 s | narrated, original timing ("Here's Forma" at 0:06) |
+| `dist/forma-launch-landscape-1920x1080-voiceover.mp4` | 1920×1080, 52 s | narrated, original timing |
+| `dist/forma-launch-reel-1080x1920-voiceover-long-intro.mp4` | 1080×1920, 58 s | narrated, **extended pain intro** ("Here's Forma" at 0:12) |
+| `dist/forma-launch-landscape-1920x1080-voiceover-long-intro.mp4` | 1920×1080, 58 s | narrated, extended pain intro |
 
-The first two have no voice: a synthesised 120 BPM score plus frame-locked UI sound effects — including the app's own wheel tick. The `-voiceover` cuts add a calm narration on top of exactly the same picture and bed.
-
-Everything is **built in code**: the Forma UI (logo, file cards, format wheel, workspace, details sheet, price card…) is remade as HTML/CSS and animated with one deterministic GSAP timeline. Design tokens, copy and artwork were lifted from the live site/app.
+The first two have no voice: a synthesised 120 BPM score plus frame-locked UI sound effects — including the app's own wheel tick. The `-voiceover` cuts add a calm narration on top of exactly the same picture and bed; the `-long-intro` cuts give the problem six more seconds (three bars) before the logo hit and are otherwise identical from "Here's Forma" on.
 
 ## Storyboard (identical timing in both cuts)
 
@@ -43,26 +43,48 @@ Everything is **built in code**: the Forma UI (logo, file cards, format wheel, w
 
 ## Voice-over
 
-Generated with **Higgsfield** (Eleven v4 via `generate_audio`, preset voice *Ainsley*, stability 0.5 for a natural, conversational read). It is written as a short story rather than captions for the screen — the pain everyone knows, the answer, the proof, the extras — and each line is pinned to the beat it belongs to:
+Generated with **Higgsfield** (Eleven v4 via `generate_audio`, preset voice *Nora*, stability 0.5). Nora was picked by measurement from 13 female presets as the lowest-pitched, slowest and darkest-sounding (≈176 Hz, ≈2.6 words/s) — the closest thing to "warm and slow" on offer; Jade and Jessica are not in the voice list the API exposes. The mix adds a little body at 120–320 Hz and takes the edge off above ~5 kHz.
+
+It is written as a short story rather than captions for the screen: the pain with converter sites (they want your file uploaded, or a sign-up first — just to hand over your files), the answer, the proof, the extras. Two scripts share one library of clips (`audio/vo/manifest.json`):
+
+**Extended intro (`long`, 58 s)** — the pain gets room: the routine is slowed down and an "Uploading to their server…" card fills while the voice explains.
 
 | time | line | on screen |
 |---|---|---|
 | 0:00 | Remember converting a file? | "Wrong format." |
-| 0:02 | Upload it. Sign up. Just to hand over your files. | the usual routine |
-| 0:06 | Here's Forma. It converts your files right on your device. | logo hit → tagline |
+| 0:02 | Every site wants you to upload it. | "Upload your file." + upload card |
+| 0:05 | Or sign up first. | "Make an account." |
+| 0:07 | Just to hand over your files. | rows struck through |
+| 0:10 | There has to be an easier way. | "There's an easier way." |
+| 0:12 | Here's Forma. It converts your files right on your device. | logo hit → tagline |
+
+**Original timing (`short`, 52 s)** — the same pain squeezed into six seconds:
+
+| time | line |
+|---|---|
+| 0:00 | Remember converting a file? |
+| 0:02 | Every site wants you to upload it, or sign up first. |
+| 0:06 | Here's Forma. It converts your files right on your device. |
+
+From "Here's Forma" on the script is identical in both (the long cut is the same plus 6 s):
+
+| time (short) | line | on screen |
+|---|---|---|
 | 0:10 | Just drop in an image, a video, anything. | the file is dropped in |
 | 0:14 | Fifty-three formats to pick from. | the wheel spins |
 | 0:18 | One click, and it's done. | Convert → ready |
 | 0:21 | That's ninety-seven percent smaller. | the "97%" counter |
 | 0:25 | No more uploads. Everything stays on your device. | privacy |
-| 0:34 | Want it resized? Compressed? You get more control, when you need it. | the details sheet (resize / quality toggles) |
+| 0:34 | Want it resized? Compressed? You get more control, when you need it. | the details sheet |
 | 0:38 | And it's free. No account needed. | free card |
 | 0:41 | So next time, skip the upload. Open Forma. | call to action |
 | 0:46 | Forma. Convert files on your own device. | end card |
 
-`audio/vo/manifest.json` holds the script, the start time and latest allowed end of every line, and the Higgsfield clip ids; `audio/vo_fetch.py` downloads them and `audio/mix_vo.py` does the rest: trims each clip to its speech, levels it, applies a light compressor and a small room, fits it to its window with a pitch-preserving tempo change (natural pace; at most ×1.18, only where a beat is tight), places it so the first word lands on the beat, and ducks the score (−5 dB) and SFX (−3 dB) underneath. Voice sits about 10 dB over the bed while it speaks. Mastered with the same −14 LUFS tool. To change a line, edit it in the manifest, regenerate that clip in Higgsfield, swap the clip id and run `./build.sh voice`.
+`audio/vo_fetch.py` downloads the clips; `audio/mix_vo.py <short|long> …` trims each clip to its speech, levels it, applies a light compressor, the warm EQ and a small room, fits it to its window with a pitch-preserving tempo change (natural pace; at most ×1.12, in practice one line at ×1.09), places the first word on its beat and ducks the score (−5 dB) and SFX (−3 dB) underneath, with the voice about 10 dB over the bed. Mastered to −14 LUFS. QA: a speech recogniser run over each finished mix (music and SFX included) hears every scripted line at its beat and nothing else.
 
-QA: a speech-recogniser run over the finished mix (music and SFX included) hears every scripted line at its beat, with no stray speech.
+### The extended intro
+
+`?intro=6` (or `INTRO=6` for the tools) inserts 6 s — exactly three bars at 120 BPM, so the beat grid is untouched — before the logo hit. `engine.js` keeps a time map: scenes authored before `ripple()` use new coordinates, everything after keeps its original times and every timeline call, sound cue, motion-blur window and `measure()` is shifted through the map. `audio/music.py` takes `FORMA_SHIFT=6` and lengthens the opening section by repeating its own three-bar motif. `tools/shiftcheck.cjs` proves the claim: the default timeline is pixel-identical to the previous build, and the extended one equals the default shifted by 6 s from "There's an easier way" onward.
 
 ## Rebuild
 
@@ -70,7 +92,8 @@ QA: a speech-recogniser run over the finished mix (music and SFX included) hears
 npm install                       # gsap + sharp
 pip install numpy scipy soundfile matplotlib pillow
 ./build.sh                        # cues → score+SFX → render both cuts → mux   (~35–45 min / 4 cores)
-./build.sh voice                  # only the voice-over cuts: needs the renders + score stems from a previous build
+./build.sh voice                  # narrated cuts at the original timing (needs the renders + score stems from a previous build)
+./build.sh long                   # extended-intro cut: score, both renders, narration (~35 min)
 ```
 
 Pieces:
@@ -78,7 +101,7 @@ Pieces:
 * `src/` — the film. `css/base.css` tokens + components · `js/engine.js` timeline engine · `js/app.js` the workspace remake · `js/scenes_*.js` the storyboard (every `sfx(t, …)` cue sits next to the animation it belongs to).
 * `tools/render.cjs` — deterministic frame renderer (parallel Chromium, temporal supersampling → x264).
 * `tools/preview.cjs` + `tools/sheet.py` — render stills at timestamps / contact sheets for review.
-* `tools/determinism.cjs` — proves frames are a pure function of time (parallel rendering is safe).
+* `tools/determinism.cjs` — proves frames are a pure function of time (parallel rendering is safe). `tools/shiftcheck.cjs` — proves the extended intro is a pure time shift.
 * **Artifact audits** (run before every render, `node tools/<name>.cjs <reel|land>`):
   * `leaks.cjs` — elements that are drawn while their scene is hidden (CSS `visibility` is inherited, not cumulative: a child with an explicit `visibility:visible` still draws inside a hidden scene — use `inherit`).
   * `stuck.cjs` — elements still visible after their exit animation has finished, and elements visible before their own entrance.

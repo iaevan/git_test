@@ -9,7 +9,7 @@ const { chromium } = require('playwright'); const path = require('path');
   const b = await chromium.launch({ args: ['--allow-file-access-from-files'] });
   const p = await (await b.newContext({ viewport: { width: W, height: H } })).newPage();
   p.on('pageerror', e => console.log('[pageerror]', e.message));
-  await p.goto('file://' + path.resolve(__dirname, '../src/index.html') + '?fmt=' + fmt);
+  await p.goto('file://' + path.resolve(__dirname, '../src/index.html') + '?fmt=' + fmt + (process.env.INTRO ? '&intro=' + process.env.INTRO : ''));
   await p.waitForFunction('window.__ready === true');
   const res = await p.evaluate(() => {
     const PROPS = ['opacity', 'autoAlpha', 'visibility', 'scale', 'scaleX', 'scaleY', 'x', 'y', 'rotation', 'filter', 'clipPath', 'color', 'backgroundColor', 'height', 'width'];

@@ -1,12 +1,12 @@
 /* ACT 1 — the problem, then the brand reveal (0:00 – 0:09) */
 window.V = (r, l) => (R ? r : l);
-window.DUR = 52;
+window.DUR = 52 + SHIFT;
 const BLUE = '#3448ed';
 
 // shared light backdrop for the first scenes (so whip-pans never reveal a seam)
 const bgL = mk('div', 'fill', world);
 bgL.style.background = 'radial-gradient(90% 55% at 50% -8%, #e6e9ff 0%, rgba(230,233,255,0) 70%), radial-gradient(70% 40% at 100% 100%, #fbeee4 0%, rgba(251,238,228,0) 70%), #f7f8fa';
-tl.set(bgL, { display: 'none' }, 9.2);
+tl.set(bgL, { display: 'none' }, 9.2 + SHIFT);
 
 /* ── S1 · "Wrong format." ─────────────────────────────────── */
 (function () {
@@ -37,8 +37,10 @@ tl.set(bgL, { display: 'none' }, 9.2);
 })();
 
 /* ── S2 · "Upload. Wait. Sign up." (the usual routine) ────── */
+// Extended cut (?intro=6): the same routine, slowed down so the narration can explain it — the rows arrive one at a time
+// and a slow "Uploading to their server…" card carries the real complaint.  Original cut: timings unchanged.
 (function () {
-  const s = scene('routine', 1.8, 4.45);
+  const s = scene('routine', 1.8, 4.45 + SHIFT);
   gsap.set(s.cam, { x: W * 1.06 });
   tl.to(s.cam, { x: 0, duration: .55, ease: 'io' }, 1.85);
 
@@ -51,25 +53,46 @@ tl.set(bgL, { display: 'none' }, 9.2);
     { ic: 'clock', tx: 'Wait for it…' },
     { ic: 'user', tx: 'Make an account.' },
   ];
-  const sc = V(1.6, 1.5), gap = V(250, 205), y0 = V(850, 470);
+  const sc = LONG && !R ? 1.35 : V(1.6, 1.5), gap = LONG && !R ? 175 : V(250, 205), y0 = LONG && !R ? 395 : V(850, 470);
+  const rowT = LONG ? [2.08, 4.4, 5.6] : [2.08, 2.58, 3.08];
+  const strikeT = LONG ? 8.7 : 3.5;
   rows.forEach((r, i) => {
     const el = mk('div', 'row-pill', s.cam);
     el.innerHTML = '<span class="ri">' + icon(r.ic, 34, 1.8) + '</span><span class="tx">' + r.tx + '</span><i class="strike"></i>';
     place(el, W / 2, y0 + gap * i, { scale: sc, opacity: 0 });
     const st = el.querySelector('.strike');
     gsap.set(st, { scaleX: 0 });
-    const t0 = 2.08 + i * .5;
+    const t0 = rowT[i];
     tl.fromTo(el, { opacity: 0, x: W * .5, filter: 'blur(26px)' }, { opacity: 1, x: 0, filter: 'blur(0px)', duration: .75, ease: 'forma', immediateRender: false }, t0);
     // strike-through, fast, one after another
-    const ts = 3.5 + i * .1;
+    const ts = strikeT + i * .1;
     tl.to(st, { scaleX: 1, duration: .16, ease: 'power3.out' }, ts);
     tl.to(el, { opacity: .5, duration: .2, ease: 'power2.out' }, ts + .05);
   });
 
+  if (LONG) {
+    // "Uploading to their server…" — the file leaves your device, slowly
+    const upl = mk('div', 'upl', s.cam);
+    upl.innerHTML = '<span class="ui">' + icon('cloudUpload', 30, 1.9) + '</span><div><b>Uploading to their server…</b><div class="ub"><span class="bar"><i></i></span><em class="pc">0%</em></div></div>';
+    const us = R ? 1.75 : 1.3, uy = R ? 1650 : 925;
+    place(upl, W / 2, uy, { scale: us, opacity: 0 });
+    tl.fromTo(upl, { opacity: 0, y: 40, scale: us * .92, filter: 'blur(14px)' }, { opacity: 1, y: 0, scale: us, filter: 'blur(0px)', duration: .7, ease: 'forma', immediateRender: false }, 2.8);
+    const fill = upl.querySelector('.bar i'), pcEl = upl.querySelector('.pc'), pv = { v: 0 };
+    gsap.set(fill, { scaleX: 0 });
+    tl.to(fill, { scaleX: 1, duration: 5.2, ease: 'power1.inOut' }, 3.0);
+    tl.to(pv, { v: 100, duration: 5.2, ease: 'power1.inOut', onUpdate: () => { pcEl.textContent = Math.round(pv.v) + '%'; } }, 3.0);
+    // its own soft cues (the generic routine cues in sound.js are for the original timing)
+    [2.1, 4.4, 5.6].forEach((t, i) => sfx(t, 'pop', { n: ['A4', 'B4', 'C#5'][i], g: .6 }));
+    sfx(8.7, 'swoosh', { d: .3, dir: 1, g: .5 });
+  }
+
   // push up to the next scene
-  tl.to(s.cam, { y: -H * 1.06, duration: .55, ease: 'io' }, 3.9);
-  blurWin(3.9, 4.45, 10, 1);
+  tl.to(s.cam, { y: -H * 1.06, duration: .55, ease: 'io' }, 3.9 + SHIFT);
+  blurWin(3.9 + SHIFT, 4.45 + SHIFT, 10, 1);
 })();
+
+// from here on every scene is authored in the original timing and slides later by SHIFT (no-op in the original cut)
+ripple(3.85, SHIFT);
 
 /* ── S3 · "There's a better way." → text selection becomes the brand flood ─ */
 let FLOOD = { x: W / 2, y: H / 2 };

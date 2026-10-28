@@ -13,16 +13,19 @@ Arrangement (bar = 2 s) — still mapped to the picture:
   0:46–0:52  end card: soft hit, chord, sparse sparkle, fade
 """
 import functools
+import os
 import numpy as np
 from dsp import *
 
 BAR, STEP = 2.0, 0.125
-TOTAL, TAIL = 52.0, 3.0
+# FORMA_SHIFT: seconds (a whole number of bars) inserted into the opening "problem" section — used by the extended-intro cut
+S = float(os.environ.get('FORMA_SHIFT', 0))
+TOTAL, TAIL = 52.0 + S, 3.0
 N = int((TOTAL + TAIL) * SR)
 
 
 def T(bar, step=0.0):
-    return bar * BAR + step * STEP
+    return bar * BAR + step * STEP + S
 
 
 # ── instruments ────────────────────────────────────────────
@@ -158,46 +161,51 @@ def build_music():
                     if T(b, s) < limit:
                         place(B['kal'], pan(kal_mono(hz(ch['arp'][idx % 4]) * (2 if fuller and idx == 3 else 1)), -.45 if s % 2 else .45), T(b, s), .7)
 
-    # ── 0:00–0:06  the problem: neutral open fifths ─────────
+    # ── the problem (0:00–0:06, longer in the extended cut): neutral open fifths ─────────
+    P = 6.0 + S
     for k, nn in enumerate(['A2', 'E3', 'A3', 'E4']):
-        place(B['pad'], pan(pad_note(hz(nn), 6.6, 1.6, 1.0, k), -.3 + k * .2), 0.0, .55)
-    for t, nn in ((.5, 'A4'), (1.0, 'E5'), (1.5, 'B4'), (2.5, 'E5'), (3.0, 'A4'), (3.5, 'B4'), (4.5, 'E5'), (5.0, 'B4')):
-        place(B['kal'], pan(kal_mono(hz(nn)), .35 if int(t * 2) % 2 else -.35), t, .5)
-    for t in (2.0, 4.0):                                      # a soft sus2 EP chord — no third yet
+        place(B['pad'], pan(pad_note(hz(nn), P + .6, 1.6, 1.0, k), -.3 + k * .2), 0.0, .55)
+    KAL = ((.5, 'A4'), (1.0, 'E5'), (1.5, 'B4'), (2.5, 'E5'), (3.0, 'A4'), (3.5, 'B4'), (4.5, 'E5'), (5.0, 'B4'))
+    for cyc in range(int(np.ceil(P / 6.0))):                  # the 3-bar motif simply repeats
+        for t0, nn in KAL:
+            t = t0 + 6.0 * cyc
+            if t < P:
+                place(B['kal'], pan(kal_mono(hz(nn)), .35 if int(t * 2) % 2 else -.35), t, .5)
+    for t in np.arange(2.0, P - 1.0, 2.0):                    # a soft sus2 EP chord every bar — no third yet
         for k, nn in enumerate(['A3', 'E4', 'B4']):
-            place(B['ep'], ep_st(hz(nn), 2.0, .55), t + k * .02, .45)
-    for t in np.arange(1.0, 5.9, .5):
+            place(B['ep'], ep_st(hz(nn), 2.0, .55), float(t) + k * .02, .45)
+    for t in np.arange(1.0, P - .1, .5):
         place(B['shaker'], shaker_s(), float(t), .25)
-    place(B['fx'], pan(rev_chime(hz('A4'), 1.6), 0), 6.0 - 1.6, .5)   # swell into the logo
+    place(B['fx'], pan(rev_chime(hz('A4'), 1.6), 0), P - 1.6, .5)   # swell into the logo
 
     # ── 0:06–0:24  groove 1 ─────────────────────────────────
     ch1 = dict(zip(range(3, 13), ['A', 'E', 'F#m', 'D', 'A', 'E', 'F#m', 'D', 'A', 'E']))
     groove(3, 5, ch1, kalimba=False)
-    groove(5, 13, ch1, limit=24.5)
+    groove(5, 13, ch1, limit=24.5 + S)
 
     # ── 0:25–0:30  privacy: pad + slow arpeggio, no drums ───
-    bd = [(24.75, 26.0, 'A'), (26.0, 28.0, 'F#m'), (28.0, 29.0, 'D'), (29.0, 30.0, 'E')]
+    bd = [(24.75 + S, 26.0 + S, 'A'), (26.0 + S, 28.0 + S, 'F#m'), (28.0 + S, 29.0 + S, 'D'), (29.0 + S, 30.0 + S, 'E')]
     for t0, t1, c in bd:
         padchord(c, t0, t1 - t0, a=.5, r=1.0, g=.9, seed=300)
         place(B['bass'], pan(bass_note(ROOT_HZ[CH[c]['root']], t1 - t0 + .2), 0), t0, .7)
         for i in range(int((t1 - t0) / .5)):
             tt_ = t0 + i * .5
-            if tt_ < 25.4: continue
+            if tt_ < 25.4 + S: continue
             nn = CH[c]['arp'][[0, 1, 2, 3, 2, 1][i % 6]]
             place(B['ep'], ep_st(hz(nn), 1.1, .5), tt_, .5)
-    place(B['fx'], pan(rev_chime(hz('E4'), 1.4), 0), 30.0 - 1.4, .5)
+    place(B['fx'], pan(rev_chime(hz('E4'), 1.4), 0), 30.0 + S - 1.4, .5)
 
     # ── 0:30–0:44  groove 2 ─────────────────────────────────
     ch2 = {15: 'A', 16: 'E', 17: 'F#m', 18: 'D', 19: 'A', 20: 'E', 21: 'D', 22: 'E'}
-    groove(15, 22, ch2, limit=44.0, fuller=True)
+    groove(15, 22, ch2, limit=44.0 + S, fuller=True)
 
     # ── 0:44–0:46  one-breath build: held chord + rising kalimba run ──
-    padchord('E', 44.0, 2.0, a=.4, r=.5, g=.8)
+    padchord('E', 44.0 + S, 2.0, a=.4, r=.5, g=.8)
     for k, nn in enumerate(CH['E']['ep']):
-        place(B['ep'], ep_st(hz(nn), 2.0, .6), 44.0 + k * .014, .5)
+        place(B['ep'], ep_st(hz(nn), 2.0, .6), 44.0 + S + k * .014, .5)
     for i, nn in enumerate(['A4', 'B4', 'C#5', 'E5', 'F#5', 'A5']):
-        place(B['kal'], pan(kal_mono(hz(nn)), -.3 + i * .12), 45.0 + i * .16, .75)
-    place(B['fx'], pan(rev_chime(hz('A4'), 1.5), 0), 46.0 - 1.5, .55)
+        place(B['kal'], pan(kal_mono(hz(nn)), -.3 + i * .12), 45.0 + S + i * .16, .75)
+    place(B['fx'], pan(rev_chime(hz('A4'), 1.5), 0), 46.0 + S - 1.5, .55)
 
     # ── 0:46–0:52  end card ─────────────────────────────────
     ch3 = {23: 'A', 24: 'D', 25: 'A'}
@@ -221,7 +229,7 @@ def build_music():
         return 20 * np.log10(np.sqrt(np.mean(s ** 2)) + 1e-12)
     TARGET = dict(kick=-30, bass=-30.5, ep=-25.5, pad=-31.5, kal=-30.5, snap=-33.5, shaker=-37.5, fx=-33)
     for k, v in B.items():
-        cur = rms_db(v, 12, 20) if k != 'fx' else rms_db(v, 0, 52) + 6
+        cur = rms_db(v, 12 + S, 20 + S) if k != 'fx' else rms_db(v, 0, 52 + S) + 6
         B[k] = v * 10 ** ((TARGET[k] - cur) / 20)
 
     # gentle sidechain (kick breathes the bass + pad), EQ to keep layers apart

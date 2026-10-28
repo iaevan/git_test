@@ -12,7 +12,7 @@ const fs = require('fs');
   const page = await (await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1 })).newPage();
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('[page]', m.text()); });
   page.on('pageerror', (e) => console.log('[pageerror]', e.message));
-  const url = 'file://' + path.resolve(__dirname, '../src/index.html') + '?fmt=' + fmt;
+  const url = 'file://' + path.resolve(__dirname, '../src/index.html') + '?fmt=' + fmt + (process.env.INTRO ? '&intro=' + process.env.INTRO : '');
   await page.goto(url);
   await page.waitForFunction('window.__ready === true', null, { timeout: 30000 });
   const dur = await page.evaluate('window.DURATION');
