@@ -39,7 +39,7 @@ ir = make_ir(.55, .01, 5, damp=5000)                       # a small, soft room 
 dry = np.zeros((N, 2)); send = np.zeros((N, 2))
 spans = []                                                 # (start, end) of audible speech, for ducking
 TARGET_RMS = 10 ** (-20 / 20)                              # active-speech RMS before the bus gain
-BASE_TEMPO, MAX_TEMPO = 1.04, 1.22                         # every line a touch brisker; stretch more only where a beat demands it
+BASE_TEMPO, MAX_TEMPO = 1.0, 1.18                          # natural pace; stretch only where a beat demands it
 for ln in man['lines']:
     src = os.path.join(root, 'vo', voice, '%02d.mp3' % ln['i'])
     x = decode(src)

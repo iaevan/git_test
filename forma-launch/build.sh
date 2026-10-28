@@ -5,7 +5,7 @@ cd "$(dirname "$0")"
 export NODE_PATH=$(npm root -g)
 mkdir -p out dist/audio
 
-voiceover() {   # ./build.sh voice [ainsley|grady]   (needs out/mix_music.wav, out/mix_sfx.wav and the silent renders)
+voiceover() {   # ./build.sh voice   (needs out/mix_music.wav, out/mix_sfx.wav and the silent renders)
   V=${1:-ainsley}
   echo "→ voice-over ($V): fetch Higgsfield clips, mix under the score, master to -14 LUFS"
   python3 audio/vo_fetch.py

@@ -6,9 +6,8 @@ A 52-second SaaS launch film for [forma.thezavino.com](https://forma.thezavino.c
 |---|---|---|
 | `dist/forma-launch-reel-1080x1920.mp4` | 1080×1920, 60 fps | Reels / TikTok / Shorts |
 | `dist/forma-launch-landscape-1920x1080.mp4` | 1920×1080, 60 fps | YouTube / X / LinkedIn / site hero |
-| `dist/forma-launch-reel-1080x1920-voiceover.mp4` | 1080×1920, 60 fps | the reel **with voice-over** (female voice) |
-| `dist/forma-launch-landscape-1920x1080-voiceover.mp4` | 1920×1080, 60 fps | the landscape cut **with voice-over** (female voice) |
-| `dist/forma-launch-reel-1080x1920-voiceover-male.mp4` | 1080×1920, 60 fps | the reel with the alternate (male) voice |
+| `dist/forma-launch-reel-1080x1920-voiceover.mp4` | 1080×1920, 60 fps | the reel **with voice-over** (narrated) |
+| `dist/forma-launch-landscape-1920x1080-voiceover.mp4` | 1920×1080, 60 fps | the landscape cut **with voice-over** (narrated) |
 
 The first two have no voice: a synthesised 120 BPM score plus frame-locked UI sound effects — including the app's own wheel tick. The `-voiceover` cuts add a calm narration on top of exactly the same picture and bed.
 
@@ -44,26 +43,24 @@ Everything is **built in code**: the Forma UI (logo, file cards, format wheel, w
 
 ## Voice-over
 
-Generated with **Higgsfield** (Eleven v4 via `generate_audio`, stability 0.7): 14 short lines, one clip each, in two preset voices — *Ainsley* (female, default) and *Grady* (male). The script follows the product's own copy and the beat of the picture:
+Generated with **Higgsfield** (Eleven v4 via `generate_audio`, preset voice *Ainsley*, stability 0.5 for a natural, conversational read). It is written as a short story rather than captions for the screen — the pain everyone knows, the answer, the proof, the extras — and each line is pinned to the beat it belongs to:
 
-| time | line |
-|---|---|
-| 0:00 | Wrong format. Again. |
-| 0:02 | Upload. Wait. Sign up. |
-| 0:04 | There's an easier way. |
-| 0:06 | Meet Forma. Convert files, on your own device. |
-| 0:09 | Drop something in. *(step 01)* |
-| 0:12 | Give it a direction. *(step 02)* |
-| 0:18 | And it's yours to go. *(step 03)* |
-| 0:21 | Ninety-seven percent smaller. |
-| 0:25 | Your files never leave your device. |
-| 0:30 | Fifty-three formats. One little wheel. |
-| 0:34 | A little more control, when you want it. |
-| 0:37 | Free to use. No account needed. |
-| 0:41 | Convert your first file. |
-| 0:46 | Forma. Convert files on your own device. |
+| time | line | on screen |
+|---|---|---|
+| 0:00 | Remember converting a file? | "Wrong format." |
+| 0:02 | Upload it. Sign up. Just to hand over your files. | the usual routine |
+| 0:06 | Here's Forma. It converts your files right on your device. | logo hit → tagline |
+| 0:10 | Just drop in an image, a video, anything. | the file is dropped in |
+| 0:14 | Fifty-three formats to pick from. | the wheel spins |
+| 0:18 | One click, and it's done. | Convert → ready |
+| 0:21 | That's ninety-seven percent smaller. | the "97%" counter |
+| 0:25 | No more uploads. Everything stays on your device. | privacy |
+| 0:34 | Want it resized? Compressed? You get more control, when you need it. | the details sheet (resize / quality toggles) |
+| 0:38 | And it's free. No account needed. | free card |
+| 0:41 | So next time, skip the upload. Open Forma. | call to action |
+| 0:46 | Forma. Convert files on your own device. | end card |
 
-`audio/vo/manifest.json` holds the script, the start time and the latest allowed end of every line and the Higgsfield clip ids; `audio/vo_fetch.py` downloads them and `audio/mix_vo.py` does the rest: trims each clip to its speech, levels it, applies a light compressor and a small room, fits it to its window with a pitch-preserving tempo change (×1.04 everywhere, up to ×1.2 only where a beat is tight), places it so the first word lands on the beat, and ducks the score (−5 dB) and SFX (−3 dB) underneath. Voice sits about 10 dB over the bed while it speaks. Mastered with the same −14 LUFS tool. To use another voice, change the voice id in the manifest, regenerate the clips in Higgsfield and rerun `./build.sh voice`.
+`audio/vo/manifest.json` holds the script, the start time and latest allowed end of every line, and the Higgsfield clip ids; `audio/vo_fetch.py` downloads them and `audio/mix_vo.py` does the rest: trims each clip to its speech, levels it, applies a light compressor and a small room, fits it to its window with a pitch-preserving tempo change (natural pace; at most ×1.18, only where a beat is tight), places it so the first word lands on the beat, and ducks the score (−5 dB) and SFX (−3 dB) underneath. Voice sits about 10 dB over the bed while it speaks. Mastered with the same −14 LUFS tool. To change a line, edit it in the manifest, regenerate that clip in Higgsfield, swap the clip id and run `./build.sh voice`.
 
 QA: a speech-recogniser run over the finished mix (music and SFX included) hears every scripted line at its beat, with no stray speech.
 
@@ -73,7 +70,7 @@ QA: a speech-recogniser run over the finished mix (music and SFX included) hears
 npm install                       # gsap + sharp
 pip install numpy scipy soundfile matplotlib pillow
 ./build.sh                        # cues → score+SFX → render both cuts → mux   (~35–45 min / 4 cores)
-./build.sh voice [ainsley|grady]  # only the voice-over cuts: needs the renders + score stems from a previous build
+./build.sh voice                  # only the voice-over cuts: needs the renders + score stems from a previous build
 ```
 
 Pieces:

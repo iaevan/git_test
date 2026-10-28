@@ -1,127 +1,95 @@
 {
-  "engine": "Higgsfield \u00b7 Eleven v4 (elevenlabs_v4), stability 0.7",
+  "engine": "Higgsfield \u00b7 Eleven v4 (elevenlabs_v4), stability 0.5",
   "voices": {
     "ainsley": {
       "voice_id": "731b4ffe-e95e-59f4-8c00-81608936091f",
       "gender": "female"
-    },
-    "grady": {
-      "voice_id": "e2a2d2e6-9ed2-59cd-82af-feaa27f8a678",
-      "gender": "male"
     }
   },
   "lines": [
     {
       "i": 0,
-      "t": 0.15,
-      "text": "Wrong format. Again.",
-      "ainsley": "hf_20261028_102205_e557374e-0ccd-4f29-81fe-83118f4b977e",
-      "grady": "hf_20261028_102214_a8c7dea8-58de-40fd-8a5f-b1a8a18763ec",
-      "end": 2.3
+      "t": 0.2,
+      "end": 2.25,
+      "text": "Remember converting a file?",
+      "ainsley": "hf_20261028_112950_733017c4-5f58-4b56-bba8-1e6a2de2b345"
     },
     {
       "i": 1,
-      "t": 2.32,
-      "text": "Upload. Wait. Sign up.",
-      "ainsley": "hf_20261028_102205_e0cba73d-8e9d-4fd5-86fe-92cf32854b34",
-      "grady": "hf_20261028_102214_68cf3681-ff3a-4f23-b382-fbf75f191e37",
-      "end": 4.4
+      "t": 2.35,
+      "end": 6.15,
+      "text": "Upload it. Sign up. Just to hand over your files.",
+      "ainsley": "hf_20261028_112950_d6ae6cc4-d830-430c-8406-e048c37b21d3"
     },
     {
       "i": 2,
-      "t": 4.48,
-      "text": "There's an easier way.",
-      "ainsley": "hf_20261028_102205_b2fa72a5-2159-473e-9e42-f0fdd11964fb",
-      "grady": "hf_20261028_102214_f5d72c94-8015-4182-82bf-f10152ddbefc",
-      "end": 5.85
+      "t": 6.3,
+      "end": 10.2,
+      "text": "Here's Forma. It converts your files right on your device.",
+      "ainsley": "hf_20261028_112959_c32e6918-c7a5-4f44-8e7b-abc10f21cb3f"
     },
     {
       "i": 3,
-      "t": 6.3,
-      "text": "Meet Forma. Convert files, on your own device.",
-      "ainsley": "hf_20261028_102239_db7df1b8-abc4-4147-a51a-4a1513c0d467",
-      "grady": "hf_20261028_102214_e33cf59e-0dcd-4f56-8b35-00fe89462f52",
-      "end": 9.35
+      "t": 10.4,
+      "end": 13.9,
+      "text": "Just drop in an image, a video, anything.",
+      "ainsley": "hf_20261028_112950_8d949594-d9ba-49b2-80b8-b285a45357ac"
     },
     {
       "i": 4,
-      "t": 9.55,
-      "text": "Drop something in.",
-      "ainsley": "hf_20261028_102247_fabf5a2f-6e6a-4d73-9e1d-f06de62ac023",
-      "grady": "hf_20261028_102214_17b748b2-4c0c-4291-afb2-f9af2feca9ef",
-      "end": 11.0
+      "t": 14.1,
+      "end": 17.6,
+      "text": "Fifty-three formats to pick from.",
+      "ainsley": "hf_20261028_112959_7cd3d39d-ef40-4633-9d56-434d589251be"
     },
     {
       "i": 5,
-      "t": 12.05,
-      "text": "Give it a direction.",
-      "ainsley": "hf_20261028_102205_574e171c-e0fc-49cd-b9bb-4560e2cd1775",
-      "grady": "hf_20261028_102214_32097087-ba79-473a-bdc2-22e3c3d4230f",
-      "end": 18.0
+      "t": 18.45,
+      "end": 20.9,
+      "text": "One click, and it's done.",
+      "ainsley": "hf_20261028_112950_c58c18fa-4c9d-4f3f-b9be-54247a6c18cc"
     },
     {
       "i": 6,
-      "t": 18.45,
-      "text": "And it's yours to go.",
-      "ainsley": "hf_20261028_102205_32d914e4-f23f-4edc-8747-5cdc59e72a1e",
-      "grady": "hf_20261028_102214_49aa296f-ece6-463f-9119-e15041658c08",
-      "end": 20.9
+      "t": 21.1,
+      "end": 23.7,
+      "text": "That's ninety-seven percent smaller.",
+      "ainsley": "hf_20261028_113101_06381df0-2205-4992-9d98-a9d80e08d0fc"
     },
     {
       "i": 7,
-      "t": 21.3,
-      "text": "Ninety-seven percent smaller.",
-      "ainsley": "hf_20261028_102205_0a0692fb-4168-468d-96dd-a2ba8af3f28d",
-      "grady": "hf_20261028_102214_fe64a445-1f42-4b18-bfd8-b94274767ece",
-      "end": 23.3
+      "t": 25.3,
+      "end": 29.5,
+      "text": "No more uploads. Everything stays on your device.",
+      "ainsley": "hf_20261028_112959_3bb32108-38b6-4fe7-ac09-fa25452faf29"
     },
     {
       "i": 8,
-      "t": 25.7,
-      "text": "Your files never leave your device.",
-      "ainsley": "hf_20261028_102205_9756a025-6fc5-4aff-98e3-a32239896b76",
-      "grady": "hf_20261028_102214_ec5be8d8-8ff8-46e5-a796-0bbc3c9667ed",
-      "end": 29.5
+      "t": 34.0,
+      "end": 38.3,
+      "text": "Want it resized? Compressed? You get more control, when you need it.",
+      "ainsley": "hf_20261028_113006_b23b745b-4089-4764-814d-f55bbb11d554"
     },
     {
       "i": 9,
-      "t": 30.5,
-      "text": "Fifty-three formats. One little wheel.",
-      "ainsley": "hf_20261028_102239_a0ad94e4-13b1-451a-95e9-64edb50c6992",
-      "grady": "hf_20261028_102214_57c220d9-9b64-42d3-9a07-2fce91e11758",
-      "end": 33.8
+      "t": 38.5,
+      "end": 40.9,
+      "text": "And it's free. No account needed.",
+      "ainsley": "hf_20261028_113006_4f48932b-71cf-4dfd-96c0-22f8183aab13"
     },
     {
       "i": 10,
-      "t": 34.5,
-      "text": "A little more control, when you want it.",
-      "ainsley": "hf_20261028_102205_c182efa2-ba80-4c86-8523-d08e887d9629",
-      "grady": "hf_20261028_102239_1317aee7-8b74-49b8-b413-0cfb659eb6d0",
-      "end": 37.1
+      "t": 41.5,
+      "end": 45.2,
+      "text": "So next time, skip the upload. Open Forma.",
+      "ainsley": "hf_20261028_113006_ecae8a2f-0500-4223-842e-2837f3a05e56"
     },
     {
       "i": 11,
-      "t": 37.7,
-      "text": "Free to use. No account needed.",
-      "ainsley": "hf_20261028_102205_ff4c3d8b-3b40-4c14-b214-0cb6d43a2464",
-      "grady": "hf_20261028_102247_902de745-71ee-46c3-a376-b9ce66e0aef2",
-      "end": 40.2
-    },
-    {
-      "i": 12,
-      "t": 41.4,
-      "text": "Convert your first file.",
-      "ainsley": "hf_20261028_102214_e7e8c60a-7e48-4e4e-becf-de105bace548",
-      "grady": "hf_20261028_102247_d80e8be2-6718-4279-a6e6-cb182100ab8d",
-      "end": 45.0
-    },
-    {
-      "i": 13,
       "t": 46.7,
+      "end": 51.5,
       "text": "Forma. Convert files on your own device.",
-      "ainsley": "hf_20261028_102214_64e301ab-d85a-4ecf-8f26-a17b37fb8209",
-      "grady": "hf_20261028_102239_08802d08-70de-48f7-afed-103fe47a85c9",
-      "end": 51.5
+      "ainsley": "hf_20261028_113007_4cd09b2e-411a-4272-88de-2f850792d5d9"
     }
   ],
   "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/"
