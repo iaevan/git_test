@@ -66,7 +66,8 @@
    "say": "[cheerful] Happy? Tell Google. [softer, concerned] Not happy? Nila hears about it first... in time to make it right.",
    "id": "220359_dbf8a7e0-e3f3-4091-9b37-78f89e038013",
    "gaps": {
-    "1": 0.4
+    "1": 0.5,
+    "2": 0.52
    }
   },
   {

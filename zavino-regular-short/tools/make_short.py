@@ -48,7 +48,7 @@ if os.path.exists('build/index.html'):
     if mm: REAL = {b['scene']: b['dur'] for b in json.loads(mm.group(1))['beats']}
 def scaled(n, o): return round(o * REAL[n] / AUTH[n], 3) if n in AUTH and n in REAL else o
 order = [s for l in L for s in l[2]]
-PAUSE = {4: 0.9, 5: 0.5, 6: 0.8, 8: 0.8, 9: 0.5, 11: 0.5, 13: 0.5}   # by line index (0-based): the quiet beats get room to land
+PAUSE = {4: 0.9, 5: 0.5, 6: 0.8, 8: 0.8, 9: 0.3, 11: 0.5, 13: 0.5}   # by line index (0-based): the quiet beats get room to land
 S = {"title": "regular. - a Zavino Labs teaser",
  "brief": "Upcoming zavino. labs product (not built yet): smart review + customer tracking for restaurants and cafes. Story: Nila's Cafe 27 used to know every customer; busy-ness made her forget them; a cold coffee, a silent exit and a one-star review show the cost. Growing shouldn't mean forgetting: regular. is a way for a cafe to remember (QR on the table, verified check-in, order, one code and bill, after-meal question, low-rating alert, regulars, AI campaigns the owner approves). Payoff: 'The usual, Rafi?'",
  "format": "9:16", "look": {"mode": "clean"}, "fps": 30, "twos": 1, "pause": 0.35, "tail": 0.8,

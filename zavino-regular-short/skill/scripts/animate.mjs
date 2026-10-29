@@ -423,6 +423,20 @@ if (cmd === "frames" || cmd === "still") {
   process.exit(0);
 }
 
+if (cmd === "audio") {
+  // (patch) SA audio <dir> [<renders/vN.mp4>]: rebuild the soundtrack (voice, music, cues) and mux it into an existing render, video untouched
+  const s = load(dir);
+  const v = await narrate(dir, s, { quiet: true });
+  const tl = timeline(s, v);
+  const rdir = path.join(dir, "renders");
+  const base = rest[0] ? path.resolve(rest[0]) : path.join(rdir, fs.readdirSync(rdir).filter((f) => /^v\d+\.mp4$/.test(f)).sort((x, y) => Number(x.slice(1, -4)) - Number(y.slice(1, -4))).pop());
+  const audio = soundtrack(dir, s, tl, v);
+  const out = base.replace(/\.mp4$/, "-audio.mp4");
+  run("ffmpeg", ["-v", "error", "-y", "-i", base, "-i", audio, "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", out]);
+  console.log(`✓ new soundtrack (${tl.duration.toFixed(2)}s) muxed → ${out}`);
+  process.exit(0);
+}
+
 if (cmd === "patch") {
   // (patch) SA patch <dir> <shot> [<renders/vN.mp4>]: re-paint one shot and splice it into an existing render (no full re-render)
   const s = load(dir), shot = Number(rest[0]);

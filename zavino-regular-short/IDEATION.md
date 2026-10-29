@@ -40,24 +40,29 @@ It is one constant in the scenes (`NAME`) — swapping it means re-rendering the
 2. **"Rafi's Tuesday"** — follow one customer through every feature. Clear, but reads like a feature tour.
 3. **"The Usual"** ← chosen. Open on the owner's blind spot (hundreds of strangers), twist into the product via Rafi's visit — your Dhanmondi example, one chicken burger and a cold coffee, ৳850 — then pay it off: weeks later the owner greets him with **"The usual, Rafi?"**. Pain → product → emotional payoff → "coming soon".
 
-## 6. What the film says (≈74 s, 9:16, male narrator ~30–35 y/o — paced slowly, with room at every step of the customer flow)
+## 6. What the film says (≈87 s, 9:16 — the script was rebuilt around one idea)
 
-1. Every week, hundreds of people walk into your café.
-2. And you don't know a single one.
-3. Who's a regular? Who spends the most?
-4. And when someone's unhappy, they don't tell you.
-5. They just leave. Then post one star.
-6. So we're building something at Zavino Labs.
-7. A QR on every table. An offer worth scanning.
-8. Rafi scans, verifies, picks his order.
-9. One code. One bill. A real, paying customer.
-10. An hour later: how was it?
-11. Love it? Google. Unhappy? You hear it first.
-12. Four visits later, Rafi's a regular.
-13. Now she knows her regulars, her big spenders, who's gone quiet.
-14. New burger? Eid? Pohela Boishakh? AI writes. You approve.
-15. Every offer, measured. Every month, one report.
-16. regular. Coming soon from Zavino Labs.
+**The point:** *growing shouldn't mean forgetting.* A café that knew every customer by name stops knowing them when it gets busy — and pays for it (a cold coffee nobody hears about, a silent exit, a one-star). regular. gives a café a memory; the payoff is a customer hearing **"The usual, Rafi?"**.
+
+Narration (delivery directed per line — warm/nostalgic → wistful → sad → regretful → hushed → hopeful → upbeat → smiling → reassuring → delighted):
+
+1. When Nila opened Café 27, she knew everyone. Every name. Every order.
+2. Then it got busy. And somewhere in the rush, she stopped knowing them.
+3. So when a coffee came out cold, nobody noticed. No complaint. They just left.
+4. A week later, one star told her what nobody had.
+5. Growing shouldn't mean forgetting.
+6. So at Zavino Labs, we're building a way for cafés to remember.
+7. A QR on every table. Rafi scans, checks in, picks his order.
+8. One code. One bill. And Rafi isn't a stranger anymore.
+9. An hour later, how was it?
+10. Happy? Tell Google. Not happy? Nila hears about it first, in time to make it right.
+11. Visit by visit, Rafi becomes a regular.
+12. And one morning… *(Nila)* The usual, Rafi? *(Rafi)* Oh! You remembered!
+13. Now she sees who's coming back, and who's slipping away.
+14. She can reach out for Eid, for Pohela Boishakh, whenever she chooses.
+15. regular. Every customer, remembered. Coming soon from Zavino Labs.
+
+Every shot illustrates the sentence being spoken (cuts land on the words); the earlier feature-by-feature narration was dropped.
 
 ## 7. Characters
 
