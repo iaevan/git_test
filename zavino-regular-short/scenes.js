@@ -648,7 +648,7 @@ Object.assign(window.SCENES, {
     const wx = lerp(dx - 110 * k.u, dx + 40 * k.u, clamp01(t / 2.0)); g.save(); g.beginPath(); g.rect(dx - 210 * k.u, k.Y(0.7) - 860 * k.u, 420 * k.u, 860 * k.u); g.clip(); g.globalAlpha = 0.9 * clamp01(t / 0.5); person(k, { x: wx, y: k.Y(0.7), h: 340, sil: Z.f700, walk: 1.8 }); g.restore();
     const ring = Math.sin(t * 20) * Math.max(0, 1 - t * 0.8) * 0.55; bell(k, dx + 180 * k.u, k.Y(0.7) - 920 * k.u, 70, ring);
     chairBack(k, k.X(0.2), fy, 220 * k.u, 440 * k.u); tableCloth(k, k.X(0.2), k.Y(0.6), 420 * k.u, fy); cup(k, k.X(0.2), k.Y(0.6) - 80 * k.u, 130, Z.f700);
-    const a = clamp01((t - 0.7) / 0.4); g.save(); g.globalAlpha = a; g.translate(k.X(0.78), k.Y(0.4)); g.rotate(0.08); txt(g, "gone.", 0, 0, 76 * k.u, Z.f800, 800); g.restore();
+    const a = clamp01((t - 0.7) / 0.4); g.save(); g.globalAlpha = a; g.translate(k.X(0.845), k.Y(0.4)); g.rotate(0.08); txt(g, "gone.", 0, 0, 62 * k.u, Z.f800, 800); g.restore();
   },
   // 15 — "Rafi scans,"
   "rafi-scan": (k) => {
@@ -722,7 +722,7 @@ Object.assign(window.SCENES, {
     g.shadowColor = "rgba(13,34,23,0.3)"; g.shadowBlur = 40 * k.u; g.shadowOffsetY = 16 * k.u; rr(g, tx, ty, tw, th, 36 * k.u, Z.f950); g.shadowColor = "transparent"; rr(g, tx + 20 * k.u, ty + 20 * k.u, tw - 40 * k.u, th - 40 * k.u, 22 * k.u, Z.f50);
     rr(g, tx + 46 * k.u, ty + 44 * k.u, tw - 92 * k.u, 72 * k.u, 18 * k.u, "#e1f2e8"); txt(g, "✓  ZV-4821 · valid", tx + 80 * k.u, ty + 81 * k.u, 32 * k.u, Z.f800, 800, "left");
     txt(g, "Bill amount", tx + 54 * k.u, ty + 150 * k.u, 26 * k.u, Z.muted, 700, "left"); rr(g, tx + 46 * k.u, ty + 172 * k.u, tw - 92 * k.u, 100 * k.u, 22 * k.u, Z.white, Z.f600, 4 * k.u);
-    const n = t < 0.3 ? 0 : t < 0.65 ? 1 : t < 1.0 ? 2 : 3, shown = "৳ " + ["8", "5", "0"].slice(0, n).join("") + (n < 3 && Math.floor(t * 4) % 2 ? "|" : ""); txt(g, shown, tx + 80 * k.u, ty + 224 * k.u, 70 * k.u, Z.ink, 800, "left");
+    const n = t < 0.3 ? 0 : t < 0.65 ? 1 : t < 1.0 ? 2 : 3, shown = "৳ " + ["8", "5", "0"].slice(0, n).join("") + (n < 3 && Math.floor(t * 4) % 2 ? "_" : ""); txt(g, shown, tx + 80 * k.u, ty + 224 * k.u, 70 * k.u, Z.ink, 800, "left");
     const press = t > 1.4 && t < 1.5, ok = t > 1.5; g.save(); g.translate(tx + tw / 2, ty + 329 * k.u); g.scale(press ? 0.95 : 1, press ? 0.95 : 1); rr(g, -(tw - 92 * k.u) / 2, -33 * k.u, tw - 92 * k.u, 66 * k.u, 33 * k.u, ok ? Z.chat : Z.f800); txt(g, ok ? "✓  Confirmed" : "Confirm", 0, 1 * k.u, 32 * k.u, "#fff", 800); g.restore(); g.restore();
     if (ok) { const a = clamp01((t - 1.5) / 0.5); for (let i = 0; i < 6; i++) { const ang = i * 1.05 + 0.3; sparkle(k, k.X(0.5) + Math.cos(ang) * (380 + a * 120) * k.u, ty + 100 * k.u + Math.sin(ang) * (170 + a * 80) * k.u, 34 * k.u * (1 - a), i % 2 ? Z.amber : Z.f400, t * 4); } g.save(); g.translate(k.X(0.26), k.Y(0.42)); g.rotate(-0.12); txt(g, "ka-ching!", 0, 0, 56 * k.u * outBack((t - 1.5) / 0.25), Z.f800, 800); g.restore(); }
   },

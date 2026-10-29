@@ -40,7 +40,7 @@ It is one constant in the scenes (`NAME`) — swapping it means re-rendering the
 2. **"Rafi's Tuesday"** — follow one customer through every feature. Clear, but reads like a feature tour.
 3. **"The Usual"** ← chosen. Open on the owner's blind spot (hundreds of strangers), twist into the product via Rafi's visit — your Dhanmondi example, one chicken burger and a cold coffee, ৳850 — then pay it off: weeks later the owner greets him with **"The usual, Rafi?"**. Pain → product → emotional payoff → "coming soon".
 
-## 6. What the film says (≈58 s, 9:16, male narrator ~30–35 y/o)
+## 6. What the film says (≈74 s, 9:16, male narrator ~30–35 y/o — paced slowly, with room at every step of the customer flow)
 
 1. Every week, hundreds of people walk into your café.
 2. And you don't know a single one.
