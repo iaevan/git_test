@@ -423,6 +423,30 @@ if (cmd === "frames" || cmd === "still") {
   process.exit(0);
 }
 
+if (cmd === "patch") {
+  // (patch) SA patch <dir> <shot> [<renders/vN.mp4>]: re-paint one shot and splice it into an existing render (no full re-render)
+  const s = load(dir), shot = Number(rest[0]);
+  const v = await narrate(dir, s, { quiet: true });
+  const tl = timeline(s, v);
+  const bt = tl.beats[shot - 1] || die(`no shot ${shot}`);
+  const rdir = path.join(dir, "renders");
+  const base = rest[1] ? path.resolve(rest[1]) : path.join(rdir, fs.readdirSync(rdir).filter((f) => /^v\d+\.mp4$/.test(f)).sort((x, y) => Number(x.slice(1, -4)) - Number(y.slice(1, -4))).pop());
+  const pg = await page(dir, s, tl);
+  const fpsOut = tl.fps / tl.twos, d0 = Math.floor((bt.start * tl.fps) / tl.twos), d1 = Math.ceil(((bt.start + bt.dur) * tl.fps) / tl.twos);
+  const piece = path.join(rdir, `patch-${shot}.mp4`);
+  const ff = spawn("ffmpeg", ["-v", "error", "-y", "-f", "image2pipe", "-c:v", "mjpeg", "-framerate", String(fpsOut), "-i", "-", "-r", String(tl.fps), "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-pix_fmt", "yuv420p", piece], { stdio: ["pipe", "inherit", "inherit"] });
+  try {
+    const write = (buf) => new Promise((r) => (ff.stdin.write(buf) ? r() : ff.stdin.once("drain", r)));
+    for (let d = d0; d < d1; d++) await write(jpeg(await pg.evaluate(`window.drawing(${d})`)));
+  } finally { await pg.close(); }
+  ff.stdin.end();
+  await new Promise((r) => ff.on("close", r));
+  const t1 = d0 * tl.twos / tl.fps, t2 = d1 * tl.twos / tl.fps, out = base.replace(/\.mp4$/, "-patched.mp4");
+  run("ffmpeg", ["-v", "error", "-y", "-i", base, "-i", piece, "-filter_complex", `[1:v]setpts=PTS-STARTPTS+${t1.toFixed(4)}/TB[p];[0:v][p]overlay=eof_action=pass:enable='between(t,${t1.toFixed(4)},${t2.toFixed(4)})'`, "-c:v", "libx264", "-preset", "medium", "-crf", "17", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-c:a", "copy", out]);
+  console.log(`✓ shot ${shot} (${t1.toFixed(2)}–${t2.toFixed(2)}s) re-painted → ${out}`);
+  process.exit(0);
+}
+
 if (cmd === "render") {
   const s = load(dir);
   const t0 = Date.now();

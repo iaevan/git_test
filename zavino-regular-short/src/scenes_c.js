@@ -58,7 +58,7 @@ Object.assign(window.SCENES, {
     const wx = lerp(dx - 110 * k.u, dx + 40 * k.u, clamp01(t / 2.0)); g.save(); g.beginPath(); g.rect(dx - 210 * k.u, k.Y(0.7) - 860 * k.u, 420 * k.u, 860 * k.u); g.clip(); g.globalAlpha = 0.9 * clamp01(t / 0.5); person(k, { x: wx, y: k.Y(0.7), h: 340, sil: Z.f700, walk: 1.8 }); g.restore();
     const ring = Math.sin(t * 20) * Math.max(0, 1 - t * 0.8) * 0.55; bell(k, dx + 180 * k.u, k.Y(0.7) - 920 * k.u, 70, ring);
     chairBack(k, k.X(0.2), fy, 220 * k.u, 440 * k.u); tableCloth(k, k.X(0.2), k.Y(0.6), 420 * k.u, fy); cup(k, k.X(0.2), k.Y(0.6) - 80 * k.u, 130, Z.f700);
-    const a = clamp01((t - 0.7) / 0.4); g.save(); g.globalAlpha = a; g.translate(k.X(0.845), k.Y(0.4)); g.rotate(0.08); txt(g, "gone.", 0, 0, 62 * k.u, Z.f800, 800); g.restore();
+    const a = clamp01((t - 0.7) / 0.4); g.save(); g.globalAlpha = a; g.translate(k.X(0.8), k.Y(0.4)); g.rotate(0.08); txt(g, "gone.", 0, 0, 56 * k.u, Z.f800, 800); g.restore();
   },
   // 15 — "Rafi scans,"
   "rafi-scan": (k) => {

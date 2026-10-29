@@ -36,3 +36,4 @@ node skill/scripts/animate.mjs render .      # the MP4 (~18 min on 4 CPU cores i
 * `scripts/lib/chrome.mjs` — `--no-sandbox --disable-dev-shm-usage --enable-unsafe-swiftshader` so headless Chrome runs as root in a container, painting in software.
 * `scripts/runtime/stage.js` — `look.mode: "clean"` skips the brush pass; captions are rounded pills.
 * `scripts/animate.mjs` — `voice.clips` (one pre-trimmed audio file per line), `voice.marks` (per caption chunk, when it is spoken — cuts land on the words instead of a character-count guess), per-line `pause`, `cues` (sound effects placed by shot), and **web fonts**: any `assets/*.woff2` is registered as `@font-face` and loaded before the first drawing (used for Manrope).
+* `scripts/animate.mjs patch <dir> <shot>` — re-paints one shot and splices it into the latest `renders/vN.mp4` (about 1 minute), for small fixes without a full re-render.
