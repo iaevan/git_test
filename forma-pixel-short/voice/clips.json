@@ -1,0 +1,86 @@
+{
+  "engine": "Higgsfield \u00b7 Eleven v4 (elevenlabs_v4), preset voice Bella, stability 0.3",
+  "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/",
+  "lines": [
+    {
+      "say": "Meet Pixel.",
+      "id": "hf_20261029_121642_a85e4425-acd1-42b6-b12a-e5476436fee0"
+    },
+    {
+      "say": "Pixel is a PNG, who really needs to be a WebP.",
+      "id": "hf_20261029_121620_04417936-66d8-4a22-89d6-bc85a390b858",
+      "tempo": 1.05
+    },
+    {
+      "say": "So Pixel does what everyone does. Googles it.",
+      "id": "hf_20261029_121620_4ce9a46e-43c2-42a1-b4e8-52904a086d4f"
+    },
+    {
+      "say": "Big mistake.",
+      "id": "hf_20261029_121620_d63ab5fe-9de0-4dd1-a4a2-f1424cee744d"
+    },
+    {
+      "say": "Ads. Pop-ups. A sign-up wall.",
+      "id": "hf_20261029_121629_7a2fff3c-f40b-443a-a895-edb1f83a6b1c"
+    },
+    {
+      "say": "Pixel just wants to convert. Not win a cruise.",
+      "id": "hf_20261029_121629_76e21867-fba4-40e4-acc9-f2dfb2b0ee3d"
+    },
+    {
+      "say": "Then comes the scary part.",
+      "id": "hf_20261029_121629_17919760-3d10-4741-bc20-e698825cec3a"
+    },
+    {
+      "say": "Just upload your file to our servers. Somewhere.",
+      "id": "hf_20261029_121642_69d667bf-0d8f-4924-b03c-fbe16b883303"
+    },
+    {
+      "say": "Pixel does not love that plan.",
+      "id": "hf_20261029_121642_cfc7aa2a-7a95-46be-bba3-62011fc26e25"
+    },
+    {
+      "say": "So Pixel runs. Straight into Forma.",
+      "id": "hf_20261029_121650_8269e89a-625d-4f8d-b2a9-9ce086ee7b69"
+    },
+    {
+      "say": "Forma converts right on your device. So Pixel never has to leave home.",
+      "id": "hf_20261029_121650_a250a600-580c-49f0-a185-2464386c5c8a",
+      "tempo": 1.05
+    },
+    {
+      "say": "One drop. One click.",
+      "id": "hf_20261029_121650_eea4c84e-5533-4e79-b5d0-9cb7e9a7835a"
+    },
+    {
+      "say": "And just like that, Pixel is a WebP!",
+      "id": "hf_20261029_121657_2d4efdb3-dc30-4370-887a-aa38e69db21f"
+    },
+    {
+      "say": "Ninety-seven percent smaller. Pixel has never felt lighter.",
+      "id": "hf_20261029_121657_6f63f31a-a60f-4eb2-98aa-bbf4f9698600",
+      "tempo": 1.06
+    },
+    {
+      "say": "Soon, everyone's lining up.",
+      "id": "hf_20261029_121657_b568e1bf-0b43-48fb-b1e6-71d739e3cc9e"
+    },
+    {
+      "say": "Images. PDFs. Audio. Video. Even fonts.",
+      "id": "hf_20261029_121704_5019dc62-130a-4c2b-a661-5af57efd4a1c",
+      "tempo": 1.15
+    },
+    {
+      "say": "One door for all of them.",
+      "id": "hf_20261029_121705_5097fa91-2996-4e4e-bc68-e04824f1f103"
+    },
+    {
+      "say": "No sign-ups. No uploads. Just your device.",
+      "id": "hf_20261029_121704_b677d0b8-cdc4-4ef4-b59a-2d2bd6b1cd96"
+    },
+    {
+      "say": "Forma. A fresh start for your files.",
+      "id": "hf_20261029_121711_18f3af33-3d08-4217-8772-7cfb7125e03f"
+    }
+  ]
+}

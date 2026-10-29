@@ -1,0 +1,307 @@
+{
+  "title": "Forma - Meet Pixel",
+  "brief": "A little PNG called Pixel needs to become a WebP. Free converter sites bury it in ads, sign-ups and uploads to faraway servers; Forma converts on your own device. Invented story from thezavino.com / forma.thezavino.com.",
+  "format": "9:16",
+  "look": {
+    "mode": "clean"
+  },
+  "fps": 30,
+  "twos": 1,
+  "pause": 0.2,
+  "tail": 0.8,
+  "voice": {
+    "clips": [
+      "voice/01.wav",
+      "voice/02.wav",
+      "voice/03.wav",
+      "voice/04.wav",
+      "voice/05.wav",
+      "voice/06.wav",
+      "voice/07.wav",
+      "voice/08.wav",
+      "voice/09.wav",
+      "voice/10.wav",
+      "voice/11.wav",
+      "voice/12.wav",
+      "voice/13.wav",
+      "voice/14.wav",
+      "voice/15.wav",
+      "voice/16.wav",
+      "voice/17.wav",
+      "voice/18.wav",
+      "voice/19.wav"
+    ]
+  },
+  "music": {
+    "mood": "playful"
+  },
+  "captions": {
+    "style": "box",
+    "size": 52,
+    "weight": 700,
+    "y": 0.79,
+    "radius": 0.5,
+    "box": "rgba(18,22,60,0.8)",
+    "color": "#ffffff",
+    "font": "\"Inter\",\"Helvetica Neue\",Arial,sans-serif"
+  },
+  "lines": [
+    {
+      "say": "Meet Pixel.",
+      "scene": "pixel-intro",
+      "move": "push"
+    },
+    {
+      "say": "Pixel is a PNG, who really needs to be a WebP.",
+      "scene": [
+        "pixel-png",
+        "pixel-todo"
+      ],
+      "move": "push",
+      "caption": "Pixel is a PNG, / who really needs to be a WebP."
+    },
+    {
+      "say": "So Pixel does what everyone does. Googles it.",
+      "scene": [
+        "pixel-search",
+        "search-results"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "Big mistake.",
+      "scene": "ad-explosion",
+      "move": "push"
+    },
+    {
+      "say": "Ads. Pop-ups. A sign-up wall.",
+      "scene": [
+        "pixel-dodge",
+        "signup-wall"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "Pixel just wants to convert. Not win a cruise.",
+      "scene": [
+        "cruise-ad",
+        "pixel-annoyed"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "Then comes the scary part.",
+      "scene": "dark-hall",
+      "move": "push"
+    },
+    {
+      "say": "Just upload your file to our servers. Somewhere.",
+      "scene": [
+        "conveyor",
+        "faraway-servers"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "Pixel does not love that plan.",
+      "scene": "pixel-panic",
+      "move": "push"
+    },
+    {
+      "say": "So Pixel runs. Straight into Forma.",
+      "scene": [
+        "pixel-run",
+        "forma-door"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "Forma converts right on your device. So Pixel never has to leave home.",
+      "scene": [
+        "home-bubble",
+        "phone-laptop"
+      ],
+      "move": "push",
+      "caption": "Forma converts right on your device. / So Pixel never has to leave home."
+    },
+    {
+      "say": "One drop. One click.",
+      "scene": [
+        "drop",
+        "click"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "And just like that, Pixel is a WebP!",
+      "scene": "transform",
+      "move": "push"
+    },
+    {
+      "say": "Ninety-seven percent smaller. Pixel has never felt lighter.",
+      "scene": [
+        "weigh-in",
+        "pixel-float"
+      ],
+      "move": "push",
+      "caption": "Ninety-seven percent smaller. / Pixel has never felt lighter."
+    },
+    {
+      "say": "Soon, everyone's lining up.",
+      "scene": "queue",
+      "move": "push"
+    },
+    {
+      "say": "Images. PDFs. Audio. Video. Even fonts.",
+      "scene": [
+        "fmt-1",
+        "fmt-2",
+        "fmt-3"
+      ],
+      "move": "push",
+      "caption": "Images. PDFs. Audio. / Video. Even fonts."
+    },
+    {
+      "say": "One door for all of them.",
+      "scene": "one-door",
+      "move": "push"
+    },
+    {
+      "say": "No sign-ups. No uploads. Just your device.",
+      "scene": [
+        "no-signup",
+        "no-upload"
+      ],
+      "move": "push"
+    },
+    {
+      "say": "Forma. A fresh start for your files.",
+      "scene": "end-card",
+      "move": "push",
+      "hold": 0.4,
+      "caption": " "
+    }
+  ],
+  "cues": [
+    {
+      "shot": 1,
+      "offset": 0.5,
+      "name": "land",
+      "gain": 0.6
+    },
+    {
+      "shot": 1,
+      "offset": 0.6,
+      "name": "sparkle",
+      "gain": 0.6
+    },
+    {
+      "shot": 6,
+      "offset": 0,
+      "name": "swish",
+      "gain": 0.8
+    },
+    {
+      "shot": 6,
+      "offset": 0.02,
+      "name": "punch",
+      "gain": 0.6
+    },
+    {
+      "shot": 11,
+      "offset": 0,
+      "name": "riser-air",
+      "gain": 0.4
+    },
+    {
+      "shot": 14,
+      "offset": 0,
+      "name": "swish",
+      "gain": 0.6
+    },
+    {
+      "shot": 14,
+      "offset": 1.5,
+      "name": "land",
+      "gain": 0.5
+    },
+    {
+      "shot": 15,
+      "offset": 0,
+      "name": "whoosh",
+      "gain": 0.7
+    },
+    {
+      "shot": 16,
+      "offset": 0.3,
+      "name": "open",
+      "gain": 0.6
+    },
+    {
+      "shot": 16,
+      "offset": 1.3,
+      "name": "sparkle",
+      "gain": 0.6
+    },
+    {
+      "shot": 19,
+      "offset": 0.5,
+      "name": "land",
+      "gain": 0.6
+    },
+    {
+      "shot": 20,
+      "offset": 0.5,
+      "name": "click-ui",
+      "gain": 0.7
+    },
+    {
+      "shot": 21,
+      "offset": 0.45,
+      "name": "whoosh-up",
+      "gain": 0.6
+    },
+    {
+      "shot": 21,
+      "offset": 1.4,
+      "name": "sparkle",
+      "gain": 0.8
+    },
+    {
+      "shot": 21,
+      "offset": 1.45,
+      "name": "chime",
+      "gain": 0.7
+    },
+    {
+      "shot": 22,
+      "offset": 1.5,
+      "name": "confirm",
+      "gain": 0.6
+    },
+    {
+      "shot": 28,
+      "offset": 0.3,
+      "name": "whoosh-short",
+      "gain": 0.5
+    },
+    {
+      "shot": 29,
+      "offset": 0.5,
+      "name": "swipe",
+      "gain": 0.5
+    },
+    {
+      "shot": 31,
+      "offset": 0.1,
+      "name": "chime",
+      "gain": 0.7
+    },
+    {
+      "shot": 31,
+      "offset": 0.5,
+      "name": "sparkle",
+      "gain": 0.5
+    }
+  ]
+}
