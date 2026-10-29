@@ -47,7 +47,7 @@ Object.assign(window.SCENES, {
     txt(g, "Bill amount", tx + 54 * k.u, ty + 150 * k.u, 26 * k.u, Z.muted, 700, "left"); rr(g, tx + 46 * k.u, ty + 172 * k.u, tw - 92 * k.u, 100 * k.u, 22 * k.u, Z.white, Z.f600, 4 * k.u);
     const d = ["8", "5", "0"], n = Math.floor(clamp01((t - 0.08) / 0.55) * 3.0 + 0.01), shown = "৳ " + d.slice(0, Math.min(3, n)).join("") + (n < 3 && Math.floor(t * 3) % 2 ? "|" : ""); txt(g, shown, tx + 80 * k.u, ty + 224 * k.u, 70 * k.u, Z.ink, 800, "left");
     const ok = t > 0.75; rr(g, tx + 46 * k.u, ty + 296 * k.u, tw - 92 * k.u, 66 * k.u, 33 * k.u, ok ? Z.chat : Z.f800); txt(g, ok ? "✓  Confirmed" : "Confirm", tx + tw / 2, ty + 330 * k.u, 32 * k.u, "#fff", 800); g.restore();
-    if (ok) { const a = clamp01((t - 0.75) / 0.5); for (let i = 0; i < 6; i++) { const ang = i * 1.05 + 0.3; sparkle(k, k.X(0.5) + Math.cos(ang) * (380 + a * 120) * k.u, ty + 100 * k.u + Math.sin(ang) * (170 + a * 80) * k.u, 34 * k.u * (1 - a), i % 2 ? Z.amber : Z.f400, t * 4); } g.save(); g.translate(k.X(0.17), k.Y(0.42)); g.rotate(-0.12); txt(g, "ka-ching!", 0, 0, 62 * k.u * outBack((t - 0.75) / 0.25), Z.f800, 800); g.restore(); }
+    if (ok) { const a = clamp01((t - 0.75) / 0.5); for (let i = 0; i < 6; i++) { const ang = i * 1.05 + 0.3; sparkle(k, k.X(0.5) + Math.cos(ang) * (380 + a * 120) * k.u, ty + 100 * k.u + Math.sin(ang) * (170 + a * 80) * k.u, 34 * k.u * (1 - a), i % 2 ? Z.amber : Z.f400, t * 4); } g.save(); g.translate(k.X(0.26), k.Y(0.42)); g.rotate(-0.12); txt(g, "ka-ching!", 0, 0, 56 * k.u * outBack((t - 0.75) / 0.25), Z.f800, 800); g.restore(); }
   },
   // 20 — "A real, paying customer."
   "verified": (k) => {
@@ -119,7 +119,7 @@ Object.assign(window.SCENES, {
   "regular-badge": (k) => {
     soft(k); const g = k.g, t = k.t; previewTag(k); const cx = k.X(0.5), cy = k.Y(0.4), s = pop(k, 0, 0.35);
     g.save(); g.translate(cx, cy); g.scale(s, s); card(k, { x: -400 * k.u, y: -420 * k.u, w: 800 * k.u, h: 840 * k.u, r: 52 * k.u });
-    faceAvatar(k, 0, -270 * k.u, 120 * k.u, RAFI, t > 0.7 ? "proud" : "happy"); txt(g, "Rafi", 0, -128 * k.u, 74 * k.u, Z.ink, 800);
+    faceAvatar(k, 0, -285 * k.u, 105 * k.u, RAFI, t > 0.7 ? "proud" : "happy"); txt(g, "Rafi", 0, -122 * k.u, 70 * k.u, Z.ink, 800);
     const st = clamp01((t - 0.35) / 0.2); if (st > 0) { const sc = lerp(3, 1, outCubic(st)); g.save(); g.translate(0, -22 * k.u); g.rotate(-0.06); g.scale(sc, sc); g.globalAlpha = Math.min(1, st * 3); rr(g, -200 * k.u, -54 * k.u, 400 * k.u, 108 * k.u, 54 * k.u, Z.amber); star(g, -130 * k.u, 0, 30 * k.u, Z.f950); txt(g, "REGULAR", 30 * k.u, 4 * k.u, 54 * k.u, Z.f950, 800); g.restore(); }
     [["5", "visits"], ["৳4,250", "spent"], ["4.8", "avg rating"]].forEach(([v, l], i) => { const a = pop(k, 0.6 + i * 0.12, 0.28), x = (i - 1) * 250 * k.u; g.save(); g.translate(x, 110 * k.u); g.scale(a, a); rr(g, -112 * k.u, -62 * k.u, 224 * k.u, 124 * k.u, 26 * k.u, Z.f50); txt(g, v, 0, -10 * k.u, 46 * k.u, Z.f800, 800); txt(g, l, 0, 38 * k.u, 26 * k.u, Z.muted, 600); g.restore(); });
     const fv = pop(k, 1.0, 0.3); g.save(); g.translate(0, 290 * k.u); g.scale(fv, fv); rr(g, -330 * k.u, -52 * k.u, 660 * k.u, 104 * k.u, 28 * k.u, Z.f50); burger(k, -260 * k.u, 6 * k.u, 70 * k.u / k.u * k.u); txt(g, "Favourite: Chicken burger", 20 * k.u, 3 * k.u, 34 * k.u, Z.ink, 700); g.restore(); g.restore();
@@ -141,8 +141,8 @@ Object.assign(window.SCENES, {
   // 29 — "who's gone quiet."
   "gone-quiet": (k) => {
     soft(k); const g = k.g, t = k.t; previewTag(k); dash(k, 2, k.X(0.5) - 440 * k.u, k.Y(0.1), 880 * k.u, 860 * k.u, t);
-    const m = pop(k, 0.85, 0.35); g.save(); g.translate(k.X(0.5), k.Y(0.1) + 780 * k.u); g.scale(m, m); rr(g, -340 * k.u, -62 * k.u, 680 * k.u, 124 * k.u, 62 * k.u, Z.f800); txt(g, "Send a nudge · 15% off", 0, 3 * k.u, 42 * k.u, Z.linen, 800); g.restore();
-    if (t > 1.1) for (let i = 0; i < 3; i++) { const tt = clamp01((t - 1.1 - i * 0.1) / 0.6); g.save(); g.globalAlpha = Math.sin(tt * Math.PI); txt(g, "♥", k.X(0.5) - 120 * k.u + i * 120 * k.u, k.Y(0.1) + 700 * k.u - tt * 260 * k.u, 54 * k.u, Z.coral, 800); g.restore(); }
+    const m = pop(k, 0.85, 0.35); g.save(); g.translate(k.X(0.5), k.Y(0.1) + 960 * k.u); g.scale(m, m); rr(g, -340 * k.u, -62 * k.u, 680 * k.u, 124 * k.u, 62 * k.u, Z.f800); txt(g, "Send a nudge · 15% off", 0, 3 * k.u, 42 * k.u, Z.linen, 800); g.restore();
+    if (t > 1.1) for (let i = 0; i < 3; i++) { const tt = clamp01((t - 1.1 - i * 0.1) / 0.6); g.save(); g.globalAlpha = Math.sin(tt * Math.PI); txt(g, "♥", k.X(0.5) - 120 * k.u + i * 120 * k.u, k.Y(0.1) + 880 * k.u - tt * 260 * k.u, 54 * k.u, Z.coral, 800); g.restore(); }
   },
   // 30 — "New burger?" · "Eid?" · "Pohela Boishakh?"  (one big AI-drafted card per word)
   "campaign-burger": (k) => campaignCard(k, { bg: Z.amber, fg: Z.f950, sub: "rgba(16,36,26,0.7)", h1: "Our new Smoky Chicken", h2: "burger is here.", chan: "WhatsApp · SMS", art: (x, y) => { burger(k, x, y, 330); } }),

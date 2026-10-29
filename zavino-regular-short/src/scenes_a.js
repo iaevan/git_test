@@ -88,7 +88,7 @@ window.SCENES = {
   "door-close": (k) => {
     cafe(k, { dim: 0.22 }); const g = k.g, t = k.t, fy = k.Y(0.73), dx = k.X(0.5);
     door(k, { x: dx, y: k.Y(0.7), w: 420, h: 860, open: 1 - ease(t / 0.55), out1: "#e8dcc0", out2: "#f1e8d2" });
-    const wx = lerp(dx - 40 * k.u, dx + 130 * k.u, clamp01(t / 1.6)); g.save(); g.beginPath(); g.rect(dx - 210 * k.u, k.Y(0.7) - 860 * k.u, 420 * k.u, 860 * k.u); g.clip(); g.globalAlpha = 0.92 * clamp01(t / 0.5); person(k, { x: wx, y: k.Y(0.7), h: 340, ghost: true, ghostColor: Z.f700, walk: 2.2, flip: false }); g.restore();
+    const wx = lerp(dx - 110 * k.u, dx + 40 * k.u, clamp01(t / 1.6)); g.save(); g.beginPath(); g.rect(dx - 210 * k.u, k.Y(0.7) - 860 * k.u, 420 * k.u, 860 * k.u); g.clip(); g.globalAlpha = 0.92 * clamp01(t / 0.5); person(k, { x: wx, y: k.Y(0.7), h: 340, ghost: true, ghostColor: Z.f700, walk: 2.2, flip: false }); g.restore();
     const ring = Math.sin(t * 20) * Math.max(0, 1 - t * 0.8) * 0.55; bell(k, dx + 180 * k.u, k.Y(0.7) - 920 * k.u, 70, ring);
     chairBack(k, k.X(0.2), fy, 220 * k.u, 440 * k.u); tableCloth(k, k.X(0.2), k.Y(0.6), 420 * k.u, fy);
     cup(k, k.X(0.2), k.Y(0.6) - 80 * k.u, 130, Z.f700);

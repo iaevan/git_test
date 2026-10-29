@@ -242,7 +242,7 @@ function door(k, o) { // a glass café door seen from inside; (x,y) = bottom cen
   const gr = g.createLinearGradient(0, y, 0, o.y); gr.addColorStop(0, o.out1 || "#ffe9b0"); gr.addColorStop(1, o.out2 || "#fff6dc"); rr(g, x, y, w, h, 10 * k.u, gr);
   const sx = Math.max(0.1, 1 - 0.9 * op), fx = x + w * sx, dr = h * 0.05 * op;
   g.beginPath(); g.moveTo(x, o.y); g.lineTo(x, y); g.lineTo(fx, y + dr); g.lineTo(fx, o.y - dr); g.closePath(); g.fillStyle = "rgba(206,224,213,0.55)"; g.fill(); g.strokeStyle = Z.f800; g.lineWidth = 10 * k.u; g.stroke();
-  rr(g, x + (fx - x) * 0.72, o.y - h * 0.48, 10 * k.u * sx, 90 * k.u, 5 * k.u, Z.amber);
+  rr(g, x + (fx - x) * 0.9, o.y - h * 0.46, 10 * k.u * sx, 90 * k.u, 5 * k.u, Z.amber);
   return { x, y, w, h };
 }
 // ───────────────────────────── scenes, part A: the pain, the reveal, the scan ─────────────────────────────
@@ -335,7 +335,7 @@ window.SCENES = {
   "door-close": (k) => {
     cafe(k, { dim: 0.22 }); const g = k.g, t = k.t, fy = k.Y(0.73), dx = k.X(0.5);
     door(k, { x: dx, y: k.Y(0.7), w: 420, h: 860, open: 1 - ease(t / 0.55), out1: "#e8dcc0", out2: "#f1e8d2" });
-    const wx = lerp(dx - 40 * k.u, dx + 130 * k.u, clamp01(t / 1.6)); g.save(); g.beginPath(); g.rect(dx - 210 * k.u, k.Y(0.7) - 860 * k.u, 420 * k.u, 860 * k.u); g.clip(); g.globalAlpha = 0.92 * clamp01(t / 0.5); person(k, { x: wx, y: k.Y(0.7), h: 340, ghost: true, ghostColor: Z.f700, walk: 2.2, flip: false }); g.restore();
+    const wx = lerp(dx - 110 * k.u, dx + 40 * k.u, clamp01(t / 1.6)); g.save(); g.beginPath(); g.rect(dx - 210 * k.u, k.Y(0.7) - 860 * k.u, 420 * k.u, 860 * k.u); g.clip(); g.globalAlpha = 0.92 * clamp01(t / 0.5); person(k, { x: wx, y: k.Y(0.7), h: 340, ghost: true, ghostColor: Z.f700, walk: 2.2, flip: false }); g.restore();
     const ring = Math.sin(t * 20) * Math.max(0, 1 - t * 0.8) * 0.55; bell(k, dx + 180 * k.u, k.Y(0.7) - 920 * k.u, 70, ring);
     chairBack(k, k.X(0.2), fy, 220 * k.u, 440 * k.u); tableCloth(k, k.X(0.2), k.Y(0.6), 420 * k.u, fy);
     cup(k, k.X(0.2), k.Y(0.6) - 80 * k.u, 130, Z.f700);
@@ -496,7 +496,7 @@ Object.assign(window.SCENES, {
     txt(g, "Bill amount", tx + 54 * k.u, ty + 150 * k.u, 26 * k.u, Z.muted, 700, "left"); rr(g, tx + 46 * k.u, ty + 172 * k.u, tw - 92 * k.u, 100 * k.u, 22 * k.u, Z.white, Z.f600, 4 * k.u);
     const d = ["8", "5", "0"], n = Math.floor(clamp01((t - 0.08) / 0.55) * 3.0 + 0.01), shown = "৳ " + d.slice(0, Math.min(3, n)).join("") + (n < 3 && Math.floor(t * 3) % 2 ? "|" : ""); txt(g, shown, tx + 80 * k.u, ty + 224 * k.u, 70 * k.u, Z.ink, 800, "left");
     const ok = t > 0.75; rr(g, tx + 46 * k.u, ty + 296 * k.u, tw - 92 * k.u, 66 * k.u, 33 * k.u, ok ? Z.chat : Z.f800); txt(g, ok ? "✓  Confirmed" : "Confirm", tx + tw / 2, ty + 330 * k.u, 32 * k.u, "#fff", 800); g.restore();
-    if (ok) { const a = clamp01((t - 0.75) / 0.5); for (let i = 0; i < 6; i++) { const ang = i * 1.05 + 0.3; sparkle(k, k.X(0.5) + Math.cos(ang) * (380 + a * 120) * k.u, ty + 100 * k.u + Math.sin(ang) * (170 + a * 80) * k.u, 34 * k.u * (1 - a), i % 2 ? Z.amber : Z.f400, t * 4); } g.save(); g.translate(k.X(0.17), k.Y(0.42)); g.rotate(-0.12); txt(g, "ka-ching!", 0, 0, 62 * k.u * outBack((t - 0.75) / 0.25), Z.f800, 800); g.restore(); }
+    if (ok) { const a = clamp01((t - 0.75) / 0.5); for (let i = 0; i < 6; i++) { const ang = i * 1.05 + 0.3; sparkle(k, k.X(0.5) + Math.cos(ang) * (380 + a * 120) * k.u, ty + 100 * k.u + Math.sin(ang) * (170 + a * 80) * k.u, 34 * k.u * (1 - a), i % 2 ? Z.amber : Z.f400, t * 4); } g.save(); g.translate(k.X(0.26), k.Y(0.42)); g.rotate(-0.12); txt(g, "ka-ching!", 0, 0, 56 * k.u * outBack((t - 0.75) / 0.25), Z.f800, 800); g.restore(); }
   },
   // 20 — "A real, paying customer."
   "verified": (k) => {
@@ -568,7 +568,7 @@ Object.assign(window.SCENES, {
   "regular-badge": (k) => {
     soft(k); const g = k.g, t = k.t; previewTag(k); const cx = k.X(0.5), cy = k.Y(0.4), s = pop(k, 0, 0.35);
     g.save(); g.translate(cx, cy); g.scale(s, s); card(k, { x: -400 * k.u, y: -420 * k.u, w: 800 * k.u, h: 840 * k.u, r: 52 * k.u });
-    faceAvatar(k, 0, -270 * k.u, 120 * k.u, RAFI, t > 0.7 ? "proud" : "happy"); txt(g, "Rafi", 0, -128 * k.u, 74 * k.u, Z.ink, 800);
+    faceAvatar(k, 0, -285 * k.u, 105 * k.u, RAFI, t > 0.7 ? "proud" : "happy"); txt(g, "Rafi", 0, -122 * k.u, 70 * k.u, Z.ink, 800);
     const st = clamp01((t - 0.35) / 0.2); if (st > 0) { const sc = lerp(3, 1, outCubic(st)); g.save(); g.translate(0, -22 * k.u); g.rotate(-0.06); g.scale(sc, sc); g.globalAlpha = Math.min(1, st * 3); rr(g, -200 * k.u, -54 * k.u, 400 * k.u, 108 * k.u, 54 * k.u, Z.amber); star(g, -130 * k.u, 0, 30 * k.u, Z.f950); txt(g, "REGULAR", 30 * k.u, 4 * k.u, 54 * k.u, Z.f950, 800); g.restore(); }
     [["5", "visits"], ["৳4,250", "spent"], ["4.8", "avg rating"]].forEach(([v, l], i) => { const a = pop(k, 0.6 + i * 0.12, 0.28), x = (i - 1) * 250 * k.u; g.save(); g.translate(x, 110 * k.u); g.scale(a, a); rr(g, -112 * k.u, -62 * k.u, 224 * k.u, 124 * k.u, 26 * k.u, Z.f50); txt(g, v, 0, -10 * k.u, 46 * k.u, Z.f800, 800); txt(g, l, 0, 38 * k.u, 26 * k.u, Z.muted, 600); g.restore(); });
     const fv = pop(k, 1.0, 0.3); g.save(); g.translate(0, 290 * k.u); g.scale(fv, fv); rr(g, -330 * k.u, -52 * k.u, 660 * k.u, 104 * k.u, 28 * k.u, Z.f50); burger(k, -260 * k.u, 6 * k.u, 70 * k.u / k.u * k.u); txt(g, "Favourite: Chicken burger", 20 * k.u, 3 * k.u, 34 * k.u, Z.ink, 700); g.restore(); g.restore();
@@ -590,8 +590,8 @@ Object.assign(window.SCENES, {
   // 29 — "who's gone quiet."
   "gone-quiet": (k) => {
     soft(k); const g = k.g, t = k.t; previewTag(k); dash(k, 2, k.X(0.5) - 440 * k.u, k.Y(0.1), 880 * k.u, 860 * k.u, t);
-    const m = pop(k, 0.85, 0.35); g.save(); g.translate(k.X(0.5), k.Y(0.1) + 780 * k.u); g.scale(m, m); rr(g, -340 * k.u, -62 * k.u, 680 * k.u, 124 * k.u, 62 * k.u, Z.f800); txt(g, "Send a nudge · 15% off", 0, 3 * k.u, 42 * k.u, Z.linen, 800); g.restore();
-    if (t > 1.1) for (let i = 0; i < 3; i++) { const tt = clamp01((t - 1.1 - i * 0.1) / 0.6); g.save(); g.globalAlpha = Math.sin(tt * Math.PI); txt(g, "♥", k.X(0.5) - 120 * k.u + i * 120 * k.u, k.Y(0.1) + 700 * k.u - tt * 260 * k.u, 54 * k.u, Z.coral, 800); g.restore(); }
+    const m = pop(k, 0.85, 0.35); g.save(); g.translate(k.X(0.5), k.Y(0.1) + 960 * k.u); g.scale(m, m); rr(g, -340 * k.u, -62 * k.u, 680 * k.u, 124 * k.u, 62 * k.u, Z.f800); txt(g, "Send a nudge · 15% off", 0, 3 * k.u, 42 * k.u, Z.linen, 800); g.restore();
+    if (t > 1.1) for (let i = 0; i < 3; i++) { const tt = clamp01((t - 1.1 - i * 0.1) / 0.6); g.save(); g.globalAlpha = Math.sin(tt * Math.PI); txt(g, "♥", k.X(0.5) - 120 * k.u + i * 120 * k.u, k.Y(0.1) + 880 * k.u - tt * 260 * k.u, 54 * k.u, Z.coral, 800); g.restore(); }
   },
   // 30 — "New burger?" · "Eid?" · "Pohela Boishakh?"  (one big AI-drafted card per word)
   "campaign-burger": (k) => campaignCard(k, { bg: Z.amber, fg: Z.f950, sub: "rgba(16,36,26,0.7)", h1: "Our new Smoky Chicken", h2: "burger is here.", chan: "WhatsApp · SMS", art: (x, y) => { burger(k, x, y, 330); } }),

@@ -242,6 +242,6 @@ function door(k, o) { // a glass café door seen from inside; (x,y) = bottom cen
   const gr = g.createLinearGradient(0, y, 0, o.y); gr.addColorStop(0, o.out1 || "#ffe9b0"); gr.addColorStop(1, o.out2 || "#fff6dc"); rr(g, x, y, w, h, 10 * k.u, gr);
   const sx = Math.max(0.1, 1 - 0.9 * op), fx = x + w * sx, dr = h * 0.05 * op;
   g.beginPath(); g.moveTo(x, o.y); g.lineTo(x, y); g.lineTo(fx, y + dr); g.lineTo(fx, o.y - dr); g.closePath(); g.fillStyle = "rgba(206,224,213,0.55)"; g.fill(); g.strokeStyle = Z.f800; g.lineWidth = 10 * k.u; g.stroke();
-  rr(g, x + (fx - x) * 0.72, o.y - h * 0.48, 10 * k.u * sx, 90 * k.u, 5 * k.u, Z.amber);
+  rr(g, x + (fx - x) * 0.9, o.y - h * 0.46, 10 * k.u * sx, 90 * k.u, 5 * k.u, Z.amber);
   return { x, y, w, h };
 }
