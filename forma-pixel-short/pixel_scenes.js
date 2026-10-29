@@ -369,7 +369,7 @@ window.SCENES = {
     mark(k, { x: k.X(0.5), y: k.Y(0.27) + (1 - a1) * 40 * k.u, s: 340, colors: ["#ffffff", "#dfe4ff", "#b8c0ff"], grow: a1 });
     g.globalAlpha = a2; txt(g, "forma.", k.X(0.5), k.Y(0.45), 230 * k.u, "#fff", 800); txt(g, "A fresh start for your files", k.X(0.5), k.Y(0.535), 56 * k.u, "#e6e9ff", 600); g.globalAlpha = a3;
     rr(g, k.X(0.18), k.Y(0.59), k.X(0.64), 124 * k.u, 62 * k.u, "rgba(255,255,255,0.16)", "rgba(255,255,255,0.75)", 5 * k.u); txt(g, "forma.thezavino.com", k.X(0.5), k.Y(0.59) + 62 * k.u, 56 * k.u, "#fff", 700); g.globalAlpha = 1;
-    const gy = k.Y(0.84); shadow(k, k.X(0.5), gy, 260 * k.u); pixel(k, { x: k.X(0.5), y: gy - Math.abs(Math.sin(t * 3.5)) * 24 * k.u * a4, s: 250, label: "WEBP", color: P.green, mood: "proud", arms: "wave" });
+    const gy = k.Y(0.855); shadow(k, k.X(0.5), gy, 230 * k.u); pixel(k, { x: k.X(0.5), y: gy - Math.abs(Math.sin(t * 3.5)) * 24 * k.u * a4, s: 220, label: "WEBP", color: P.green, mood: "proud", arms: "wave" });
     g.globalAlpha = ease((t - 0.9) * 1.6);
     { const parts = [["a ", 38, 500, "rgba(255,255,255,0.8)"], ["zavino.", 56, 800, "#fff"], [" labs product", 38, 500, "rgba(255,255,255,0.8)"]]; let tw = 0; parts.forEach((p) => { g.font = `${p[2]} ${p[1] * k.u}px ${FONT}`; p.w = g.measureText(p[0]).width; tw += p.w; });
       let xx = k.X(0.5) - tw / 2; parts.forEach((p) => { txt(g, p[0], xx, k.Y(0.935), p[1] * k.u, p[3], p[2], "left"); xx += p.w; }); }
