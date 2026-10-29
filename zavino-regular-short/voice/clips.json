@@ -1,0 +1,72 @@
+{
+ "voice": "Mark (Higgsfield preset 27c04473-84a9-4b60-a41f-c8e8458bd4f1)",
+ "model": "elevenlabs_v4",
+ "stability": 0.35,
+ "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/hf_20261029_",
+ "lines": [
+  {
+   "say": "Every week, hundreds of people walk into your café.",
+   "id": "171129_b74d6529-84c4-4b5a-b003-c47c94fbd1b5"
+  },
+  {
+   "say": "And you don't know a single one.",
+   "id": "171138_9ab6262a-a37a-4510-9961-987257ea8147"
+  },
+  {
+   "say": "Who's a regular? Who spends the most?",
+   "id": "171129_2f529e9a-3ed9-4474-8dda-3f8e8afb758b"
+  },
+  {
+   "say": "And when someone's unhappy, they don't tell you.",
+   "id": "171128_eb5c6dd6-2dc0-49a9-9408-0ee0f46e71ed"
+  },
+  {
+   "say": "They just leave. Then post one star.",
+   "id": "171137_f90fb88a-35d4-4325-9d1a-ee13b747ac5d"
+  },
+  {
+   "say": "So we're building something at Zavino Labs.",
+   "id": "171139_c9114b05-6b20-4d08-b156-0d300271e4cd"
+  },
+  {
+   "say": "A QR code on every table. An offer worth scanning.",
+   "id": "171148_5b075b52-2ab3-4133-8cbf-b87ddbebd379"
+  },
+  {
+   "say": "Rafi scans, verifies, picks his order.",
+   "id": "171128_42aa4792-f0b0-4cf9-bd12-fbc21fd4f105"
+  },
+  {
+   "say": "One code. One bill. A real, paying customer.",
+   "id": "171142_ce5e88a4-ac57-42f7-82a5-e470812d8a91"
+  },
+  {
+   "say": "An hour later: how was it?",
+   "id": "171149_39339dc9-0179-44bc-928f-b26fdd4990aa"
+  },
+  {
+   "say": "Loved it? Off to Google. Unhappy? You hear it first.",
+   "id": "171142_5af83586-3414-4a34-baea-67dc0868337a"
+  },
+  {
+   "say": "Four visits later, Rafi's a regular.",
+   "id": "171142_8f7ecb62-6feb-4a04-b9ea-5cdab7b5bea2"
+  },
+  {
+   "say": "Now she knows her regulars, her big spenders, who's gone quiet.",
+   "id": "171148_c7436452-0fc4-4ffa-8a06-958f6dc9d404"
+  },
+  {
+   "say": "New burger? Eed? Pohela Boishakh? AI writes. You approve.",
+   "id": "171313_3a5ec716-df94-47b7-b6a7-8ba4cdc2b883"
+  },
+  {
+   "say": "Every offer, measured. Every month, one report.",
+   "id": "171155_676d0a1b-9619-4ea9-adad-371e76c4f3f2"
+  },
+  {
+   "say": "Regular. Coming soon, from Zavino Labs.",
+   "id": "171154_5863c02d-b0ca-423a-9878-a3045e7be414"
+  }
+ ]
+}

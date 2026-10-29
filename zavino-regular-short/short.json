@@ -1,0 +1,600 @@
+{
+ "title": "regular. - a Zavino Labs teaser",
+ "brief": "Upcoming zavino. labs product (not built yet): smart review + customer tracking for restaurants and cafes. A QR on each table earns a verified phone number, an order and a bill; then reviews, low-rating alerts, regulars, AI campaigns (the owner approves) and monthly reports. Story: owner Nila, customer Rafi, Cafe 27 in Dhanmondi.",
+ "format": "9:16",
+ "look": {
+  "mode": "clean"
+ },
+ "fps": 30,
+ "twos": 1,
+ "pause": 0.2,
+ "tail": 0.8,
+ "voice": {
+  "clips": [
+   "voice/01.wav",
+   "voice/02.wav",
+   "voice/03.wav",
+   "voice/04.wav",
+   "voice/05.wav",
+   "voice/06.wav",
+   "voice/07.wav",
+   "voice/08.wav",
+   "voice/09.wav",
+   "voice/10.wav",
+   "voice/11.wav",
+   "voice/12.wav",
+   "voice/13.wav",
+   "voice/14.wav",
+   "voice/15.wav",
+   "voice/16.wav"
+  ]
+ },
+ "music": {
+  "mood": "story"
+ },
+ "captions": {
+  "style": "box",
+  "size": 50,
+  "weight": 700,
+  "y": 0.79,
+  "radius": 0.5,
+  "box": "rgba(13,34,23,0.84)",
+  "color": "#f5f2e7",
+  "font": "\"Manrope\",\"Inter\",\"Helvetica Neue\",Arial,sans-serif"
+ },
+ "lines": [
+  {
+   "say": "Every week, hundreds of people walk into your café.",
+   "caption": "Every week, hundreds of people / walk into your café.",
+   "scene": [
+    "crowd-count",
+    "door-stream"
+   ],
+   "move": "push"
+  },
+  {
+   "say": "And you don't know a single one.",
+   "caption": "And you don't know / a single one.",
+   "scene": [
+    "nila-blank",
+    "ghost-lineup"
+   ],
+   "move": "push"
+  },
+  {
+   "say": "Who's a regular? Who spends the most?",
+   "caption": "Who's a regular? / Who spends the most?",
+   "scene": [
+    "who-regular",
+    "who-spender"
+   ],
+   "move": "push"
+  },
+  {
+   "say": "And when someone's unhappy, they don't tell you.",
+   "caption": "And when someone's unhappy, / they don't tell you.",
+   "scene": [
+    "unhappy-sip",
+    "quiet-exit"
+   ],
+   "move": "push"
+  },
+  {
+   "say": "They just leave. Then post one star.",
+   "caption": "They just leave. / Then post one star.",
+   "scene": [
+    "door-close",
+    "one-star"
+   ],
+   "move": "push"
+  },
+  {
+   "say": "So we're building something at Zavino Labs.",
+   "caption": "So we're building something / at Zavino Labs.",
+   "scene": [
+    "labs-build",
+    "labs-brand"
+   ],
+   "move": "still"
+  },
+  {
+   "say": "A QR code on every table. An offer worth scanning.",
+   "caption": "A QR code on every table. / An offer worth scanning.",
+   "scene": [
+    "table-qr",
+    "offer-card"
+   ],
+   "move": "push"
+  },
+  {
+   "say": "Rafi scans, verifies, picks his order.",
+   "caption": "Rafi scans, / verifies, / picks his order.",
+   "scene": [
+    "rafi-scan",
+    "otp",
+    "menu-pick"
+   ],
+   "move": "still"
+  },
+  {
+   "say": "One code. One bill. A real, paying customer.",
+   "caption": "One code. / One bill. / A real, paying customer.",
+   "scene": [
+    "code-show",
+    "bill-entry",
+    "verified"
+   ],
+   "move": "push"
+  },
+  {
+   "say": "An hour later: how was it?",
+   "caption": "An hour later: / how was it?",
+   "scene": [
+    "hour-later",
+    "chat-ask"
+   ],
+   "move": "still"
+  },
+  {
+   "say": "Loved it? Off to Google. Unhappy? You hear it first.",
+   "caption": "Loved it? Off to Google. / Unhappy? You hear it first.",
+   "scene": [
+    "five-star",
+    "low-alert"
+   ],
+   "move": "still"
+  },
+  {
+   "say": "Four visits later, Rafi's a regular.",
+   "caption": "Four visits later, / Rafi's a regular.",
+   "scene": [
+    "visit-stamps",
+    "regular-badge"
+   ],
+   "move": "still"
+  },
+  {
+   "say": "Now she knows her regulars, her big spenders, who's gone quiet.",
+   "caption": "Now she knows her regulars, / her big spenders, / who's gone quiet.",
+   "scene": [
+    "usual",
+    "spenders",
+    "gone-quiet"
+   ],
+   "move": "still"
+  },
+  {
+   "say": "New burger? Eid? Pohela Boishakh? AI writes. You approve.",
+   "caption": "New burger? / Eid? / Pohela Boishakh? / AI writes. You approve.",
+   "scene": [
+    "campaign-burger",
+    "campaign-eid",
+    "campaign-boishakh",
+    "approve"
+   ],
+   "move": "still"
+  },
+  {
+   "say": "Every offer, measured. Every month, one report.",
+   "caption": "Every offer, measured. / Every month, one report.",
+   "scene": [
+    "offer-result",
+    "monthly-report"
+   ],
+   "move": "still"
+  },
+  {
+   "say": "Regular. Coming soon, from Zavino Labs.",
+   "caption": "regular. / Coming soon from Zavino Labs.",
+   "scene": [
+    "end-name",
+    "end-card"
+   ],
+   "move": "still"
+  }
+ ],
+ "cues": [
+  {
+   "shot": 2,
+   "offset": 0.15,
+   "name": "bell",
+   "gain": 0.5
+  },
+  {
+   "shot": 8,
+   "offset": 0.95,
+   "name": "bell",
+   "gain": 0.45
+  },
+  {
+   "shot": 9,
+   "offset": 0.45,
+   "name": "land-light",
+   "gain": 0.4
+  },
+  {
+   "shot": 10,
+   "offset": 0.45,
+   "name": "drop",
+   "gain": 0.6
+  },
+  {
+   "shot": 10,
+   "offset": 0.95,
+   "name": "error-soft",
+   "gain": 0.4
+  },
+  {
+   "shot": 11,
+   "offset": 0,
+   "name": "riser-air",
+   "gain": 0.35
+  },
+  {
+   "shot": 11,
+   "offset": 1.35,
+   "name": "sparkle",
+   "gain": 0.5
+  },
+  {
+   "shot": 12,
+   "offset": 0.2,
+   "name": "chime",
+   "gain": 0.5
+  },
+  {
+   "shot": 13,
+   "offset": 0.1,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "shot": 13,
+   "offset": 0.38,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "shot": 13,
+   "offset": 0.66,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "shot": 14,
+   "offset": 0.1,
+   "name": "sparkle",
+   "gain": 0.4
+  },
+  {
+   "shot": 15,
+   "offset": 0.4,
+   "name": "click-ui",
+   "gain": 0.5
+  },
+  {
+   "shot": 15,
+   "offset": 0.6,
+   "name": "confirm",
+   "gain": 0.5
+  },
+  {
+   "shot": 16,
+   "offset": 0.1,
+   "name": "tick",
+   "gain": 0.35
+  },
+  {
+   "shot": 16,
+   "offset": 0.25,
+   "name": "tick",
+   "gain": 0.35
+  },
+  {
+   "shot": 16,
+   "offset": 0.4,
+   "name": "tick",
+   "gain": 0.35
+  },
+  {
+   "shot": 16,
+   "offset": 0.55,
+   "name": "tick",
+   "gain": 0.35
+  },
+  {
+   "shot": 16,
+   "offset": 0.68,
+   "name": "confirm",
+   "gain": 0.6
+  },
+  {
+   "shot": 17,
+   "offset": 0.3,
+   "name": "select",
+   "gain": 0.5
+  },
+  {
+   "shot": 17,
+   "offset": 0.75,
+   "name": "select",
+   "gain": 0.5
+  },
+  {
+   "shot": 18,
+   "offset": 0.1,
+   "name": "whoosh-short",
+   "gain": 0.4
+  },
+  {
+   "shot": 19,
+   "offset": 0.1,
+   "name": "key-press",
+   "gain": 0.45
+  },
+  {
+   "shot": 19,
+   "offset": 0.3,
+   "name": "key-press",
+   "gain": 0.45
+  },
+  {
+   "shot": 19,
+   "offset": 0.5,
+   "name": "key-press",
+   "gain": 0.45
+  },
+  {
+   "shot": 19,
+   "offset": 0.75,
+   "name": "chime",
+   "gain": 0.7
+  },
+  {
+   "shot": 19,
+   "offset": 0.8,
+   "name": "sparkle",
+   "gain": 0.5
+  },
+  {
+   "shot": 20,
+   "offset": 0.35,
+   "name": "confirm",
+   "gain": 0.4
+  },
+  {
+   "shot": 20,
+   "offset": 0.6,
+   "name": "confirm",
+   "gain": 0.4
+  },
+  {
+   "shot": 20,
+   "offset": 0.85,
+   "name": "confirm",
+   "gain": 0.4
+  },
+  {
+   "shot": 20,
+   "offset": 1.1,
+   "name": "punch",
+   "gain": 0.7
+  },
+  {
+   "shot": 20,
+   "offset": 1.25,
+   "name": "sparkle",
+   "gain": 0.5
+  },
+  {
+   "shot": 21,
+   "offset": 0,
+   "name": "whoosh-long",
+   "gain": 0.4
+  },
+  {
+   "shot": 22,
+   "offset": 0.1,
+   "name": "pop",
+   "gain": 0.45
+  },
+  {
+   "shot": 22,
+   "offset": 0.3,
+   "name": "pop",
+   "gain": 0.45
+  },
+  {
+   "shot": 22,
+   "offset": 0.55,
+   "name": "tap",
+   "gain": 0.45
+  },
+  {
+   "shot": 23,
+   "offset": 0.1,
+   "name": "sparkle",
+   "gain": 0.5
+  },
+  {
+   "shot": 23,
+   "offset": 1.0,
+   "name": "click-ui",
+   "gain": 0.5
+  },
+  {
+   "shot": 23,
+   "offset": 1.12,
+   "name": "confirm",
+   "gain": 0.5
+  },
+  {
+   "shot": 24,
+   "offset": 0.3,
+   "name": "error-soft",
+   "gain": 0.5
+  },
+  {
+   "shot": 24,
+   "offset": 0.9,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "shot": 25,
+   "offset": 0,
+   "name": "land-light",
+   "gain": 0.5
+  },
+  {
+   "shot": 25,
+   "offset": 0.2,
+   "name": "land-light",
+   "gain": 0.5
+  },
+  {
+   "shot": 25,
+   "offset": 0.5,
+   "name": "land-light",
+   "gain": 0.5
+  },
+  {
+   "shot": 25,
+   "offset": 0.8,
+   "name": "land-light",
+   "gain": 0.5
+  },
+  {
+   "shot": 25,
+   "offset": 1.1,
+   "name": "land-light",
+   "gain": 0.5
+  },
+  {
+   "shot": 26,
+   "offset": 0.4,
+   "name": "punch",
+   "gain": 0.7
+  },
+  {
+   "shot": 26,
+   "offset": 0.5,
+   "name": "sparkle",
+   "gain": 0.5
+  },
+  {
+   "shot": 27,
+   "offset": 0.1,
+   "name": "bell",
+   "gain": 0.4
+  },
+  {
+   "shot": 27,
+   "offset": 0.55,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "shot": 28,
+   "offset": 0,
+   "name": "swish",
+   "gain": 0.4
+  },
+  {
+   "shot": 29,
+   "offset": 0,
+   "name": "swish",
+   "gain": 0.4
+  },
+  {
+   "shot": 29,
+   "offset": 1.1,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "shot": 30,
+   "offset": 0.02,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "shot": 31,
+   "offset": 0.02,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "shot": 32,
+   "offset": 0.02,
+   "name": "pop",
+   "gain": 0.5
+  },
+  {
+   "shot": 31,
+   "offset": 0.15,
+   "name": "sparkle",
+   "gain": 0.4
+  },
+  {
+   "shot": 33,
+   "offset": 1.2,
+   "name": "click-ui",
+   "gain": 0.6
+  },
+  {
+   "shot": 33,
+   "offset": 1.3,
+   "name": "chime",
+   "gain": 0.5
+  },
+  {
+   "shot": 34,
+   "offset": 0,
+   "name": "swish",
+   "gain": 0.4
+  },
+  {
+   "shot": 34,
+   "offset": 1.3,
+   "name": "sparkle",
+   "gain": 0.4
+  },
+  {
+   "shot": 35,
+   "offset": 0,
+   "name": "swish",
+   "gain": 0.4
+  },
+  {
+   "shot": 35,
+   "offset": 1.2,
+   "name": "chime",
+   "gain": 0.4
+  },
+  {
+   "shot": 36,
+   "offset": 0.1,
+   "name": "land",
+   "gain": 0.6
+  },
+  {
+   "shot": 36,
+   "offset": 0.3,
+   "name": "sparkle",
+   "gain": 0.5
+  },
+  {
+   "shot": 37,
+   "offset": 0.35,
+   "name": "chime",
+   "gain": 0.6
+  },
+  {
+   "shot": 37,
+   "offset": 0.4,
+   "name": "sparkle",
+   "gain": 0.5
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+frames/
+build/
+voice/raw-*.mp3
+render.log
+render.done
+renders/
