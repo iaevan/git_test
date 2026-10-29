@@ -9,26 +9,6 @@ const tableCloth = (k, x, topY, w, floorY, col) => { const g = k.g; g.beginPath(
 const chairBack = (k, x, y, w, h) => { const g = k.g; rr(g, x - w / 2, y - h, w, h, w * 0.3, Z.woodDk); rr(g, x - w * 0.38, y - h * 0.9, w * 0.76, h * 0.55, w * 0.22, Z.wood); };
 
 window.SCENES = {
-  // 1 — "Every week, hundreds of people"
-  "crowd-count": (k) => {
-    cafe(k); const g = k.g, t = k.t, fy = k.Y(0.745);
-    const seq = [[-0.15, 0.45, 520], [-0.3, 0.38, 470], [-0.5, 0.55, 560], [-0.72, 0.47, 500], [-0.9, 0.4, 480], [-1.1, 0.52, 540]];
-    seq.forEach(([x0, sp, h], i) => { const x = x0 + t * sp * 0.9; person(k, { x: k.X(x), y: fy + (i % 3) * 18 * k.u, h, ghost: true, ghostColor: GHOST[i % GHOST.length], walk: 1.7 + i * 0.1, ph: i, arms: "down" }); });
-    shadow(k, k.X(0.86), k.Y(0.77), 420 * k.u, 0.1);
-    person(k, { x: k.X(0.86), y: k.Y(0.7), h: 600, ...NILA, mood: "happy", arms: "wipe" });
-    counter(k, { x0: 0.6, x1: 1.04, top: 0.64, bottom: 0.77, props: false });
-    const n = Math.round(lerp(0, 312, ease(t / 1.5))); const pw = 640 * k.u, px = k.X(0.5) - pw / 2, py = k.Y(0.14); const sc = 1 + 0.04 * Math.sin(t * 14) * (t < 1.5 ? 1 : 0);
-    g.save(); g.translate(k.X(0.5), py + 70 * k.u); g.scale(sc, sc); g.translate(-k.X(0.5), -(py + 70 * k.u)); card(k, { x: px, y: py, w: pw, h: 140 * k.u, r: 70 * k.u, fill: Z.f900 });
-    txt(g, String(n), px + 190 * k.u, py + 72 * k.u, 100 * k.u, Z.amberLt, 800); txt(g, "customers", px + 480 * k.u, py + 52 * k.u, 38 * k.u, Z.f200, 700); txt(g, "this week", px + 480 * k.u, py + 96 * k.u, 38 * k.u, Z.f300, 600); g.restore();
-  },
-  // 2 — "walk into your café."
-  "door-stream": (k) => {
-    cafe(k); const g = k.g, t = k.t, fy = k.Y(0.745), dx = k.X(0.5);
-    door(k, { x: dx, y: k.Y(0.7), w: 380, h: 800, open: ease(t / 0.2) * 0.95 });
-    const ring = Math.sin(t * 22) * Math.max(0, 1 - t * 0.9) * 0.5; bell(k, dx + 150 * k.u, k.Y(0.7) - 840 * k.u, 70, ring); txt(g, "ding!", dx + 150 * k.u, k.Y(0.7) - 960 * k.u, 46 * k.u, Z.f800, 800);
-    for (let i = 0; i < 7; i++) { const t0 = i * 0.2, tt = t - t0; if (tt < 0) continue; const side = i % 2 ? 1 : -1, tx = dx + side * (260 + (i % 4) * 110 + Math.floor(i / 2) * 20) * k.u, p = outCubic(tt / 1.1), x = lerp(dx, tx, p), sc = lerp(0.55, 1, p), h = 520 * sc;
-      person(k, { x, y: fy - (1 - p) * 70 * k.u, h, ghost: true, ghostColor: GHOST[i % GHOST.length], walk: tt < 1.1 ? 2.2 : 0, ph: i, flip: side < 0, alpha: clamp01(tt / 0.12) }); }
-  },
   // 3 — "And you don't know"
   "nila-blank": (k) => {
     cafe(k, { dim: 0.1 }); const g = k.g, t = k.t;
@@ -38,26 +18,6 @@ window.SCENES = {
     const nx = k.X(0.5), ny = k.Y(0.64) - 30 * k.u; g.save(); g.translate(nx, ny); g.rotate(-0.04); rr(g, -230 * k.u, -26 * k.u, 460 * k.u, 70 * k.u, 10 * k.u, Z.white, "rgba(22,53,36,0.2)", 3 * k.u);
     g.strokeStyle = "rgba(22,53,36,0.18)"; g.lineWidth = 3 * k.u; for (let i = 0; i < 2; i++) { g.beginPath(); g.moveTo(-190 * k.u, -2 * k.u + i * 28 * k.u); g.lineTo(190 * k.u, -2 * k.u + i * 28 * k.u); g.stroke(); } txt(g, "customers:", -130 * k.u, 6 * k.u, 30 * k.u, Z.grey, 700); g.restore();
     [[-0.28, 0.05], [0.3, 0.02], [0.02, -0.06]].forEach(([dx, dy], i) => qmark(k, k.X(0.5 + dx), p.top - 40 * k.u + dy * k.H - i * 20 * k.u, 150, 0.25 + i * 0.3));
-  },
-  // 4 — "a single one."
-  "ghost-lineup": (k) => {
-    cafe(k); const g = k.g, t = k.t, fy = k.Y(0.745);
-    const ps = []; for (let i = 0; i < 5; i++) { const x = k.X(0.12 + i * 0.19); shadow(k, x, fy + 6 * k.u, 230 * k.u, 0.1); ps.push([x, person(k, { x, y: fy, h: 620, ghost: true, ghostColor: GHOST[i], ph: i * 0.8, sq: 1 + Math.sin(t * 2 + i) * 0.006 })]); }
-    ps.forEach(([x, p], i) => { qmark(k, x, p.top - 110 * k.u, 110, 0.15 + i * 0.22); tagCard(k, x, fy - 330 * k.u, 170 * k.u, "no name", ease((t - 0.3 - i * 0.2) / 0.2)); });
-  },
-  // 5 — "Who's a regular?"
-  "who-regular": (k) => {
-    cafe(k); const g = k.g, t = k.t, fy = k.Y(0.72);
-    for (let i = 0; i < 4; i++) { const x = k.X(0.15 + i * 0.235); person(k, { x, y: fy, h: 680, ghost: true, ghostColor: GHOST[(i + 1) % 5], ph: i }); shadow(k, x, fy + 6 * k.u, 250 * k.u, 0.1); }
-    const mx = lerp(k.X(0.1), k.X(0.9), ease((t - 0.1) / 1.3)), my = k.Y(0.42) + Math.sin(t * 5) * 14 * k.u; g.save(); g.translate(mx, my); g.strokeStyle = Z.f800; g.lineWidth = 22 * k.u; g.lineCap = "round"; g.beginPath(); g.arc(0, 0, 150 * k.u, 0, 7); g.stroke(); g.fillStyle = "rgba(206,224,213,0.35)"; g.fill(); g.beginPath(); g.moveTo(106 * k.u, 106 * k.u); g.lineTo(250 * k.u, 250 * k.u); g.stroke(); txt(g, "?", 0, 4 * k.u, 170 * k.u, Z.f800, 800); g.restore();
-    const b = pop(k, 0.05, 0.3); g.save(); g.translate(k.X(0.5), k.Y(0.14)); g.scale(b, b); pill(g, -270 * k.u, -62 * k.u, 540 * k.u, 124 * k.u, Z.f900, "a regular?", Z.linen, 62 * k.u, 800); g.restore();
-  },
-  // 6 — "Who spends the most?"
-  "who-spender": (k) => {
-    cafe(k); const g = k.g, t = k.t, fy = k.Y(0.72);
-    [[0.2, 560, 0], [0.5, 700, 1], [0.8, 600, 2]].forEach(([fx, h, i]) => { const x = k.X(fx); person(k, { x, y: fy, h, ghost: true, ghostColor: GHOST[i + 2], ph: i }); shadow(k, x, fy + 6 * k.u, 250 * k.u, 0.1);
-      const s = pop(k, 0.12 + i * 0.3, 0.3), y = fy - h - 120 * k.u; g.save(); g.translate(x, y); g.scale(s, s); card(k, { x: -150 * k.u, y: -62 * k.u, w: 300 * k.u, h: 124 * k.u, r: 62 * k.u, fill: Z.white }); txt(g, "৳ ???", 0, 3 * k.u, 62 * k.u, Z.f800, 800); g.restore(); });
-    for (let i = 0; i < 7; i++) { const tt = (t * 0.5 + i * 0.21) % 1; g.save(); g.globalAlpha = Math.sin(tt * Math.PI) * 0.8; txt(g, "৳", k.X(0.08 + hash(i) * 0.84), k.Y(0.3) - tt * 260 * k.u, 70 * k.u, Z.amber, 800); g.restore(); }
   },
   // 7 — "And when someone's unhappy,"
   "unhappy-sip": (k) => {
@@ -83,16 +43,6 @@ window.SCENES = {
     person(k, { x, y: fy, h: 700, ...TANIA, mood: "sad", walk: moving ? 2.4 : 0, arms: "down", look: [1, 0.2], alpha: 1 - clamp01((wp - 0.86) / 0.14) });
     cup(k, k.X(0.34), k.Y(0.72), 120, Z.f700);
     if (t > 0.92) { const a = Math.sin(clamp01((t - 0.92) / 0.8) * Math.PI); g.save(); g.globalAlpha = a; txt(g, "ding", dx + 150 * k.u, k.Y(0.7) - 930 * k.u, 46 * k.u, Z.f800, 800); g.restore(); }
-  },
-  // 9 — "They just leave."
-  "door-close": (k) => {
-    cafe(k, { dim: 0.22 }); const g = k.g, t = k.t, fy = k.Y(0.73), dx = k.X(0.5);
-    door(k, { x: dx, y: k.Y(0.7), w: 420, h: 860, open: 1 - ease(t / 0.55), out1: "#e8dcc0", out2: "#f1e8d2" });
-    const wx = lerp(dx - 110 * k.u, dx + 40 * k.u, clamp01(t / 1.6)); g.save(); g.beginPath(); g.rect(dx - 210 * k.u, k.Y(0.7) - 860 * k.u, 420 * k.u, 860 * k.u); g.clip(); g.globalAlpha = 0.92 * clamp01(t / 0.5); person(k, { x: wx, y: k.Y(0.7), h: 340, ghost: true, ghostColor: Z.f700, walk: 2.2, flip: false }); g.restore();
-    const ring = Math.sin(t * 20) * Math.max(0, 1 - t * 0.8) * 0.55; bell(k, dx + 180 * k.u, k.Y(0.7) - 920 * k.u, 70, ring);
-    chairBack(k, k.X(0.2), fy, 220 * k.u, 440 * k.u); tableCloth(k, k.X(0.2), k.Y(0.6), 420 * k.u, fy);
-    cup(k, k.X(0.2), k.Y(0.6) - 80 * k.u, 130, Z.f700);
-    const a = clamp01((t - 0.6) / 0.4); g.save(); g.globalAlpha = a; g.translate(k.X(0.81), k.Y(0.4)); g.rotate(0.08); txt(g, "gone.", 0, 0, 76 * k.u, Z.f800, 800); g.restore();
   },
   // 10 — "Then post one star."
   "one-star": (k) => {
@@ -155,48 +105,5 @@ window.SCENES = {
     pill(g, -150 * k.u, 370 * k.u, 300 * k.u, 80 * k.u, Z.amber, "one-time offer", Z.f950, 34 * k.u, 800);
     g.restore();
     for (let i = 0; i < 6; i++) sparkle(k, cx + Math.cos(i * 1.05 + t * 1.5) * 470 * k.u, cy + Math.sin(i * 1.05 + t * 1.5) * 560 * k.u, (16 + 14 * Math.sin(t * 4 + i)) * k.u, i % 2 ? Z.amber : Z.f500, t + i);
-  },
-  // 15 — "Rafi scans,"
-  "rafi-scan": (k) => {
-    cafe(k); const g = k.g, t = k.t, fy = k.Y(0.76), tx = k.X(0.7), ty = k.Y(0.6);
-    chairBack(k, k.X(0.26), fy, 260 * k.u, 540 * k.u);
-    person(k, { x: k.X(0.26), y: fy, h: 800, ...RAFI, mood: t > 0.7 ? "happy" : "neutral", arms: "hold", look: [0.9, 0.2], sq: 1 + Math.sin(t * 2) * 0.004 });
-    tableCloth(k, k.X(0.5), ty, 880 * k.u, fy, Z.f700);
-    // tent card on the table
-    g.save(); g.translate(tx, ty - 22 * k.u); g.beginPath(); g.moveTo(-96 * k.u, 0); g.lineTo(96 * k.u, 0); g.lineTo(74 * k.u, -230 * k.u); g.lineTo(-74 * k.u, -230 * k.u); g.closePath(); g.fillStyle = Z.white; g.fill(); rr(g, -74 * k.u, -230 * k.u, 148 * k.u, 40 * k.u, 6 * k.u, Z.f900); qr(k, { x: 0, y: -110 * k.u, s: 110, seed: 9 }); g.restore();
-    // a phone in Rafi's hand, a scan beam to the card
-    const px = k.X(0.41), py = k.Y(0.535); phone(k, { x: px, y: py, h: 300, rot: 0.38, bg: Z.f900 });
-    const beam = clamp01((t - 0.15) / 0.3), fl = t > 0.45 ? Math.max(0, 1 - (t - 0.45) * 4) : 0; g.save(); g.globalAlpha = 0.55 * beam * (1 - clamp01((t - 0.9) / 0.3)); g.fillStyle = Z.amberLt; g.beginPath(); g.moveTo(px + 40 * k.u, py - 80 * k.u); g.lineTo(tx - 110 * k.u, ty - 330 * k.u); g.lineTo(tx - 110 * k.u, ty - 40 * k.u); g.closePath(); g.fill(); g.restore();
-    if (fl > 0) glowSpot(k, tx, ty - 130 * k.u, 300 * k.u, "#ffffff", fl * 0.8);
-    // brackets snapping on the QR
-    const sn = ease((t - 0.3) / 0.25), d = lerp(190, 110, sn) * k.u; g.save(); g.strokeStyle = Z.green || "#3a9d6b"; g.lineWidth = 12 * k.u; g.lineCap = "round"; [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sy]) => { g.beginPath(); g.moveTo(tx + sx * d, ty - 130 * k.u + sy * (d - 50 * k.u)); g.lineTo(tx + sx * d, ty - 130 * k.u + sy * d); g.lineTo(tx + sx * (d - 50 * k.u), ty - 130 * k.u + sy * d); g.stroke(); }); g.restore();
-    const b = pop(k, 0.55, 0.3); g.save(); g.translate(k.X(0.5), k.Y(0.2)); g.scale(b, b); card(k, { x: -380 * k.u, y: -90 * k.u, w: 760 * k.u, h: 180 * k.u, r: 90 * k.u, fill: Z.white }); circle(g, -290 * k.u, 0, 52 * k.u, Z.chat); txt(g, "✓", -290 * k.u, 4 * k.u, 62 * k.u, "#fff", 800); txt(g, "Offer found", -200 * k.u, -26 * k.u, 46 * k.u, Z.ink, 800, "left"); txt(g, "10% off at Café 27", -200 * k.u, 34 * k.u, 36 * k.u, Z.muted, 600, "left"); g.restore();
-  },
-  // 16 — "verifies,"
-  "otp": (k) => {
-    soft(k); const g = k.g, t = k.t; previewTag(k);
-    const ph = phone(k, { x: k.X(0.5), y: k.Y(0.43), h: 1140 });
-    clipScreen(g, ph, () => { const x0 = ph.x, y0 = ph.y, w = ph.w, u = ph.u; g.fillStyle = Z.f50; g.fillRect(x0, y0, w, ph.h);
-      txt(g, "Café 27", x0 + w / 2, y0 + 110 * u, 36 * u, Z.f700, 800); txt(g, "Verify your number", x0 + w / 2, y0 + 220 * u, 52 * u, Z.ink, 800);
-      rr(g, x0 + 50 * u, y0 + 300 * u, w - 100 * u, 110 * u, 22 * u, Z.white, "rgba(22,53,36,0.15)", 3 * u); txt(g, "+880 17•• ••• 821", x0 + w / 2, y0 + 357 * u, 40 * u, Z.ink, 700);
-      txt(g, "Enter the 4-digit code we sent", x0 + w / 2, y0 + 480 * u, 30 * u, Z.muted, 600);
-      const digs = ["4", "7", "2", "9"], bw = 104 * u, gap = 22 * u, bx = x0 + w / 2 - (bw * 4 + gap * 3) / 2;
-      digs.forEach((d, i) => { const on = t > 0.08 + i * 0.15, p = on ? outBack((t - 0.08 - i * 0.15) / 0.15) : 0, ok = t > 0.68; rr(g, bx + i * (bw + gap), y0 + 540 * u, bw, 130 * u, 22 * u, ok ? "#e1f2e8" : Z.white, ok ? Z.chat : (on ? Z.f700 : "rgba(22,53,36,0.18)"), 4 * u); if (on) txt(g, d, bx + i * (bw + gap) + bw / 2, y0 + 606 * u + (1 - p) * -30 * u, 70 * u * Math.min(1, p + 0.2), Z.ink, 800); });
-      const v = pop(k, 0.68, 0.25); g.save(); g.translate(x0 + w / 2, y0 + 840 * u); g.scale(v, v); rr(g, -250 * u, -60 * u, 500 * u, 120 * u, 60 * u, Z.chat); txt(g, "✓  Verified", 0, 3 * u, 50 * u, "#fff", 800); g.restore(); });
-    if (t > 0.68) for (let i = 0; i < 6; i++) sparkle(k, ph.cx + Math.cos(i * 1.05) * (200 + (t - 0.68) * 300) * k.u, k.Y(0.43) + 300 * k.u + Math.sin(i * 1.05) * (120 + (t - 0.68) * 260) * k.u, 26 * k.u * Math.max(0, 1 - (t - 0.68) * 2.5), Z.amber, t * 3);
-  },
-  // 17 — "picks his order."
-  "menu-pick": (k) => {
-    soft(k); const g = k.g, t = k.t; previewTag(k);
-    const ph = phone(k, { x: k.X(0.5), y: k.Y(0.43), h: 1140 });
-    clipScreen(g, ph, () => { const x0 = ph.x, y0 = ph.y, w = ph.w, u = ph.u; g.fillStyle = Z.f50; g.fillRect(x0, y0, w, ph.h);
-      txt(g, "What did you order?", x0 + w / 2, y0 + 130 * u, 50 * u, Z.ink, 800);
-      const items = [["Chicken burger", "৳550", 0.3, "b"], ["Cold coffee", "৳300", 0.75, "c"], ["Fries", "৳220", 99, "f"], ["Brownie", "৳180", 99, "w"]];
-      items.forEach(([n, pr, tc, ic], i) => { const y = y0 + 230 * u + i * 170 * u, on = t > tc, p = on ? outBack((t - tc) / 0.25) : 0; rr(g, x0 + 36 * u, y, w - 72 * u, 140 * u, 28 * u, on ? "#e8f3ec" : Z.white, on ? Z.chat : "rgba(22,53,36,0.12)", on ? 4 * u : 3 * u);
-        circle(g, x0 + 112 * u, y + 70 * u, 44 * u, Z.f100); if (ic === "b") burger(k, x0 + 112 * u, y + 76 * u, 64 * u / k.u); else if (ic === "c") cup(k, x0 + 112 * u, y + 70 * u, 64 * u / k.u, Z.terra); else circle(g, x0 + 112 * u, y + 70 * u, 20 * u, Z.sand2);
-        txt(g, n, x0 + 172 * u, y + 52 * u, 31 * u, Z.ink, 800, "left"); txt(g, pr, x0 + 172 * u, y + 98 * u, 28 * u, Z.muted, 700, "left");
-        circle(g, x0 + w - 98 * u, y + 70 * u, 28 * u, on ? Z.chat : Z.f100); if (on) { g.save(); g.translate(x0 + w - 98 * u, y + 70 * u); g.scale(p, p); txt(g, "✓", 0, 3 * u, 40 * u, "#fff", 800); g.restore(); } });
-      const bp = ease((t - 1.0) / 0.25); g.save(); g.globalAlpha = bp; rr(g, x0 + 50 * u, y0 + 930 * u, w - 100 * u, 120 * u, 60 * u, Z.f800); txt(g, "Continue", x0 + w / 2, y0 + 992 * u, 46 * u, Z.linen, 800); g.restore(); });
-    const tp = pop(k, 0.7, 0.3); g.save(); g.translate(k.X(0.86), k.Y(0.17)); g.rotate(0.06); g.scale(tp, tp); rr(g, -150 * k.u, -52 * k.u, 300 * k.u, 104 * k.u, 52 * k.u, Z.amber); txt(g, "৳850", 0, 3 * k.u, 58 * k.u, Z.f950, 800); g.restore();
   },
 };

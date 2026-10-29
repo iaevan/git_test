@@ -84,10 +84,12 @@ async function narrate(dir, s, { quiet = false } = {}) {
   if (v.clips) {
     // (patch) one audio file per line, already trimmed to its speech: v.clips = ["voice/01.wav", ...] (relative to the project)
     if (v.clips.length !== s.lines.length) die(`voice.clips has ${v.clips.length} files for ${s.lines.length} lines`);
-    for (const c of v.clips) {
+    // (patch) v.marks = "voice/marks.json": per line, the time (s) each caption chunk starts being spoken, so cuts land on the words
+    const marks = v.marks && fs.existsSync(path.resolve(dir, v.marks)) ? readJSON(path.resolve(dir, v.marks)) : null;
+    for (const [ci, c] of v.clips.entries()) {
       const f = path.resolve(dir, c);
       if (!fs.existsSync(f)) die(`voice clip ${c} not found`);
-      out.push({ file: f, dur: duration(f) });
+      out.push({ file: f, dur: duration(f), marks: marks ? marks[ci] : null });
     }
     return out;
   }
@@ -197,13 +199,14 @@ function timeline(s, voices) {
     const start = t;
     const speak = start + (i === 0 ? lead : 0.05);
     voiceAt.push(speak);
-    let end = speak + v.dur + pause + (ln.hold || 0);
+    let end = speak + v.dur + (ln.pause ?? pause) + (ln.hold || 0);   // (patch) per-line pause
     if (i === s.lines.length - 1) end += s.tail ?? 1.2;
     // captions: chunks timed by their length across the spoken part
     const cs = chunks(ln.caption ?? ln.say, maxWords);
     const total = cs.reduce((a, c) => a + c.length + 4, 0);
     let acc = 0;
-    const times = cs.map((c) => { const at = speak + (v.dur * acc) / total; acc += c.length + 4; return at; });
+    let times = cs.map((c) => { const at = speak + (v.dur * acc) / total; acc += c.length + 4; return at; });
+    if (v.marks && v.marks.length === cs.length) times = v.marks.map((m, j) => (j === 0 ? speak : speak + m - 0.05));   // (patch) cut a hair before the word
     cs.forEach((c, j) => track.push({ at: j === 0 ? start : times[j], end: j === cs.length - 1 ? end : times[j + 1], text: c }));
     // shots: one scene, or a list that splits the line at its caption chunks
     const scenes = Array.isArray(ln.scene) ? ln.scene : [ln.scene];

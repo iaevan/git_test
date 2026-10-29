@@ -24,31 +24,6 @@ function dash(k, tab, x, y, w, h, tt) {
 }
 
 Object.assign(window.SCENES, {
-  // 18 — "One code."
-  "code-show": (k) => {
-    cafe(k); const g = k.g, t = k.t, fy = k.Y(0.745);
-    person(k, { x: k.X(0.84), y: k.Y(0.71), h: 660, ...NILA, mood: t > 0.5 ? "happy" : "neutral", arms: "wave", look: [-0.8, 0.1] });
-    counter(k, { x0: 0.6, x1: 1.04, top: 0.64, bottom: 0.77 });
-    person(k, { x: k.X(0.17), y: fy, h: 740, ...RAFI, mood: "happy", arms: "up", look: [0.8, -0.2] });
-    const s = pop(k, 0.1, 0.4); g.save(); g.translate(k.X(0.55), k.Y(0.3)); g.rotate(-0.04 + Math.sin(t * 3) * 0.01); g.scale(s * 0.92, s * 0.92);
-    card(k, { x: -270 * k.u, y: -250 * k.u, w: 540 * k.u, h: 500 * k.u, r: 40 * k.u }); rr(g, -270 * k.u, -250 * k.u, 540 * k.u, 150 * k.u, 40 * k.u, Z.f900); rr(g, -270 * k.u, -140 * k.u, 540 * k.u, 40 * k.u, 0, Z.f900);
-    txt(g, "10% off", 0, -178 * k.u, 90 * k.u, Z.amberLt, 800); g.setLineDash([14 * k.u, 12 * k.u]); g.strokeStyle = Z.f300; g.lineWidth = 4 * k.u; g.beginPath(); g.moveTo(-250 * k.u, -60 * k.u); g.lineTo(250 * k.u, -60 * k.u); g.stroke(); g.setLineDash([]);
-    txt(g, "your code", 0, -20 * k.u, 34 * k.u, Z.muted, 700); txt(g, "ZV-4821", 0, 70 * k.u, 118 * k.u, Z.f800, 800); pill(g, -170 * k.u, 150 * k.u, 340 * k.u, 70 * k.u, Z.f100, "one-time · valid today", Z.f800, 28 * k.u, 800); g.restore();
-    if (t > 0.1 && t < 0.6) sparkle(k, k.X(0.55) + 250 * k.u, k.Y(0.3) - 260 * k.u, 46 * k.u, Z.amber, t * 3);
-  },
-  // 19 — "One bill."
-  "bill-entry": (k) => {
-    cafe(k); const g = k.g, t = k.t;
-    person(k, { x: k.X(0.5), y: k.Y(0.715), h: 860, ...NILA, mood: t > 0.75 ? "proud" : "happy", arms: "down", look: [0, 0.6] });
-    counter(k, { x0: -0.05, x1: 1.05, top: 0.69, bottom: 0.8, props: false });
-    const tw = 720 * k.u, th = 410 * k.u, tx = k.X(0.5) - tw / 2, ty = k.Y(0.45); g.save(); g.translate(k.X(0.5), ty + th); g.rotate(-0.02); g.translate(-k.X(0.5), -(ty + th));
-    g.shadowColor = "rgba(13,34,23,0.3)"; g.shadowBlur = 40 * k.u; g.shadowOffsetY = 16 * k.u; rr(g, tx, ty, tw, th, 36 * k.u, Z.f950); g.shadowColor = "transparent"; rr(g, tx + 20 * k.u, ty + 20 * k.u, tw - 40 * k.u, th - 40 * k.u, 22 * k.u, Z.f50);
-    rr(g, tx + 46 * k.u, ty + 44 * k.u, tw - 92 * k.u, 72 * k.u, 18 * k.u, "#e1f2e8"); txt(g, "✓  ZV-4821 · valid", tx + 80 * k.u, ty + 81 * k.u, 32 * k.u, Z.f800, 800, "left");
-    txt(g, "Bill amount", tx + 54 * k.u, ty + 150 * k.u, 26 * k.u, Z.muted, 700, "left"); rr(g, tx + 46 * k.u, ty + 172 * k.u, tw - 92 * k.u, 100 * k.u, 22 * k.u, Z.white, Z.f600, 4 * k.u);
-    const d = ["8", "5", "0"], n = Math.floor(clamp01((t - 0.08) / 0.55) * 3.0 + 0.01), shown = "৳ " + d.slice(0, Math.min(3, n)).join("") + (n < 3 && Math.floor(t * 3) % 2 ? "|" : ""); txt(g, shown, tx + 80 * k.u, ty + 224 * k.u, 70 * k.u, Z.ink, 800, "left");
-    const ok = t > 0.75; rr(g, tx + 46 * k.u, ty + 296 * k.u, tw - 92 * k.u, 66 * k.u, 33 * k.u, ok ? Z.chat : Z.f800); txt(g, ok ? "✓  Confirmed" : "Confirm", tx + tw / 2, ty + 330 * k.u, 32 * k.u, "#fff", 800); g.restore();
-    if (ok) { const a = clamp01((t - 0.75) / 0.5); for (let i = 0; i < 6; i++) { const ang = i * 1.05 + 0.3; sparkle(k, k.X(0.5) + Math.cos(ang) * (380 + a * 120) * k.u, ty + 100 * k.u + Math.sin(ang) * (170 + a * 80) * k.u, 34 * k.u * (1 - a), i % 2 ? Z.amber : Z.f400, t * 4); } g.save(); g.translate(k.X(0.26), k.Y(0.42)); g.rotate(-0.12); txt(g, "ka-ching!", 0, 0, 56 * k.u * outBack((t - 0.75) / 0.25), Z.f800, 800); g.restore(); }
-  },
   // 20 — "A real, paying customer."
   "verified": (k) => {
     soft(k); const g = k.g, t = k.t; previewTag(k);
@@ -71,17 +46,6 @@ Object.assign(window.SCENES, {
     const b = pop(k, 0.2, 0.3); g.save(); g.translate(cx, k.Y(0.125)); g.scale(b, b); pill(g, -230 * k.u, -56 * k.u, 460 * k.u, 112 * k.u, Z.f900, "1 hour later", Z.linen, 52 * k.u, 800); g.restore();
     person(k, { x: lerp(k.X(0.1), k.X(0.9), clamp01(t / 2.2)), y: k.Y(0.745), h: 330, ...RAFI, walk: 2.2, mood: "happy", arms: "down", flip: false });
   },
-  // 22 — "how was it?"
-  "chat-ask": (k) => {
-    soft(k); const g = k.g, t = k.t; previewTag(k);
-    const ph = phone(k, { x: k.X(0.5), y: k.Y(0.43), h: 1140 });
-    clipScreen(g, ph, () => { const x0 = ph.x, y0 = ph.y, w = ph.w, u = ph.u; g.fillStyle = "#eaf1ec"; g.fillRect(x0, y0, w, ph.h);
-      g.fillStyle = Z.f900; g.fillRect(x0, y0, w, 150 * u); circle(g, x0 + 80 * u, y0 + 84 * u, 40 * u, Z.f700); cup(k, x0 + 80 * u, y0 + 84 * u, 46 * u / k.u, Z.amberLt); txt(g, "Café 27", x0 + 140 * u, y0 + 70 * u, 36 * u, Z.linen, 800, "left"); txt(g, "message", x0 + 140 * u, y0 + 112 * u, 24 * u, Z.f300, 600, "left");
-      const m1 = pop(k, 0.1, 0.3); g.save(); g.translate(x0 + 40 * u, y0 + 260 * u); g.scale(m1, m1); rr(g, 0, 0, 400 * u, 190 * u, 30 * u, Z.white); txt(g, "Hi Rafi!", 34 * u, 56 * u, 40 * u, Z.ink, 800, "left"); txt(g, "How was your visit", 34 * u, 112 * u, 34 * u, Z.ink, 600, "left"); txt(g, "today?", 34 * u, 154 * u, 34 * u, Z.ink, 600, "left"); g.restore();
-      const m2 = pop(k, 0.3, 0.25); g.save(); g.translate(x0 + 40 * u, y0 + 500 * u); g.scale(m2, m2); rr(g, 0, 0, w - 80 * u, 250 * u, 30 * u, Z.white); txt(g, "Tap to rate", (w - 80 * u) / 2, 54 * u, 30 * u, Z.muted, 700);
-      const sz = 60 * u; for (let i = 0; i < 5; i++) { const f = clamp01((t - 0.62 - i * 0.09) / 0.08); star(g, (w - 80 * u) / 2 + (i - 2) * sz * 1.45, 150 * u, sz * 0.62, f > 0 ? Z.amber : Z.greyLt); } g.restore();
-      if (t > 0.45) { const tp = clamp01((t - 0.4) / 0.25); const fx = lerp(x0 + w * 0.85, x0 + w * 0.5 + 2 * sz * 1.45 - 40 * u, ease(tp)), fy = lerp(y0 + 900 * u, y0 + 650 * u, ease(tp)); g.save(); g.fillStyle = "rgba(22,53,36,0.25)"; g.beginPath(); g.arc(fx, fy, 38 * u, 0, 7); g.fill(); g.restore(); } });
-  },
   // 23 — "Loved it? Off to Google."
   "five-star": (k) => {
     soft(k); const g = k.g, t = k.t; previewTag(k);
@@ -96,7 +60,7 @@ Object.assign(window.SCENES, {
   },
   // 24 — "Unhappy? You hear it first."
   "low-alert": (k) => {
-    cafe(k, { dim: 0.08 }); const g = k.g, t = k.t, fy = k.Y(0.745), buzz = t > 0.35 && t < 1.2 ? Math.sin(t * 70) * 5 * k.u : 0;
+    cafe(k, { dim: 0.08, noBoard: true }); const g = k.g, t = k.t, fy = k.Y(0.745), buzz = t > 0.35 && t < 1.2 ? Math.sin(t * 70) * 5 * k.u : 0;
     person(k, { x: k.X(0.4), y: fy, h: 820, ...NILA, mood: t > 0.35 ? "wow" : "happy", arms: "hold", look: [0, 0.8], shake: t > 0.35 && t < 1.2 });
     phone(k, { x: k.X(0.4) + buzz, y: k.Y(0.5) + 60 * k.u, h: 230, bg: Z.coralLt, rot: -0.05 });
     const p = ease((t - 0.3) / 0.3); g.save(); g.translate(0, (1 - p) * -260 * k.u); g.globalAlpha = p; card(k, { x: k.X(0.5) - 440 * k.u, y: k.Y(0.1), w: 880 * k.u, h: 270 * k.u, r: 44 * k.u, fill: Z.white, sh: "rgba(226,87,76,0.35)" });
@@ -127,7 +91,7 @@ Object.assign(window.SCENES, {
   },
   // 27 — "Now she knows her regulars,"
   "usual": (k) => {
-    cafe(k); const g = k.g, t = k.t, fy = k.Y(0.745), dx = k.X(0.86);
+    cafe(k, { noBoard: true }); const g = k.g, t = k.t, fy = k.Y(0.745), dx = k.X(0.86);
     door(k, { x: dx, y: k.Y(0.7), w: 300, h: 740, open: 0.95 });
     person(k, { x: k.X(0.24), y: k.Y(0.71), h: 700, ...NILA, mood: "happy", arms: "wave", look: [0.9, 0] });
     counter(k, { x0: -0.05, x1: 0.5, top: 0.64, bottom: 0.77, props: false });
@@ -196,9 +160,7 @@ Object.assign(window.SCENES, {
     const a1 = ease(t * 3);
     g.save(); g.globalAlpha = a1; txt(g, NAME, k.X(0.5), k.Y(0.3) + (1 - a1) * 30 * k.u, 230 * k.u, Z.linen, 800); txt(g, "Turn first visits into favourites.", k.X(0.5), k.Y(0.4), 50 * k.u, Z.f200, 600); g.restore();
     const b = pop(k, 0.35, 0.35); g.save(); g.translate(k.X(0.5), k.Y(0.52)); g.scale(b, b); pill(g, -260 * k.u, -62 * k.u, 520 * k.u, 124 * k.u, Z.amber, "Coming soon", Z.f950, 62 * k.u, 800); g.restore();
-    const a3 = ease((t - 0.7) / 0.4); g.save(); g.globalAlpha = a3; if (IMAGES["zavino-symbol-light"]) g.drawImage(IMAGES["zavino-symbol-light"], k.X(0.5) - 280 * k.u, k.Y(0.915) - 40 * k.u, 80 * k.u, 80 * k.u);
-    g.font = `800 ${74 * k.u}px ${FONT}`; const w1 = g.measureText("zavino.").width; g.font = `500 ${38 * k.u}px ${FONT}`; const w2 = g.measureText(" labs").width, x0 = k.X(0.5) - 180 * k.u;
-    txt(g, "zavino.", x0, k.Y(0.915), 74 * k.u, Z.linen, 800, "left"); txt(g, " labs", x0 + w1, k.Y(0.915) + 12 * k.u, 38 * k.u, Z.f300, 500, "left"); g.restore();
+    const a3 = ease((t - 0.7) / 0.4); g.save(); g.globalAlpha = a3; zavinoLockup(k, k.X(0.5), k.Y(0.915), 76); g.restore();
     if (t < 1.4) confetti(k, 24, 0.4, 0.2, [Z.amber, Z.f400, Z.amberLt, Z.f300]);
   },
 });
@@ -211,8 +173,3 @@ function campaignCard(k, c) {
 }
 function floorBand(k, y) { const g = k.g, gr = g.createLinearGradient(0, k.Y(y), 0, k.H); gr.addColorStop(0, Z.woodLt); gr.addColorStop(1, Z.wood); g.fillStyle = gr; g.fillRect(0, k.Y(y), k.W, k.H - k.Y(y)); }
 function cursorArrow(k, x, y, s) { const g = k.g; s *= k.u; g.save(); g.translate(x, y); g.beginPath(); g.moveTo(0, 0); g.lineTo(0, s); g.lineTo(s * 0.28, s * 0.76); g.lineTo(s * 0.5, s * 1.15); g.lineTo(s * 0.65, s * 1.07); g.lineTo(s * 0.43, s * 0.7); g.lineTo(s * 0.78, s * 0.66); g.closePath(); g.fillStyle = Z.ink; g.fill(); g.lineWidth = s * 0.07; g.strokeStyle = "#fff"; g.stroke(); g.restore(); }
-
-// the café shots are zoomed in a little so people fill the vertical frame (less floor, bigger faces)
-["crowd-count", "door-stream", "nila-blank", "ghost-lineup", "who-regular", "who-spender", "unhappy-sip", "quiet-exit", "door-close", "table-qr", "rafi-scan", "code-show", "bill-entry", "low-alert", "usual", "end-name"].forEach((n) => {
-  const f = window.SCENES[n]; window.SCENES[n] = (k) => { const g = k.g; g.save(); g.translate(k.W / 2, k.Y(0.12)); g.scale(1.12, 1.12); g.translate(-k.W / 2, -k.Y(0.12)); f(k); g.restore(); };
-});
