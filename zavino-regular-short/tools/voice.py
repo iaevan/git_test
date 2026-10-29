@@ -20,6 +20,7 @@ asr = WhisperModel('base.en', device='cpu', compute_type='int8', local_files_onl
 def norm(w): return re.sub(r'[^a-z0-9]', '', w.lower())
 
 marks_all = []
+clips = []
 for i, ln in enumerate(m['lines'], 1):
     raw = os.path.join(here, 'raw-%02d.mp3' % i)
     if not os.path.exists(raw) or os.path.getsize(raw) < 1000:
@@ -66,8 +67,18 @@ for i, ln in enumerate(m['lines'], 1):
         marks.append(round(starts[j] + shift, 3))
     pieces.append(y[prev_cut:]); y = np.concatenate(pieces)
     n = int(.01 * SR); y[:n] *= np.linspace(0, 1, n); m_ = int(.06 * SR); y[-m_:] *= np.linspace(1, 0, m_)
-    y *= .9 / max(np.max(np.abs(y)), 1e-6)
-    sf.write(os.path.join(here, '%02d.wav' % i), y, SR, subtype='PCM_16')
+    clips.append(y)
     marks_all.append(marks)
     print('%02d  %.2f s  marks %s  %s' % (i, len(y) / SR, marks, 'exact' if len(W) == tot else 'guess(%d/%d words)' % (len(W), tot)))
+# Level: the directed takes are deliberately quieter (sad, hushed) or livelier (upbeat). Peak-normalising each clip would flatten that,
+# so every clip gets a gain that keeps KEEP of its level difference from the average line, with the loudest peak at .9.
+KEEP = m.get('keep_dynamics', 0.6)
+rms = np.array([20 * np.log10(np.sqrt(np.mean(c[np.abs(c) > .01 * np.abs(c).max()] ** 2)) + 1e-9) for c in clips])
+target = rms.mean() + KEEP * (rms - rms.mean())
+gain = target - rms
+peak = max(np.max(np.abs(c)) * 10 ** (g / 20) for c, g in zip(clips, gain))
+gain += 20 * np.log10(.9 / peak)
+for i, (c, g) in enumerate(zip(clips, gain), 1):
+    sf.write(os.path.join(here, '%02d.wav' % i), np.clip(c * 10 ** (g / 20), -1, 1), SR, subtype='PCM_16')
+print('levels (dB rms) before -> after:', ', '.join('%.1f→%.1f' % (r, r + g) for r, g in zip(rms, gain)))
 json.dump(marks_all, open(os.path.join(here, 'marks.json'), 'w'))

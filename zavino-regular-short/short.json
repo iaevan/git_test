@@ -1,6 +1,6 @@
 {
  "title": "regular. - a Zavino Labs teaser",
- "brief": "Upcoming zavino. labs product (not built yet): smart review + customer tracking for restaurants and cafes. A QR on each table earns a verified phone number, an order and a bill; then reviews, low-rating alerts, regulars, AI campaigns (the owner approves) and monthly reports. Story: owner Nila, customer Rafi, Cafe 27 in Dhanmondi.",
+ "brief": "Upcoming zavino. labs product (not built yet): smart review + customer tracking for restaurants and cafes. Story: Nila's Cafe 27 used to know every customer; busy-ness made her forget them; a cold coffee, a silent exit and a one-star review show the cost. Growing shouldn't mean forgetting: regular. is a way for a cafe to remember (QR on the table, verified check-in, order, one code and bill, after-meal question, low-rating alert, regulars, AI campaigns the owner approves). Payoff: 'The usual, Rafi?'",
  "format": "9:16",
  "look": {
   "mode": "clean"
@@ -25,13 +25,12 @@
    "voice/12.wav",
    "voice/13.wav",
    "voice/14.wav",
-   "voice/15.wav",
-   "voice/16.wav"
+   "voice/15.wav"
   ],
   "marks": "voice/marks.json"
  },
  "music": {
-  "mood": "story"
+  "mood": "hopeful"
  },
  "captions": {
   "style": "box",
@@ -45,93 +44,82 @@
  },
  "lines": [
   {
-   "say": "Every week, hundreds of people walk into your café.",
-   "caption": "Every week, hundreds of people / walk into your café.",
+   "say": "When Nila opened Café 27, she knew everyone. Every name. Every order.",
+   "caption": "When Nila opened Café 27, / she knew everyone. / Every name. Every order.",
+   "scene": [
+    "open-sign",
+    "early-names",
+    "early-orders"
+   ],
+   "move": "push"
+  },
+  {
+   "say": "Then it got busy. And somewhere in the rush, she stopped knowing them.",
+   "caption": "Then it got busy. / And somewhere in the rush, / she stopped knowing them.",
    "scene": [
     "crowd-count",
-    "door-stream"
+    "lineup",
+    "nila-blank"
    ],
    "move": "push"
   },
   {
-   "say": "And you don't know a single one.",
-   "caption": "And you don't know / a single one.",
-   "scene": [
-    "nila-blank",
-    "lineup"
-   ],
-   "move": "push"
-  },
-  {
-   "say": "Who's a regular? Who spends the most?",
-   "caption": "Who's a regular? / Who spends the most?",
-   "scene": [
-    "who-regular",
-    "who-spender"
-   ],
-   "move": "push"
-  },
-  {
-   "say": "And when someone's unhappy, they don't tell you.",
-   "caption": "And when someone's unhappy, / they don't tell you.",
+   "say": "So when a coffee came out cold, nobody noticed. No complaint. They just left.",
+   "caption": "So when a coffee came out cold, / nobody noticed. / No complaint. They just left.",
    "scene": [
     "unhappy-sip",
-    "quiet-exit"
+    "quiet-exit",
+    "door-close"
    ],
    "move": "push"
   },
   {
-   "say": "They just leave. Then post one star.",
-   "caption": "They just leave. / Then post one star.",
-   "scene": [
-    "door-close",
-    "one-star"
-   ],
-   "move": "push",
-   "pause": 0.55
-  },
-  {
-   "say": "So we're building something at Zavino Labs.",
-   "caption": "So we're building something / at Zavino Labs.",
-   "scene": [
-    "labs-build",
-    "labs-brand"
-   ],
+   "say": "A week later, one star told her what nobody had.",
+   "caption": "A week later, / one star told her / what nobody had.",
+   "scene": "one-star",
    "move": "still"
   },
   {
-   "say": "A QR code on every table. An offer worth scanning.",
-   "caption": "A QR code on every table. / An offer worth scanning.",
-   "scene": [
-    "table-qr",
-    "offer-card"
-   ],
-   "move": "push"
+   "say": "Growing shouldn't mean forgetting.",
+   "caption": "Growing shouldn't mean forgetting.",
+   "scene": "nila-closing",
+   "move": "push",
+   "pause": 0.9
   },
   {
-   "say": "Rafi scans, verifies, picks his order.",
-   "caption": "Rafi scans, / verifies, / picks his order.",
+   "say": "So at Zavino Labs, we're building a way for cafés to remember.",
+   "caption": "So at Zavino Labs, / we're building a way / for cafés to remember.",
    "scene": [
+    "labs-brand",
+    "labs-build"
+   ],
+   "move": "still",
+   "pause": 0.5
+  },
+  {
+   "say": "A QR on every table. Rafi scans, checks in, picks his order.",
+   "caption": "A QR on every table. / Rafi scans, / checks in, / picks his order.",
+   "scene": [
+    "table-qr",
     "rafi-scan",
     "otp",
     "menu-pick"
    ],
    "move": "still",
-   "pause": 0.9
+   "pause": 0.8
   },
   {
-   "say": "One code. One bill. A real, paying customer.",
-   "caption": "One code. / One bill. / A real, paying customer.",
+   "say": "One code. One bill. And Rafi isn't a stranger anymore.",
+   "caption": "One code. / One bill. / And Rafi isn't a stranger anymore.",
    "scene": [
     "code-show",
     "bill-entry",
     "verified"
    ],
-   "move": "push",
-   "pause": 0.5
+   "move": "push"
   },
   {
-   "say": "An hour later: how was it?",
+   "say": "An hour later, how was it?",
    "caption": "An hour later: / how was it?",
    "scene": [
     "hour-later",
@@ -141,498 +129,534 @@
    "pause": 0.8
   },
   {
-   "say": "Loved it? Off to Google. Unhappy? You hear it first.",
-   "caption": "Loved it? Off to Google. / Unhappy? You hear it first.",
+   "say": "Happy? Tell Google. Not happy? Nila hears about it first, in time to make it right.",
+   "caption": "Happy? Tell Google. / Not happy? Nila hears about it first — / in time to make it right.",
    "scene": [
     "five-star",
-    "low-alert"
+    "low-alert",
+    "make-it-right"
    ],
-   "move": "still"
+   "move": "still",
+   "pause": 0.5
   },
   {
-   "say": "Four visits later, Rafi's a regular.",
-   "caption": "Four visits later, / Rafi's a regular.",
+   "say": "Visit by visit, Rafi becomes a regular.",
+   "caption": "Visit by visit, / Rafi becomes a regular.",
    "scene": [
     "visit-stamps",
     "regular-badge"
    ],
-   "move": "still",
-   "pause": 0.45
+   "move": "still"
   },
   {
-   "say": "Now she knows her regulars, her big spenders, who's gone quiet.",
-   "caption": "Now she knows her regulars, / her big spenders, / who's gone quiet.",
+   "say": "And one morning… The usual, Rafi? Oh! You remembered!",
+   "caption": "And one morning… / The usual, Rafi? / Oh! You remembered!",
    "scene": [
+    "morning-door",
     "usual",
-    "spenders",
+    "remembered"
+   ],
+   "move": "push",
+   "pause": 0.5
+  },
+  {
+   "say": "Now she sees who's coming back, and who's slipping away.",
+   "caption": "Now she sees who's coming back, / and who's slipping away.",
+   "scene": [
+    "regulars",
     "gone-quiet"
    ],
    "move": "still"
   },
   {
-   "say": "New burger? Eid? Pohela Boishakh? AI writes. You approve.",
-   "caption": "New burger? / Eid? / Pohela Boishakh? / AI writes. You approve.",
+   "say": "She can reach out for Eid, for Pohela Boishakh, whenever she chooses.",
+   "caption": "She can reach out for Eid, / for Pohela Boishakh — / whenever she chooses.",
    "scene": [
-    "campaign-burger",
     "campaign-eid",
     "campaign-boishakh",
     "approve"
    ],
    "move": "still",
-   "pause": 0.4
+   "pause": 0.5
   },
   {
-   "say": "Every offer, measured. Every month, one report.",
-   "caption": "Every offer, measured. / Every month, one report.",
-   "scene": [
-    "offer-result",
-    "monthly-report"
-   ],
-   "move": "still"
-  },
-  {
-   "say": "Regular. Coming soon, from Zavino Labs.",
-   "caption": "regular. / Coming soon from Zavino Labs.",
+   "say": "Regular. Every customer, remembered. Coming soon from Zavino Labs.",
+   "caption": "regular. Every customer, remembered. / Coming soon from Zavino Labs.",
    "scene": [
     "end-name",
     "end-card"
    ],
-   "move": "still",
-   "pause": 0.5
+   "move": "still"
   }
  ],
  "cues": [
   {
-   "shot": 2,
+   "shot": 1,
    "offset": 0.15,
    "name": "bell",
-   "gain": 0.5
+   "gain": 0.35
+  },
+  {
+   "shot": 1,
+   "offset": 0.9,
+   "name": "tap",
+   "gain": 0.35
+  },
+  {
+   "shot": 2,
+   "offset": 0.25,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "shot": 2,
+   "offset": 0.55,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "shot": 2,
+   "offset": 0.85,
+   "name": "pop",
+   "gain": 0.3
+  },
+  {
+   "shot": 3,
+   "offset": 0.2,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "shot": 3,
+   "offset": 0.5,
+   "name": "pop",
+   "gain": 0.25
+  },
+  {
+   "shot": 3,
+   "offset": 0.8,
+   "name": "pop",
+   "gain": 0.25
   },
   {
    "shot": 8,
-   "offset": 1.014,
+   "offset": 1.053,
    "name": "bell",
-   "gain": 0.45
+   "gain": 0.4
   },
   {
    "shot": 9,
    "offset": 0.45,
    "name": "land-light",
-   "gain": 0.4
+   "gain": 0.35
   },
   {
    "shot": 10,
-   "offset": 0.6,
+   "offset": 0.94,
    "name": "drop",
-   "gain": 0.6
+   "gain": 0.5
   },
   {
    "shot": 10,
-   "offset": 1.266,
+   "offset": 1.985,
    "name": "error-soft",
-   "gain": 0.4
-  },
-  {
-   "shot": 11,
-   "offset": 0.0,
-   "name": "riser-air",
    "gain": 0.35
   },
   {
    "shot": 11,
-   "offset": 1.263,
-   "name": "sparkle",
-   "gain": 0.5
+   "offset": 0.4,
+   "name": "chime",
+   "gain": 0.25
   },
   {
    "shot": 12,
-   "offset": 0.316,
+   "offset": 0.288,
    "name": "chime",
-   "gain": 0.5
+   "gain": 0.45
   },
   {
    "shot": 13,
-   "offset": 0.14,
-   "name": "pop",
-   "gain": 0.4
+   "offset": 0.0,
+   "name": "riser-air",
+   "gain": 0.3
   },
   {
    "shot": 13,
-   "offset": 0.533,
-   "name": "pop",
-   "gain": 0.4
-  },
-  {
-   "shot": 13,
-   "offset": 0.926,
-   "name": "pop",
-   "gain": 0.4
+   "offset": 2.096,
+   "name": "sparkle",
+   "gain": 0.45
   },
   {
    "shot": 14,
-   "offset": 0.093,
-   "name": "sparkle",
-   "gain": 0.4
+   "offset": 0.102,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "shot": 14,
+   "offset": 0.389,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "shot": 14,
+   "offset": 0.675,
+   "name": "pop",
+   "gain": 0.35
   },
   {
    "shot": 15,
    "offset": 0.8,
    "name": "click-ui",
-   "gain": 0.5
+   "gain": 0.45
   },
   {
    "shot": 15,
    "offset": 1.05,
    "name": "confirm",
-   "gain": 0.5
+   "gain": 0.45
   },
   {
    "shot": 16,
    "offset": 0.38,
    "name": "click-ui",
-   "gain": 0.45
+   "gain": 0.4
   },
   {
    "shot": 16,
    "offset": 0.75,
    "name": "chime",
-   "gain": 0.4
+   "gain": 0.35
   },
   {
    "shot": 16,
    "offset": 1.0,
    "name": "tick",
-   "gain": 0.35
+   "gain": 0.3
   },
   {
    "shot": 16,
    "offset": 1.16,
    "name": "tick",
-   "gain": 0.35
+   "gain": 0.3
   },
   {
    "shot": 16,
    "offset": 1.32,
    "name": "tick",
-   "gain": 0.35
+   "gain": 0.3
   },
   {
    "shot": 16,
    "offset": 1.48,
    "name": "tick",
-   "gain": 0.35
+   "gain": 0.3
   },
   {
    "shot": 16,
    "offset": 1.7,
    "name": "confirm",
-   "gain": 0.6
+   "gain": 0.5
   },
   {
    "shot": 17,
    "offset": 0.55,
    "name": "select",
-   "gain": 0.5
+   "gain": 0.4
   },
   {
    "shot": 17,
    "offset": 1.0,
    "name": "select",
-   "gain": 0.5
+   "gain": 0.4
   },
   {
    "shot": 17,
    "offset": 1.68,
    "name": "click-ui",
-   "gain": 0.5
+   "gain": 0.4
   },
   {
    "shot": 18,
    "offset": 0.25,
    "name": "whoosh-short",
-   "gain": 0.4
-  },
-  {
-   "shot": 18,
-   "offset": 0.3,
-   "name": "sparkle",
    "gain": 0.35
   },
   {
    "shot": 19,
    "offset": 0.3,
    "name": "key-press",
-   "gain": 0.45
+   "gain": 0.4
   },
   {
    "shot": 19,
    "offset": 0.65,
    "name": "key-press",
-   "gain": 0.45
+   "gain": 0.4
   },
   {
    "shot": 19,
    "offset": 1.0,
    "name": "key-press",
-   "gain": 0.45
+   "gain": 0.4
   },
   {
    "shot": 19,
    "offset": 1.4,
    "name": "click-ui",
-   "gain": 0.5
+   "gain": 0.45
   },
   {
    "shot": 19,
    "offset": 1.5,
    "name": "chime",
-   "gain": 0.7
+   "gain": 0.6
   },
   {
    "shot": 19,
    "offset": 1.55,
    "name": "sparkle",
-   "gain": 0.5
-  },
-  {
-   "shot": 20,
-   "offset": 0.383,
-   "name": "confirm",
    "gain": 0.4
   },
   {
    "shot": 20,
-   "offset": 0.657,
+   "offset": 0.392,
    "name": "confirm",
-   "gain": 0.4
+   "gain": 0.35
   },
   {
    "shot": 20,
-   "offset": 0.931,
+   "offset": 0.673,
    "name": "confirm",
-   "gain": 0.4
+   "gain": 0.35
   },
   {
    "shot": 20,
-   "offset": 1.205,
+   "offset": 0.953,
+   "name": "confirm",
+   "gain": 0.35
+  },
+  {
+   "shot": 20,
+   "offset": 1.233,
    "name": "punch",
-   "gain": 0.7
+   "gain": 0.55
   },
   {
    "shot": 20,
-   "offset": 1.369,
+   "offset": 1.401,
    "name": "sparkle",
-   "gain": 0.5
+   "gain": 0.4
   },
   {
    "shot": 21,
    "offset": 0.0,
    "name": "whoosh-long",
-   "gain": 0.4
+   "gain": 0.35
   },
   {
    "shot": 22,
    "offset": 0.15,
    "name": "pop",
-   "gain": 0.45
+   "gain": 0.4
   },
   {
    "shot": 22,
    "offset": 0.6,
    "name": "pop",
-   "gain": 0.45
+   "gain": 0.4
   },
   {
    "shot": 22,
    "offset": 1.25,
    "name": "tap",
+   "gain": 0.4
+  },
+  {
+   "shot": 23,
+   "offset": 0.11,
+   "name": "sparkle",
    "gain": 0.45
   },
   {
    "shot": 23,
-   "offset": 0.131,
-   "name": "sparkle",
-   "gain": 0.5
-  },
-  {
-   "shot": 23,
-   "offset": 1.306,
+   "offset": 1.102,
    "name": "click-ui",
-   "gain": 0.5
+   "gain": 0.45
   },
   {
    "shot": 23,
-   "offset": 1.463,
+   "offset": 1.234,
    "name": "confirm",
-   "gain": 0.5
+   "gain": 0.45
   },
   {
    "shot": 24,
-   "offset": 0.319,
+   "offset": 0.431,
    "name": "error-soft",
-   "gain": 0.5
+   "gain": 0.45
   },
   {
    "shot": 24,
-   "offset": 0.958,
+   "offset": 1.294,
    "name": "pop",
-   "gain": 0.4
+   "gain": 0.35
   },
   {
    "shot": 25,
+   "offset": 0.5,
+   "name": "pop",
+   "gain": 0.35
+  },
+  {
+   "shot": 25,
+   "offset": 1.2,
+   "name": "chime",
+   "gain": 0.45
+  },
+  {
+   "shot": 25,
+   "offset": 1.25,
+   "name": "sparkle",
+   "gain": 0.4
+  },
+  {
+   "shot": 26,
    "offset": 0.0,
    "name": "land-light",
-   "gain": 0.5
-  },
-  {
-   "shot": 25,
-   "offset": 0.268,
-   "name": "land-light",
-   "gain": 0.5
-  },
-  {
-   "shot": 25,
-   "offset": 0.669,
-   "name": "land-light",
-   "gain": 0.5
-  },
-  {
-   "shot": 25,
-   "offset": 1.07,
-   "name": "land-light",
-   "gain": 0.5
-  },
-  {
-   "shot": 25,
-   "offset": 1.472,
-   "name": "land-light",
-   "gain": 0.5
+   "gain": 0.4
   },
   {
    "shot": 26,
-   "offset": 0.479,
-   "name": "punch",
-   "gain": 0.7
+   "offset": 0.335,
+   "name": "land-light",
+   "gain": 0.4
   },
   {
    "shot": 26,
-   "offset": 0.599,
-   "name": "sparkle",
-   "gain": 0.5
+   "offset": 0.838,
+   "name": "land-light",
+   "gain": 0.4
   },
   {
-   "shot": 27,
-   "offset": 0.121,
-   "name": "bell",
+   "shot": 26,
+   "offset": 1.341,
+   "name": "land-light",
+   "gain": 0.4
+  },
+  {
+   "shot": 26,
+   "offset": 1.844,
+   "name": "land-light",
    "gain": 0.4
   },
   {
    "shot": 27,
-   "offset": 0.666,
-   "name": "pop",
+   "offset": 0.566,
+   "name": "punch",
+   "gain": 0.55
+  },
+  {
+   "shot": 27,
+   "offset": 0.707,
+   "name": "sparkle",
    "gain": 0.4
   },
   {
    "shot": 28,
-   "offset": 0.0,
-   "name": "swish",
+   "offset": 0.3,
+   "name": "bell",
    "gain": 0.4
   },
   {
    "shot": 29,
-   "offset": 0.0,
-   "name": "swish",
-   "gain": 0.4
-  },
-  {
-   "shot": 29,
-   "offset": 1.181,
+   "offset": 0.303,
    "name": "pop",
-   "gain": 0.4
+   "gain": 0.35
   },
   {
    "shot": 30,
-   "offset": 0.027,
-   "name": "pop",
+   "offset": 0.15,
+   "name": "sparkle",
+   "gain": 0.5
+  },
+  {
+   "shot": 30,
+   "offset": 0.3,
+   "name": "chime",
    "gain": 0.5
   },
   {
    "shot": 31,
-   "offset": 0.027,
-   "name": "pop",
-   "gain": 0.5
+   "offset": 0,
+   "name": "swish",
+   "gain": 0.35
   },
   {
    "shot": 32,
-   "offset": 0.024,
+   "offset": 0.0,
+   "name": "swish",
+   "gain": 0.35
+  },
+  {
+   "shot": 32,
+   "offset": 1.591,
    "name": "pop",
-   "gain": 0.5
+   "gain": 0.35
   },
   {
-   "shot": 31,
-   "offset": 0.202,
-   "name": "sparkle",
+   "shot": 33,
+   "offset": 0.045,
+   "name": "pop",
    "gain": 0.4
   },
   {
    "shot": 33,
-   "offset": 1.346,
+   "offset": 0.341,
+   "name": "sparkle",
+   "gain": 0.35
+  },
+  {
+   "shot": 34,
+   "offset": 0.023,
+   "name": "pop",
+   "gain": 0.4
+  },
+  {
+   "shot": 35,
+   "offset": 0.926,
    "name": "click-ui",
-   "gain": 0.6
-  },
-  {
-   "shot": 33,
-   "offset": 1.459,
-   "name": "chime",
    "gain": 0.5
   },
   {
-   "shot": 34,
-   "offset": 0.0,
-   "name": "swish",
-   "gain": 0.4
-  },
-  {
-   "shot": 34,
-   "offset": 1.72,
-   "name": "sparkle",
-   "gain": 0.4
-  },
-  {
    "shot": 35,
-   "offset": 0.0,
-   "name": "swish",
-   "gain": 0.4
-  },
-  {
-   "shot": 35,
-   "offset": 1.201,
+   "offset": 1.003,
    "name": "chime",
-   "gain": 0.4
+   "gain": 0.45
   },
   {
    "shot": 36,
-   "offset": 0.158,
+   "offset": 0.406,
    "name": "land",
-   "gain": 0.6
+   "gain": 0.5
   },
   {
    "shot": 36,
-   "offset": 0.474,
+   "offset": 1.219,
    "name": "sparkle",
-   "gain": 0.5
+   "gain": 0.4
   },
   {
    "shot": 37,
-   "offset": 0.383,
+   "offset": 0.342,
    "name": "chime",
-   "gain": 0.6
+   "gain": 0.5
   },
   {
    "shot": 37,
-   "offset": 0.437,
+   "offset": 0.39,
    "name": "sparkle",
-   "gain": 0.5
+   "gain": 0.4
   }
  ]
 }

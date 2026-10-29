@@ -89,17 +89,6 @@ Object.assign(window.SCENES, {
     const fv = pop(k, 1.0, 0.3); g.save(); g.translate(0, 290 * k.u); g.scale(fv, fv); rr(g, -330 * k.u, -52 * k.u, 660 * k.u, 104 * k.u, 28 * k.u, Z.f50); burger(k, -260 * k.u, 6 * k.u, 70 * k.u / k.u * k.u); txt(g, "Favourite: Chicken burger", 20 * k.u, 3 * k.u, 34 * k.u, Z.ink, 700); g.restore(); g.restore();
     if (t > 0.4 && t < 1.1) sparkle(k, cx + 210 * k.u, cy - 100 * k.u, 40 * k.u * Math.sin((t - 0.4) * 4.5), Z.amber, t * 4);
   },
-  // 27 — "Now she knows her regulars,"
-  "usual": (k) => {
-    cafe(k, { noBoard: true }); const g = k.g, t = k.t, fy = k.Y(0.745), dx = k.X(0.86);
-    door(k, { x: dx, y: k.Y(0.7), w: 300, h: 740, open: 0.95 });
-    person(k, { x: k.X(0.24), y: k.Y(0.71), h: 700, ...NILA, mood: "happy", arms: "wave", look: [0.9, 0] });
-    counter(k, { x0: -0.05, x1: 0.5, top: 0.64, bottom: 0.77, props: false });
-    const rx = lerp(k.X(1.0), k.X(0.66), outCubic(t / 0.7)); person(k, { x: rx, y: fy, h: 740, ...RAFI, mood: t > 0.9 ? "happy" : "wow", walk: t < 0.7 ? 2.2 : 0, arms: t > 0.9 ? "wave" : "down", look: [-0.9, 0] });
-    speech(k, { x: k.X(0.5), y: k.Y(0.2), text: "The usual, Rafi?", w: 760, h: 140, t0: 0.55, tailX: -0.3 });
-    const tg = pop(k, 0.9, 0.3); g.save(); g.translate(rx, fy - 800 * k.u); g.scale(tg, tg); pill(g, -150 * k.u, -40 * k.u, 300 * k.u, 80 * k.u, Z.amber, "Regular", Z.f950, 36 * k.u, 800); g.restore();
-    if (t > 1.0) for (let i = 0; i < 4; i++) { const tt = ((t - 1.0) * 0.9 + i * 0.25) % 1; g.save(); g.globalAlpha = Math.sin(tt * Math.PI); txt(g, "♥", rx - 60 * k.u + i * 40 * k.u, fy - 820 * k.u - tt * 160 * k.u, 44 * k.u, Z.coral, 800); g.restore(); }
-  },
   // 28 — "her big spenders,"
   "spenders": (k) => { soft(k); previewTag(k); dash(k, 1, k.X(0.5) - 440 * k.u, k.Y(0.1), 880 * k.u, 860 * k.u, k.t); },
   // 29 — "who's gone quiet."

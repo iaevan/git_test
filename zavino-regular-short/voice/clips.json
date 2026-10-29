@@ -1,126 +1,98 @@
 {
- "voice": "Mark (Higgsfield preset 27c04473-84a9-4b60-a41f-c8e8458bd4f1)",
+ "voices": {
+  "narrator": "Julian (Higgsfield preset 95429266-c0ac-4137-a209-63b8812b0f23)",
+  "nila": "Maeve (64cf4f1a-61c8-5938-9aea-83d12b2e1d13)",
+  "rafi": "Dylan (b847bc29-f184-583a-8ad9-d1f1e16d1a60)"
+ },
  "model": "elevenlabs_v4",
- "stability": 0.35,
+ "stability": 0.0,
+ "tempo": 1.0,
  "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/hf_20261029_",
  "lines": [
   {
-   "say": "Every week, hundreds of people walk into your café.",
-   "id": "171129_b74d6529-84c4-4b5a-b003-c47c94fbd1b5",
+   "say": "[warmly, nostalgic] When Nila opened Café 27, she knew everyone. [softly] Every name. Every order.",
+   "id": "220012_80f64395-3d82-4088-af15-e1ccd2644a3f",
+   "gaps": {}
+  },
+  {
+   "say": "[gently] Then it got busy. [quieter, wistful] And somewhere in the rush... she stopped knowing them.",
+   "id": "220011_753119d2-94bd-4479-9e5f-4d26d3819be9",
+   "gaps": {}
+  },
+  {
+   "say": "[softly, sadly] So when a coffee came out cold... nobody noticed. [quietly] No complaint. They just... left.",
+   "id": "220012_6f901117-34cf-4211-b2a7-6d84605fe587",
+   "gaps": {}
+  },
+  {
+   "say": "[quietly, with regret] A week later, one star told her what nobody had.",
+   "id": "220012_1f39325d-8ac3-423f-92fe-ce296d8f26f9",
+   "gaps": {}
+  },
+  {
+   "say": "[slowly, heartfelt, almost a whisper] Growing shouldn't mean forgetting.",
+   "id": "220016_df6235f4-7f41-48ae-b7b1-c23e039b52b0",
+   "gaps": {}
+  },
+  {
+   "say": "[hopeful, brightening] So at Zavino Labs, we're building a way for cafés to remember.",
+   "id": "220023_013ebf78-3420-48ba-a0ef-a07afefe246a",
+   "gaps": {}
+  },
+  {
+   "say": "[upbeat, curious] A QR on every table. Rafi scans... checks in... picks his order.",
+   "id": "220015_b7ae2469-a7ca-477a-beb0-be0d7be63071",
    "gaps": {
-    "1": 0.25
+    "2": 0.7,
+    "3": 0.9
    }
   },
   {
-   "say": "And you don't know a single one.",
-   "id": "171138_9ab6262a-a37a-4510-9961-987257ea8147",
+   "say": "[warmly] One code. One bill. [smiling] And Rafi isn't a stranger anymore.",
+   "id": "220015_c2fe9222-b98d-42fa-821b-859737e30f6f",
    "gaps": {
-    "1": 0.45
+    "1": 1.0,
+    "2": 1.0
    }
   },
   {
-   "say": "Who's a regular? Who spends the most?",
-   "id": "171129_2f529e9a-3ed9-4474-8dda-3f8e8afb758b",
+   "say": "[curious, gentle] An hour later... how was it?",
+   "id": "220034_291bcc22-fc79-4118-8169-d38c9b2f285a",
    "gaps": {
-    "1": 0.35
+    "1": 0.2
    }
   },
   {
-   "say": "And when someone's unhappy, they don't tell you.",
-   "id": "171128_eb5c6dd6-2dc0-49a9-9408-0ee0f46e71ed",
-   "gaps": {
-    "1": 0.3
-   }
-  },
-  {
-   "say": "They just leave. Then post one star.",
-   "id": "171137_f90fb88a-35d4-4325-9d1a-ee13b747ac5d",
-   "gaps": {
-    "1": 0.3
-   }
-  },
-  {
-   "say": "So we're building something at Zavino Labs.",
-   "id": "171139_c9114b05-6b20-4d08-b156-0d300271e4cd",
-   "gaps": {
-    "1": 0.35
-   }
-  },
-  {
-   "say": "A QR code on every table. An offer worth scanning.",
-   "id": "171148_5b075b52-2ab3-4133-8cbf-b87ddbebd379",
-   "gaps": {
-    "1": 0.35
-   }
-  },
-  {
-   "say": "Rafi scans, verifies, picks his order.",
-   "id": "171128_42aa4792-f0b0-4cf9-bd12-fbc21fd4f105",
-   "gaps": {
-    "1": 0.6,
-    "2": 0.9
-   }
-  },
-  {
-   "say": "One code. One bill. A real, paying customer.",
-   "id": "171142_ce5e88a4-ac57-42f7-82a5-e470812d8a91",
-   "gaps": {
-    "1": 0.7,
-    "2": 0.85
-   }
-  },
-  {
-   "say": "An hour later: how was it?",
-   "id": "171149_39339dc9-0179-44bc-928f-b26fdd4990aa",
-   "gaps": {
-    "1": 0.5
-   }
-  },
-  {
-   "say": "Loved it? Off to Google. Unhappy? You hear it first.",
-   "id": "171142_5af83586-3414-4a34-baea-67dc0868337a",
+   "say": "[cheerful] Happy? Tell Google. [softer, concerned] Not happy? Nila hears about it first... in time to make it right.",
+   "id": "220359_dbf8a7e0-e3f3-4091-9b37-78f89e038013",
    "gaps": {
     "1": 0.4
    }
   },
   {
-   "say": "Four visits later, Rafi's a regular.",
-   "id": "171142_8f7ecb62-6feb-4a04-b9ea-5cdab7b5bea2",
-   "gaps": {
-    "1": 0.4
-   }
+   "say": "[smiling, warm] Visit by visit, Rafi becomes a regular.",
+   "id": "220023_049b9af1-ff59-482c-ae83-cefd270cedf3",
+   "gaps": {}
   },
   {
-   "say": "Now she knows her regulars, her big spenders, who's gone quiet.",
-   "id": "171148_c7436452-0fc4-4ffa-8a06-958f6dc9d404",
-   "gaps": {
-    "1": 0.3,
-    "2": 0.3
-   }
+   "say": "NARRATOR (Julian): [hushed, anticipating] And one morning...  NILA (Maeve): [warmly, smiling, affectionate] The usual, Rafi?  RAFI (Dylan): [surprised, touched, delighted] Oh! You remembered!",
+   "id": "220035_ebd782b4-d1a3-4d95-9c4f-0a0f603efcc0",
+   "gaps": {}
   },
   {
-   "say": "New burger? Eed? Pohela Boishakh? AI writes. You approve.",
-   "id": "171313_3a5ec716-df94-47b7-b6a7-8ba4cdc2b883",
-   "gaps": {
-    "1": 0.3,
-    "2": 0.3,
-    "3": 0.35
-   }
+   "say": "[warm, confident] Now she sees who's coming back... and who's slipping away.",
+   "id": "220035_3a7944b6-479f-401c-afc1-b794357888d4",
+   "gaps": {}
   },
   {
-   "say": "Every offer, measured. Every month, one report.",
-   "id": "171155_676d0a1b-9619-4ea9-adad-371e76c4f3f2",
-   "gaps": {
-    "1": 0.3
-   }
+   "say": "[reassuring] She can reach out for Eed, for Pohela Boishakh... whenever she chooses.",
+   "id": "220035_221ef8d2-faa3-40fb-abbc-4bb07825ac5b",
+   "gaps": {}
   },
   {
-   "say": "Regular. Coming soon, from Zavino Labs.",
-   "id": "171154_5863c02d-b0ca-423a-9878-a3045e7be414",
-   "gaps": {
-    "1": 0.4
-   }
+   "say": "[proud, warm] Regular. [softly, smiling] Every customer... remembered. [bright] Coming soon from Zavino Labs.",
+   "id": "220043_26ddf30c-3f3a-4915-82d0-1263a9a5f757",
+   "gaps": {}
   }
- ],
- "tempo": 0.95
+ ]
 }
