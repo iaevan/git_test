@@ -1,4 +1,4 @@
-# Zavino services — motion explainer
+# Zavino services — motion explainer (v2)
 
 A ~68 s motion-graphics explainer for Zavino's client services, built from the team's scene-by-scene script, plus the 30 s cutdown. Masters at **16:9**, cutdowns at **1:1** and **9:16**.
 
@@ -10,14 +10,21 @@ A ~68 s motion-graphics explainer for Zavino's client services, built from the t
 
 All at 30 fps, AAC 192k, about −14 LUFS.
 
+## What changed in v2
+
+* **Text always stays inside its box.** Every string is drawn through `fit1` / `para` / `chip` (`src/ui.js`): the font shrinks to fit the box width (and a paragraph's height) before an ellipsis is ever used, titles wrap into balanced lines, and each helper logs `OVERFLOW …` if something still cannot fit or runs off the frame. `node skill/scripts/animate.mjs lint <variant>` renders every shot at eleven moments and fails on any such message — all six variants pass.
+* **The Zavino symbol is used throughout**, from the exact brand SVG path (`src/logo.js`): the top-left mark in the HUD, a paper-cut watermark behind the takeoff and the call to action, the assistant's avatar and the hub of the connected-tools and content-workflow diagrams, the button badge, the "your team has the final say" seal in scene 7, and — in the close — an **extruded 3D symbol** that rises and turns while the jet lands as the period of "zavino.".
+* **Three.js hero layer** (`src/hero3d.js`, Three r149 in `assets/vendor/`): the paper ribbon (a lit, twisting, bump-mapped strip with a back face), the ivory paper jet (procedural, folded-paper edges), stone plinths and the extruded symbol, all with a soft key light and shadows that fall on the page. It renders to an offscreen WebGL canvas and is composited over the 2D scenes, so crisp UI text stays in Canvas2D. The camera drifts a little for parallax; the 2D layout and the 3D objects share screen-fraction coordinates so they line up in every aspect ratio.
+* **Richer scenes**: layered paper hills along the bottom edge, drifting flight lines and dust, soft card shadows, data-flow dots, a count-up inbox badge, a ribbon that wraps the pile and lifts it away (scene 2), a progress rail and typed draft (3), a chat window with an approved-documents fan, task ticks, a hub-and-spoke tool diagram and a hand that approves (4), a wireframe that is designed, built and launched, then a tabbed browser, a phone and a customer/team switch (5), one brief branching into email, social and web page that the team approves one by one (6), a sealed 2×2 of the four services (7), the process as plinths along the ribbon with the jet hopping from stop to stop (8), and the close (9).
+
 ## How it follows the brief
 
 * **Look** — sand `#E1D7C1` base, deep forest `#163524` for text and the logo, mid forest `#37634A` for highlights; one heavy rounded sans (**Nunito**, weights 800–1000) with the lowercase **zavino.** wordmark whose period is the closing mark.
-* **Motif** — the ivory jet and the green paper-ribbon ramp from the homepage hero (`thezavino.com/media/flight-ramp.webp`): the film opens on a stone plinth with the ribbon ramp, the jet slides up and launches, and the ribbon unrolls across the frame. Every scene change is a **ribbon sweep** with the jet at its head — the outgoing scene eases out under it and the next eases in behind it, so there are **no hard cuts** and the film reads as one flight. The four process stops (scene 8) are plinths along the ribbon, and in the close the jet lands as the period of "zavino.".
+* **Motif** — the ivory jet and the green paper-ribbon ramp from the homepage hero: the film opens on a stone plinth with the ribbon ramp, the jet slides up and launches. Every scene change is a **ribbon sweep** (a 3D ribbon with the jet at its head) — the outgoing scene eases out under it and the next eases in behind it, so there are **no hard cuts** and the film reads as one flight. The four process stops (scene 8) are plinths along the ribbon.
 * **Motion** — soft ease-in/out, small bounces on cards, ribbon sweeps as transitions.
 * **Sound** — a light, warm instrumental (the skill's "story" bed) under the voice, soft taps, ticks and whooshes only, and a small lift (air riser + chime) at the logo.
-* **Voice** — calm, confident, human: Higgsfield Eleven v4, preset voice **Julian** (the same narrator as the *regular.* teaser), directed `[calm, warm, confident]` etc. at stability 0.3; the exact script lines.
-* **Claims** — only the homepage's own words (services, "Every lead has a next step.", "An answer, ready to review.", "Big ideas. A useful first step.", "Your team has the final say.", the four process steps, "Where vision takes flight."). No statistics, no client results, no Zavino Labs products (as the notes ask). No email on screen — only the website and the AI-audit call to action.
+* **Voice** — calm, confident, human: Higgsfield Eleven v4, preset voice **Julian**, directed `[calm, warm, confident]` etc. at stability 0.3; the exact script lines.
+* **Claims** — only the homepage's own words (services, "Every lead has a next step.", "An answer, ready to review.", "Big ideas. A useful first step.", "Your team has the final say.", the four process steps, "Where vision takes flight."). No statistics, no client results, no Zavino Labs products. No email on screen — only the website and the AI-audit call to action.
 
 ## Cutdown lines (30 s)
 
@@ -27,27 +34,35 @@ The brief asks for the first sentence of each kept scene. Two of those first sen
 * scene 5 → "Got an idea? We design, build and launch SaaS products, websites and web apps."
 * scene 9 → "Have a project in mind? Book an AI audit. Zavino. Where vision takes flight."
 
-These were recorded as separate takes so each ends naturally, rather than cut out of the long lines.
+These were recorded as separate takes so each ends naturally, rather than cut out of the long lines. The scenes compress their own timelines for these shorter lines (scene 4 shows question → answer → approval, scene 3 reaches "in sync" in time).
 
 ## Length
 
-The script's voice-over reads at about 60 s on its own (Julian's calm pace). With room for the takeoff, the stamp and a held logo the full film is about 68 s. If it has to be 60 s flat, the quickest way is a slightly faster read (about 1.08×) or dropping the logo hold.
+The script's voice-over reads at about 60 s on its own (Julian's calm pace). With room for the takeoff, the seal and a held logo the full film is about 68 s. If it has to be 60 s flat, the quickest way is a slightly faster read (about 1.08×) or dropping the logo hold.
 
 ## Rebuild
 
 ```bash
 python3 tools/voice.py              # download, trim, level and time the 13 voice takes → voice/<key>.wav + marks.json
 python3 tools/make_variants.py      # variants/<cut>-<format>/short.json (timing, cues)
-tools/build.sh                      # scenes.js (src/film.js + src/segments.js + marks + src/flight.js) → each variant
+tools/build.sh                      # scenes.js = ui + logo + ribbon2d + parts + hero3d + scenes + marks + flight → each variant
 export CHROME=/path/to/chrome-headless-shell SHORTS_GL=swiftshader
-node skill/scripts/animate.mjs render variants/60-16x9    # one variant (~10 min on 4 CPU cores); repeat per variant
+node skill/scripts/animate.mjs lint variants/60-9x16      # text-containment check (also 60-16x9, 60-1x1, 30-…)
+tools/sheet.sh variants/60-16x9 /tmp/qa.jpg 4:0.5 7:0.8   # tile a few stills to look at (QA only)
+node skill/scripts/animate.mjs render variants/60-16x9    # one variant; repeat per variant
 tools/finish.sh                     # −14 LUFS → out/
 ```
 
 | source | what |
 |---|---|
-| `src/film.js` | palette, type, layout per frame shape, the paper ribbon (a twisting band along a spline), the jet, plinths, cards, icons |
-| `src/segments.js` | the nine scenes; each times its beats to the moment the matching phrase is spoken (`voice/marks.json`) |
-| `src/flight.js` | the ribbon-sweep transitions and the dispatcher that draws every beat from global time |
+| `src/ui.js` | palette, easing, the text-fit system (`fit1`, `para`, `chip`), layout per frame shape, background, HUD, cards, icons, hand |
+| `src/logo.js` | the exact brand path: 2D draw + parser for the 3D extrusion |
+| `src/ribbon2d.js` | the 2D paper ribbon and dotted data-flow lines (where the ribbon must pass under / over flat cards) |
+| `src/parts.js` | paper-cut logo, logo disc, paper hills, the seal, cursor, ripples, badges, progress rail |
+| `src/hero3d.js` | the Three.js layer: ribbon, jet, plinths, extruded symbol, lights, shadows |
+| `src/scenes_a.js`, `src/scenes_b.js` | the nine scenes; each times its beats to the moment the matching phrase is spoken (`voice/marks.json`) |
+| `src/flight.js` | the 3D ribbon-sweep transitions and the dispatcher that draws every beat from global time |
 | `voice/clips.json` | the 13 takes (ids, directed text, phrase breaks) |
-| `skill/` | Shorts Animator working copy (clean look, per-line voice clips, cues, web fonts; Nunito up to weight 1000) |
+| `skill/` | Shorts Animator working copy (clean look, per-line voice clips, cues, web fonts, vendor scripts, the `lint` command) |
+
+`src/film.js` and `src/segments.js` are the v1 (2D-only) design, kept for reference; they are no longer part of the build.

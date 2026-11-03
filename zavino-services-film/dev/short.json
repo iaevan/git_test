@@ -1,0 +1,2 @@
+{"title":"dev","format":"16:9","look":{"mode":"clean"},"fps":30,"twos":1,"voice":"none","music":{"mood":"none"},"captions":{"style":"none"},
+ "lines":[{"say":"a b c d e f g h i j k l m n","scene":"t1","move":"still","hold":1.0},{"say":"a b c d e f g h i j k l m n","scene":"t2","move":"still","hold":1.0}]}

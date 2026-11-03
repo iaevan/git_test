@@ -80,31 +80,31 @@
   },
   {
    "shot": 2,
-   "offset": 1.334,
+   "offset": 1.3,
    "name": "tap",
    "gain": 0.2
   },
   {
    "shot": 2,
-   "offset": 2.301,
+   "offset": 1.534,
    "name": "typing",
    "gain": 0.14
   },
   {
    "shot": 2,
-   "offset": 3.301,
+   "offset": 2.534,
    "name": "confirm",
    "gain": 0.3
   },
   {
    "shot": 2,
-   "offset": 2.991,
+   "offset": 1.917,
    "name": "tap",
    "gain": 0.2
   },
   {
    "shot": 2,
-   "offset": 3.891,
+   "offset": 2.817,
    "name": "click-soft",
    "gain": 0.2
   },
@@ -122,31 +122,31 @@
   },
   {
    "shot": 3,
-   "offset": 1.57,
+   "offset": 1.67,
    "name": "tap",
    "gain": 0.2
   },
   {
    "shot": 3,
-   "offset": 2.447,
+   "offset": 2.224,
    "name": "tap",
    "gain": 0.16
   },
   {
    "shot": 3,
-   "offset": 3.114,
+   "offset": 2.758,
    "name": "tap",
    "gain": 0.16
   },
   {
    "shot": 3,
-   "offset": 4.332,
+   "offset": 3.049,
    "name": "click-ui",
    "gain": 0.3
   },
   {
    "shot": 3,
-   "offset": 4.402,
+   "offset": 3.109,
    "name": "confirm",
    "gain": 0.3
   },
@@ -164,13 +164,37 @@
   },
   {
    "shot": 4,
-   "offset": 2.8,
+   "offset": 2.52,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "shot": 4,
+   "offset": 3.15,
    "name": "swish",
    "gain": 0.2
   },
   {
    "shot": 4,
-   "offset": 3.834,
+   "offset": 3.55,
+   "name": "swish",
+   "gain": 0.18
+  },
+  {
+   "shot": 4,
+   "offset": 4.35,
+   "name": "swish",
+   "gain": 0.18
+  },
+  {
+   "shot": 4,
+   "offset": 3.417,
+   "name": "tap",
+   "gain": 0.2
+  },
+  {
+   "shot": 4,
+   "offset": 4.108,
    "name": "swish",
    "gain": 0.2
   },
@@ -212,19 +236,19 @@
   },
   {
    "shot": 6,
-   "offset": 2.92,
+   "offset": 1.92,
    "name": "riser-air",
    "gain": 0.28
   },
   {
    "shot": 6,
-   "offset": 4.57,
+   "offset": 3.57,
    "name": "chime",
    "gain": 0.42
   },
   {
    "shot": 6,
-   "offset": 4.62,
+   "offset": 3.62,
    "name": "sparkle",
    "gain": 0.3
   },

@@ -17,13 +17,17 @@ def cues_for(key, ev, d):
     base = key[1:]; c = []
     if base == "1": c += [(0.7, "tap", .2), (1.9, "whoosh-up", .3)]
     if base == "2": c += [(ev(0) + .25, "tap", .22), (ev(1) + .05, "tap", .22), (ev(1) + .85, "tap", .22), (ev(2) + .1, "tap", .22), (ev(2) + .55, "swish", .25), (max(ev(2) + 1.45, d - 1.25), "whoosh-up", .25)]
-    if base == "3": c += [(.35, "tap", .22), (max(1.05, ev(1, .4) - .2), "tap", .2), (ev(2, .6), "typing", .14), (ev(2, .6) + 1.0, "confirm", .3), (ev(3, .78), "tap", .2), (ev(3, .78) + .9, "click-soft", .2)]
-    if base == "4": c += [(.35, "pop", .22), (max(.95, ev(1, .35) - .2), "tap", .2), (ev(2, .55), "tap", .16), (ev(3, .7), "tap", .16), (ev(4, .85) + .55, "click-ui", .3), (ev(4, .85) + .62, "confirm", .3)]
-    if base == "5": c += [(.35, "tap", .22), (max(2.2, ev(2, .45) + .2) - .25, "swish", .2), (max(3.4, ev(3, .72)) - .25, "swish", .2)]
-    if base == "6": c += [(.35, "tap", .22), (max(1.2, ev(1, .4) - .1), "swish", .22), (ev(2, .75), "confirm", .26), (ev(2, .75) + .35, "confirm", .26)]
-    if base == "7": tS = max(1.0, ev(0) + min(2.3, d * .42)); c += [(.3, "tap", .16), (.69, "tap", .16), (tS, "land", .45)]
+    if base == "3": c += [(.35, "tap", .22), (max(1.3, ev(1, .28) - .1), "tap", .2), (ev(2, .4), "typing", .14), (ev(2, .4) + 1.0, "confirm", .3), (ev(3, .5), "tap", .2), (ev(3, .5) + .9, "click-soft", .2)]
+    if base == "4":
+        q5 = min(ev(4, .72), d - (2.0 if key == "c4" else 2.3))
+        c += [(.35, "pop", .22), (max(1.15, ev(1, .26) - .1), "tap", .2), (ev(2, .5), "tap", .16), (ev(3, .62), "tap", .16), (q5 + .6, "click-ui", .3), (q5 + .66, "confirm", .3)]
+    if base == "5":
+        b2, b3 = ev(2, .42), ev(3, .62); tsw = b3 + min(1.5, max(.6, (d - .9 - b3) * .55))
+        c += [(.35, "tap", .22), (max(1.0, ev(1, .2) + .1) + 1.15, "pop", .2), (b2 + .3, "swish", .2), (b2 + .85 - .15, "swish", .18), (b2 + 1.65 - .15, "swish", .18), (b3 - .1, "tap", .2), (tsw - .1, "swish", .2)]
+    if base == "6": c += [(.35, "tap", .22), (max(1.3, ev(1, .4) - .2) + .1, "swish", .22), (ev(2, .7) + .5, "confirm", .26), (ev(2, .7) + 1.1, "confirm", .26), (ev(2, .7) + 1.7, "confirm", .26)]
+    if base == "7": tS = max(1.0, ev(0) + min(2.2, d * .42)); c += [(.3, "tap", .16), (.69, "tap", .16), (tS, "land", .45)]
     if base == "8": c += [(ev(i + 1, .2 + i * .2), "tick", .22) for i in range(4)]
-    if base == "9": tW = ev(3, .62) - .15; c += [(ev(1, .2), "tap", .25), (tW - 1.2, "riser-air", .28), (tW + .45, "chime", .42), (tW + .5, "sparkle", .3)]
+    if base == "9": tW = ev(2 if key == "c9" else 3, .5 if key == "c9" else .62) - .15; c += [(ev(1, .2), "tap", .25), (tW - 1.2, "riser-air", .28), (tW + .45, "chime", .42), (tW + .5, "sparkle", .3)]
     return c
 for cut, lines in CUTS.items():
     order = [k for k, _ in lines]; PAUSE, TAIL = TIMING[cut]

@@ -140,7 +140,7 @@
   },
   {
    "shot": 3,
-   "offset": 2.909,
+   "offset": 3.009,
    "name": "tap",
    "gain": 0.2
   },
@@ -182,7 +182,7 @@
   },
   {
    "shot": 4,
-   "offset": 1.47,
+   "offset": 1.57,
    "name": "tap",
    "gain": 0.2
   },
@@ -200,13 +200,13 @@
   },
   {
    "shot": 4,
-   "offset": 7.82,
+   "offset": 7.668,
    "name": "click-ui",
    "gain": 0.3
   },
   {
    "shot": 4,
-   "offset": 7.89,
+   "offset": 7.728,
    "name": "confirm",
    "gain": 0.3
   },
@@ -224,13 +224,37 @@
   },
   {
    "shot": 5,
-   "offset": 2.88,
+   "offset": 2.56,
+   "name": "pop",
+   "gain": 0.2
+  },
+  {
+   "shot": 5,
+   "offset": 3.23,
    "name": "swish",
    "gain": 0.2
   },
   {
    "shot": 5,
-   "offset": 5.32,
+   "offset": 3.63,
+   "name": "swish",
+   "gain": 0.18
+  },
+  {
+   "shot": 5,
+   "offset": 4.43,
+   "name": "swish",
+   "gain": 0.18
+  },
+  {
+   "shot": 5,
+   "offset": 5.47,
+   "name": "tap",
+   "gain": 0.2
+  },
+  {
+   "shot": 5,
+   "offset": 6.801,
    "name": "swish",
    "gain": 0.2
   },
@@ -254,13 +278,19 @@
   },
   {
    "shot": 6,
-   "offset": 4.83,
+   "offset": 5.33,
    "name": "confirm",
    "gain": 0.26
   },
   {
    "shot": 6,
-   "offset": 5.18,
+   "offset": 5.93,
+   "name": "confirm",
+   "gain": 0.26
+  },
+  {
+   "shot": 6,
+   "offset": 6.53,
    "name": "confirm",
    "gain": 0.26
   },

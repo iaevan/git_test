@@ -253,12 +253,17 @@ function build(dir, s, tl) {
     fs.mkdirSync(path.join(b, "assets"), { recursive: true });
     for (const f of fonts) fs.copyFileSync(path.join(assets, f), path.join(b, "assets", f));
   }
+  // (patch) assets/vendor/*.js (e.g. Three.js) are copied next to the page and loaded before scenes.js
+  const vend = path.join(assets, "vendor");
+  const vendors = fs.existsSync(vend) ? fs.readdirSync(vend).filter((f) => /\.js$/.test(f)).sort() : [];
+  if (vendors.length) { fs.mkdirSync(path.join(b, "vendor"), { recursive: true }); for (const f of vendors) fs.copyFileSync(path.join(vend, f), path.join(b, "vendor", f)); }
+  const vendorTags = vendors.map((f) => `<script src="vendor/${f}"></script>`).join("");
   const fam = (f) => f.replace(/\.[^.]+$/, "").replace(/^./, (c) => c.toUpperCase());
   const faces = fonts.map((f) => `@font-face{font-family:"${fam(f)}";src:url(assets/${f});font-weight:200 1000}`).join("");
   const html = `<!doctype html><html><head><meta charset="utf-8"><style>${faces}html,body{margin:0;background:#000}</style></head><body>
 <canvas id="out"></canvas>
 <script>window.SHORT=${JSON.stringify(SHORT)};window.IMAGES={};</script>
-<script src="kit.js"></script><script src="paint.js"></script><script src="scenes.js"></script>
+<script src="kit.js"></script><script src="paint.js"></script>${vendorTags}<script src="scenes.js"></script>
 <script>
 Promise.all(${JSON.stringify(fonts.map(fam))}.map(n=>document.fonts.load('700 40px "'+n+'"')).concat(${JSON.stringify(imgs)}.map(f=>new Promise(r=>{const i=new Image();i.onload=()=>{IMAGES[f.replace(/\\.[^.]+$/,"")]=i;r()};i.onerror=r;i.src="assets/"+f})))).then(()=>{const s=document.createElement("script");s.src="stage.js";document.body.appendChild(s)});
 </script></body></html>`;
@@ -421,6 +426,23 @@ if (cmd === "frames" || cmd === "still") {
     await pg.close();
   }
   process.exit(0);
+}
+
+if (cmd === "lint") {
+  // (patch) SA lint <dir> [fractions]: render every shot at several moments and print the page's OVERFLOW / error messages
+  const s = load(dir);
+  const v = await narrate(dir, s, { quiet: true });
+  const tl = timeline(s, v);
+  const pg = await page(dir, s, tl);
+  const fr = rest[0] ? rest[0].split(",").map(Number) : [0.06, 0.15, 0.28, 0.4, 0.52, 0.64, 0.76, 0.88, 0.97];
+  const seen = new Set(); let n = 0;
+  for (let i = 0; i < tl.beats.length; i++) for (const at of fr) {
+    const before = pg.logs.length;
+    await pg.evaluate(`window.still(${i}, ${at})`);
+    for (const l of pg.logs.slice(before)) if (/OVERFLOW|error/i.test(l)) { const key = tl.beats[i].scene + " " + l; if (!seen.has(key)) { seen.add(key); console.log(`shot ${i + 1} ${tl.beats[i].scene} @${at}: ${l}`); n++; } }
+  }
+  console.log(n ? `⚠ ${n} issue(s)` : "✓ no overflow, no errors");
+  await pg.close(); process.exit(0);
 }
 
 if (cmd === "audio") {
