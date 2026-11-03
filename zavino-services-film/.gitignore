@@ -12,3 +12,5 @@ variants/*/build/
 variants/*/renders/
 variants/*/render.log
 render_all.log
+dev/scenes.js
+dev/assets
