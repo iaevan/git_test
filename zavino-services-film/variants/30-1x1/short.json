@@ -1,0 +1,238 @@
+{
+ "title": "Zavino services - 30 s 1:1",
+ "format": "1:1",
+ "look": {
+  "mode": "clean"
+ },
+ "fps": 30,
+ "twos": 1,
+ "lead": 0.35,
+ "pause": 0.2,
+ "tail": 2.0,
+ "voice": {
+  "clips": [
+   "../../voice/s1.wav",
+   "../../voice/c3.wav",
+   "../../voice/c4.wav",
+   "../../voice/c5.wav",
+   "../../voice/s7.wav",
+   "../../voice/c9.wav"
+  ]
+ },
+ "music": {
+  "mood": "story"
+ },
+ "captions": {
+  "style": "none"
+ },
+ "lines": [
+  {
+   "say": "Growing a business shouldn't mean more work.",
+   "scene": "s1",
+   "move": "still",
+   "hold": 0.9
+  },
+  {
+   "say": "AI Revenue turns inquiries into sales conversations.",
+   "scene": "c3",
+   "move": "still"
+  },
+  {
+   "say": "AI Operations builds assistants that answer from your approved documents.",
+   "scene": "c4",
+   "move": "still"
+  },
+  {
+   "say": "Got an idea? We design, build and launch SaaS products, websites and web apps.",
+   "scene": "c5",
+   "move": "still"
+  },
+  {
+   "say": "In every system, your team has the final say.",
+   "scene": "s7",
+   "move": "still",
+   "hold": 0.6
+  },
+  {
+   "say": "Have a project in mind? Book an AI audit. Zavino. Where vision takes flight.",
+   "scene": "c9",
+   "move": "still"
+  }
+ ],
+ "cues": [
+  {
+   "shot": 1,
+   "offset": 0.7,
+   "name": "tap",
+   "gain": 0.2
+  },
+  {
+   "shot": 1,
+   "offset": 1.9,
+   "name": "whoosh-up",
+   "gain": 0.3
+  },
+  {
+   "shot": 2,
+   "offset": 0.35,
+   "name": "tap",
+   "gain": 0.22
+  },
+  {
+   "shot": 2,
+   "offset": 1.334,
+   "name": "tap",
+   "gain": 0.2
+  },
+  {
+   "shot": 2,
+   "offset": 2.301,
+   "name": "typing",
+   "gain": 0.14
+  },
+  {
+   "shot": 2,
+   "offset": 3.301,
+   "name": "confirm",
+   "gain": 0.3
+  },
+  {
+   "shot": 2,
+   "offset": 2.991,
+   "name": "tap",
+   "gain": 0.2
+  },
+  {
+   "shot": 2,
+   "offset": 3.891,
+   "name": "click-soft",
+   "gain": 0.2
+  },
+  {
+   "shot": 2,
+   "offset": -0.32,
+   "name": "whoosh",
+   "gain": 0.22
+  },
+  {
+   "shot": 3,
+   "offset": 0.35,
+   "name": "pop",
+   "gain": 0.22
+  },
+  {
+   "shot": 3,
+   "offset": 1.57,
+   "name": "tap",
+   "gain": 0.2
+  },
+  {
+   "shot": 3,
+   "offset": 2.447,
+   "name": "tap",
+   "gain": 0.16
+  },
+  {
+   "shot": 3,
+   "offset": 3.114,
+   "name": "tap",
+   "gain": 0.16
+  },
+  {
+   "shot": 3,
+   "offset": 4.332,
+   "name": "click-ui",
+   "gain": 0.3
+  },
+  {
+   "shot": 3,
+   "offset": 4.402,
+   "name": "confirm",
+   "gain": 0.3
+  },
+  {
+   "shot": 3,
+   "offset": -0.32,
+   "name": "whoosh",
+   "gain": 0.22
+  },
+  {
+   "shot": 4,
+   "offset": 0.35,
+   "name": "tap",
+   "gain": 0.22
+  },
+  {
+   "shot": 4,
+   "offset": 2.8,
+   "name": "swish",
+   "gain": 0.2
+  },
+  {
+   "shot": 4,
+   "offset": 3.834,
+   "name": "swish",
+   "gain": 0.2
+  },
+  {
+   "shot": 4,
+   "offset": -0.32,
+   "name": "whoosh",
+   "gain": 0.22
+  },
+  {
+   "shot": 5,
+   "offset": 0.3,
+   "name": "tap",
+   "gain": 0.16
+  },
+  {
+   "shot": 5,
+   "offset": 0.69,
+   "name": "tap",
+   "gain": 0.16
+  },
+  {
+   "shot": 5,
+   "offset": 1.83,
+   "name": "land",
+   "gain": 0.45
+  },
+  {
+   "shot": 5,
+   "offset": -0.32,
+   "name": "whoosh",
+   "gain": 0.22
+  },
+  {
+   "shot": 6,
+   "offset": 1.61,
+   "name": "tap",
+   "gain": 0.25
+  },
+  {
+   "shot": 6,
+   "offset": 2.92,
+   "name": "riser-air",
+   "gain": 0.28
+  },
+  {
+   "shot": 6,
+   "offset": 4.57,
+   "name": "chime",
+   "gain": 0.42
+  },
+  {
+   "shot": 6,
+   "offset": 4.62,
+   "name": "sparkle",
+   "gain": 0.3
+  },
+  {
+   "shot": 6,
+   "offset": -0.32,
+   "name": "whoosh",
+   "gain": 0.22
+  }
+ ]
+}

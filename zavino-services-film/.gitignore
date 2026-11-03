@@ -1,0 +1,14 @@
+frames/
+build/
+voice/raw-*.mp3
+render.log
+render.done
+renders/
+variants/*/scenes.js
+variants/*/*.mp4
+variants/*/qa/
+variants/*/frames/
+variants/*/build/
+variants/*/renders/
+variants/*/render.log
+render_all.log

@@ -1,0 +1,87 @@
+{
+ "voice": "Julian (Higgsfield preset 95429266-c0ac-4137-a209-63b8812b0f23)",
+ "model": "elevenlabs_v4",
+ "stability": 0.3,
+ "keep_dynamics": 0.6,
+ "cdn": "https://d8j0ntlcm91z4.cloudfront.net/user_3KjaH969vHSUFPx1mx79dxcwQkP/hf_20261103_",
+ "clips": [
+  {
+   "key": "s1",
+   "id": "163149_f307cd5d-6d6f-493c-9127-da03f9bc63ef",
+   "directed": "[calm, warm, confident] Growing a business shouldn't mean more work.",
+   "chunks": "Growing a business shouldn't mean more work."
+  },
+  {
+   "key": "s2",
+   "id": "163149_48ff736a-0a4a-4342-8a9a-dc9157855167",
+   "directed": "[calm, understanding] Leads need follow-ups. Customers ask the same questions. Content has to reach every channel.",
+   "chunks": "Leads need follow-ups. / Customers ask the same questions. / Content has to reach every channel."
+  },
+  {
+   "key": "s3",
+   "id": "163219_49cd8f7a-411d-4613-b6ad-172bf0676b67",
+   "directed": "[confident, clear] AI Revenue turns inquiries into sales conversations. It captures the lead, prepares the follow-up, and keeps your sales tools in sync.",
+   "chunks": "AI Revenue turns inquiries into sales conversations. / It captures the lead, / prepares the follow-up, / and keeps your sales tools in sync."
+  },
+  {
+   "key": "s4",
+   "id": "163149_1df4908a-17a0-4122-b55c-0a89ba8c5824",
+   "directed": "[calm, confident] AI Operations builds assistants that answer from your approved documents, handle routine tasks, and connect your tools. Your team reviews what matters.",
+   "chunks": "AI Operations builds assistants / that answer from your approved documents, / handle routine tasks, / and connect your tools. / Your team reviews what matters."
+  },
+  {
+   "key": "s5",
+   "id": "163220_f3d34b22-598e-4885-9145-018fa047c36e",
+   "directed": "[warm, inviting] Got an idea? We design, build and launch SaaS products, websites and web apps, starting with the features your customers and team need most.",
+   "chunks": "Got an idea? / We design, build and launch / SaaS products, websites and web apps, / starting with the features your customers and team need most."
+  },
+  {
+   "key": "s6",
+   "id": "163342_5c91a220-7bae-47b1-a29d-66d95161f4a5",
+   "directed": "[clear, warm] AI Content Workflow turns one brief into content for every channel. Your team approves what goes out.",
+   "chunks": "AI Content Workflow turns one brief / into content for every channel. / Your team approves what goes out."
+  },
+  {
+   "key": "s7",
+   "id": "163341_4c56490f-d387-4a64-b82a-66aa249d6d91",
+   "directed": "[steady, reassuring] In every system, your team has the final say.",
+   "chunks": "In every system, your team has the final say."
+  },
+  {
+   "key": "s8",
+   "id": "163350_cb897c0f-f76a-4e81-a1d1-97b4038c8d3b",
+   "directed": "[calm, confident] We start simple. Understand the problem. Plan the first version. Build and launch it. Then keep improving.",
+   "chunks": "We start simple. / Understand the problem. / Plan the first version. / Build and launch it. / Then keep improving."
+  },
+  {
+   "key": "s9",
+   "id": "163349_2ba5532a-ffcb-49e2-93d1-1b2aad560021",
+   "directed": "[warm, inviting] Have a project in mind? Book an AI audit, and we'll help you find a clear first step. [warm, a gentle smile] Zavino. Where vision takes flight.",
+   "chunks": "Have a project in mind? / Book an AI audit, / and we'll help you find a clear first step. / Zavino. / Where vision takes flight."
+  },
+  {
+   "key": "c3",
+   "id": "163412_de121a90-1105-49fb-832b-e461cbc80384",
+   "directed": "[confident, clear] AI Revenue turns inquiries into sales conversations.",
+   "chunks": "AI Revenue turns inquiries into sales conversations."
+  },
+  {
+   "key": "c4",
+   "id": "163412_d847517c-a601-4394-9f5a-ff3609de80e3",
+   "directed": "[calm, confident] AI Operations builds assistants that answer from your approved documents.",
+   "chunks": "AI Operations builds assistants / that answer from your approved documents."
+  },
+  {
+   "key": "c5",
+   "id": "163423_d446bbf5-da56-4a66-af06-22a64feb1c36",
+   "directed": "[warm, inviting] Got an idea? We design, build and launch SaaS products, websites and web apps.",
+   "chunks": "Got an idea? / We design, build and launch / SaaS products, websites and web apps."
+  },
+  {
+   "key": "c9",
+   "id": "163423_e33dd165-8556-474f-832c-a2ffeb70a0d5",
+   "directed": "[warm, inviting] Have a project in mind? Book an AI audit. [warm, a gentle smile] Zavino. Where vision takes flight.",
+   "chunks": "Have a project in mind? / Book an AI audit. / Zavino. / Where vision takes flight."
+  }
+ ]
+}
