@@ -14,7 +14,7 @@ body{background:#888;font-family:Inter,'FreeSans',sans-serif;color:var(--ink)}
 
 <!-- SLIDE 1 -->
 <div class="slide" id="s1" style="background:#F9B233">
-<svg width="1080" height="1440" viewBox="0 0 1080 1440" style="position:absolute;left:0;top:-90px" id="art"></svg>
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" style="position:absolute;left:0;top:0" id="art"></svg>
 <div class="h" style="position:absolute;left:60px;top:55px;width:980px;font-size:92px;color:var(--ink);white-space:nowrap">Is your restaurant<br><span style="background:var(--ink);color:#FFF3DC;padding:2px 22px 8px;border-radius:18px;display:inline-block;margin-top:12px;font-size:78px;transform:rotate(-1.5deg)">chaotic like this?</span></div>
 <div class="pill" style="right:50px;bottom:48px;background:var(--ink);color:#fff;font-size:34px;padding:22px 40px">Swipe → Meet TableMate</div>
 </div>
@@ -52,92 +52,6 @@ const $=(id)=>document.getElementById(id);
 function E(p,t,a,txt){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;p.appendChild(e);return e}
 function G(p,tr){return E(p,'g',{transform:tr})}
 function T(p,x,y,txt,size,fill,w=800,anchor='start',extra={}){return E(p,'text',{x,y,'font-size':size,fill,'font-weight':w,'text-anchor':anchor,'font-family':'Inter,FreeSans,sans-serif',...extra},txt)}
-
-/* ===== SLIDE 1 ART ===== */
-(function(){const s=$('art');
-// floor (isometric diamond)
-E(s,'polygon',{points:'540,420 1180,780 540,1160 -100,780',fill:'#E2552F'});
-E(s,'polygon',{points:'540,420 1180,780 1180,830 540,1210 -100,830 -100,780',fill:'#B83A1D'});
-E(s,'polygon',{points:'540,1160 1180,780 1180,830 540,1210',fill:'#8F2B14'});
-// floor tiles
-for(let i=1;i<8;i++){const t=i/8;
- E(s,'line',{x1:540-640*t,y1:420+360*t,x2:540+(640)*(1-t)*0+ (540+640*(1-t)) -540,y2:420+360*t+ (1160-420)*0,stroke:'#0000',});}
-for(let i=1;i<10;i++){const t=i/10;
- E(s,'line',{x1:540+(-640)*t,y1:420+360*t,x2:540+(-640)*t+640*0+ (540-(-100))*0 +640,y2:420+360*t+380,stroke:'#ffffff18','stroke-width':2});
- E(s,'line',{x1:540+640*t,y1:420+360*t,x2:540+640*t-640,y2:420+360*t+380,stroke:'#ffffff18','stroke-width':2});}
-function guest(x,y,c,flip){const g=G(s,`translate(${x},${y})`);E(g,'ellipse',{cx:0,cy:6,rx:26,ry:14,fill:'#0003'});E(g,'ellipse',{cx:0,cy:-6,rx:25,ry:15,fill:c});E(g,'circle',{cx:0,cy:-24,r:15,fill:'#5b3a29'});E(g,'circle',{cx:0,cy:-26,r:12,fill:'#f0c29b'});E(g,'path',{d:'M-13 -30 Q0 -44 13 -30 Q0 -36 -13 -30',fill:'#2a1a12'});}
-function table(x,y,r,col,qr){const g=G(s,`translate(${x},${y})`);
- E(g,'ellipse',{cx:0,cy:r*0.55+22,rx:r+8,ry:(r+8)*0.56,fill:'#0004'});
- E(g,'rect',{x:-r,y:0,width:2*r,height:r*0.5+16,fill:'#7a4a2b'});
- E(g,'ellipse',{cx:0,cy:r*0.5+16,rx:r,ry:r*0.56,fill:'#7a4a2b'});
- E(g,'ellipse',{cx:0,cy:0,rx:r,ry:r*0.56,fill:col});
- E(g,'ellipse',{cx:0,cy:0,rx:r*0.82,ry:r*0.46,fill:'none',stroke:'#fff6',"stroke-width":3});
- return g}
-function cup(g,x,y){E(g,'ellipse',{cx:x,cy:y,rx:11,ry:6,fill:'#fff'});E(g,'ellipse',{cx:x,cy:y-1,rx:7,ry:4,fill:'#6b3b1f'})}
-// back-to-front table layout
-const tabs=[[540,545,[ '#d1e8ff']],[330,660,[]],[750,660,[]],[170,800,[]],[540,790,[]],[910,800,[]],[350,960,[]],[730,960,[]]];
-const gc=['#2E86AB','#8E44AD','#27AE60','#E84393','#F1C40F','#16A085','#C0392B','#2980B9'];
-tabs.forEach(([x,y],i)=>{
- const isQR=(i===4);
- if(isQR){ // glow
-  const gl=E(s,'ellipse',{cx:x,cy:y,rx:175,ry:105,fill:'#FFF7B0',opacity:.55});
-  E(s,'ellipse',{cx:x,cy:y,rx:130,ry:78,fill:'#FFFFFF',opacity:.5});
- }
- guest(x-92,y-6,gc[i%8]);guest(x+92,y-6,gc[(i+3)%8]);if(!isQR){guest(x,y-60,gc[(i+5)%8])}
- const g=table(x,y,isQR?66:58,isQR?'#fffbe8':'#FFE2B8');
- cup(g,-22,0);cup(g,30,4);
- if(isQR){ // QR plate in iso
-  const q=G(g,'matrix(0.86 0.5 -0.86 0.5 0 -4)');
-  E(q,'rect',{x:-30,y:-30,width:60,height:60,rx:5,fill:'#fff',stroke:'#16513C','stroke-width':3});
-  const pat=[[0,0],[1,0],[2,0],[0,1],[2,1],[0,2],[1,2],[2,2],[4,0],[5,0],[4,2],[5,1],[0,4],[1,5],[2,4],[4,4],[5,5],[3,3],[4,3],[3,5],[5,3],[3,1],[1,3]];
-  const c=8;pat.forEach(([a,b])=>E(q,'rect',{x:-24+a*c,y:-24+b*c,width:c-1,height:c-1,fill:'#16513C'}));
- }
-});
-// speech bubbles
-function bubble(x,y,w,txt,bg,fg,rot,tailL){const g=G(s,`translate(${x},${y}) rotate(${rot})`);
- E(g,'rect',{x:0,y:0,width:w,height:70,rx:35,fill:bg,stroke:'#2A1A12','stroke-width':4});
- E(g,'path',{d:tailL?'M40 66 L22 98 L70 68':'M'+(w-40)+' 66 L'+(w-22)+' 98 L'+(w-70)+' 68',fill:bg,stroke:'#2A1A12','stroke-width':4,'stroke-linejoin':'round'});
- E(g,'rect',{x:tailL?36:w-76,y:62,width:36,height:9,fill:bg});
- T(g,w/2,46,txt,34,fg,900,'middle');}
-bubble(60,440,300,'Bill please!','#fff','#2A1A12',-6,true);
-bubble(690,430,310,'Is this still ৳380?','#FFE45C','#2A1A12',5,true);
-bubble(30,590,380,'Where’s our order?','#FF8A6B','#2A1A12',-3,false);
-bubble(650,585,390,'Can I get a waiter?','#fff','#2A1A12',4,true);
-// menu stack bottom-right
-(function(){const g=G(s,'translate(915,1185) rotate(6)');
- for(let i=0;i<9;i++){const o=Math.sin(i*1.7)*10;E(g,'rect',{x:-70+o,y:-i*20,width:140,height:20,rx:4,fill:i%2?'#fff':'#FFF0D0',stroke:'#2A1A12','stroke-width':3})}
- T(g,0,-163,'MENU',26,'#2A1A12',900,'middle');
- [['৳350',-215,-6],['৳420',-262,5]].forEach(([p,y,rot])=>{const n=G(g,`translate(0,${y}) rotate(${rot})`);E(n,'rect',{x:-58,y:-24,width:116,height:38,rx:6,fill:'#fff',stroke:'#2A1A12','stroke-width':3});T(n,0,4,p,26,'#2A1A12',900,'middle');E(n,'line',{x1:-50,y1:2,x2:50,y2:-14,stroke:'#E01E1E','stroke-width':6,'stroke-linecap':'round'})});
-})();
-// counter
-E(s,'polygon',{points:'-20,1215 520,1180 520,1350 -20,1440',fill:'#5a3320'});
-E(s,'polygon',{points:'-20,1215 520,1180 540,1200 -20,1240',fill:'#8c5a3a'});
-// QR hint arrow label
-const lab=G(s,'translate(540,720)');
-// owner from behind
-(function(){const g=G(s,'translate(250,1160)');
- E(g,'path',{d:'M-120 190 Q-130 40 -70 10 L70 10 Q130 40 120 190Z',fill:'#2E5A88'}); // blazer
- E(g,'path',{d:'M-18 10 L18 10 L10 60 L-10 60Z',fill:'#F2C7A0'});
- E(g,'rect',{x:-8,y:80,width:16,height:110,fill:'#1c3b5e'});
- E(g,'circle',{cx:0,cy:-40,r:52,fill:'#2a1a12'});E(g,'path',{d:'M-30 -70 Q0 -90 30 -70',fill:'none',stroke:'#4a3324','stroke-width':6,'stroke-linecap':'round'});
- // arms up
- E(g,'path',{d:'M-95 45 Q-170 -30 -200 -110',fill:'none',stroke:'#2E5A88','stroke-width':44,'stroke-linecap':'round'});
- E(g,'path',{d:'M95 45 Q170 -30 210 -110',fill:'none',stroke:'#2E5A88','stroke-width':44,'stroke-linecap':'round'});
- E(g,'circle',{cx:-202,cy:-120,r:24,fill:'#f0c29b'});E(g,'circle',{cx:214,cy:-122,r:24,fill:'#f0c29b'});
- // phone (left)
- const p=G(g,'translate(-250,-210) rotate(-14)');E(p,'rect',{x:0,y:0,width:62,height:108,rx:10,fill:'#222',stroke:'#fff','stroke-width':3});E(p,'rect',{x:6,y:10,width:50,height:88,rx:4,fill:'#7fd1ff'});
- // notebook (right)
- const n=G(g,'translate(190,-250) rotate(10)');E(n,'rect',{x:0,y:0,width:112,height:140,rx:6,fill:'#fff',stroke:'#2A1A12','stroke-width':4});E(n,'rect',{x:0,y:0,width:16,height:140,fill:'#E4482A'});
- T(n,62,56,'Best',22,'#2A1A12',900,'middle');T(n,64,84,'seller???',19,'#E4482A',900,'middle');
- // stamp card in air
- const c=G(g,'translate(-20,-300) rotate(-12)');E(c,'path',{d:'M0 0 L110 6 L100 68 L12 60 L4 40 L12 20Z',fill:'#E8D8B0',stroke:'#2A1A12','stroke-width':3});
- [0,1,2].forEach(i=>E(c,'circle',{cx:26+i*26,cy:30,r:8,fill:i<1?'#E4482A':'none',stroke:'#2A1A12','stroke-width':2}));
- // sweat/stress marks
- E(g,'path',{d:'M-70 -130 l-14 -26 M-30 -150 l-4 -30 M20 -150 l8 -30',stroke:'#2A1A12','stroke-width':5,'stroke-linecap':'round'});
-})();
-// "calm" tag near QR table
-(function(){const g=G(s,'translate(540,862)');})();
-})();
 
 /* ===== SLIDE 2 ART ===== */
 (function(){const s=$('s2art');
@@ -224,4 +138,5 @@ T(s,540,925,'Example screens · demo data from Juniper Café',22,'#FFF3DC',700,'
 (function(){const items=[['Works alongside your POS.','Keep the system you already use.'],['Payments stay with your restaurant.',''],['Print once.','One permanent QR per table, and your menu updates behind it.']];
 const c=$('chk');items.forEach(([a,b])=>{const d=document.createElement('div');d.style.cssText='display:flex;gap:26px;align-items:flex-start;margin-bottom:34px';
 d.innerHTML=`<svg width="64" height="64" viewBox="0 0 64 64" style="flex:none;margin-top:4px"><rect width="64" height="64" rx="16" fill="#16513C"/><path d="M16 33l12 12 22-26" fill="none" stroke="#F7A81B" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="font-size:42px;line-height:1.2"><b style="font-weight:900">${a}</b>${b?`<br><span style="font-weight:500;font-size:36px">${b}</span>`:''}</div>`;c.appendChild(d)});})();
-</script></body></html>
+</script>
+<script src="art1.js"></script></body></html>
