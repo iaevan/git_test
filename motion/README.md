@@ -11,7 +11,7 @@ Everything on screen is TableMate's own UI, recorded from the live demo (Juniper
 - `work/` – capture scripts (Playwright + CDP screencast) used to record the real guest phone, staff tablet and owner cards.
   Credentials are read from `work/creds.local.json` (git-ignored; never commit it).
 - `assets/` – real fonts (Manrope, DM Sans, Noto Sans Bengali), real Table 05 QR, logo glyph, order-card crop.
-- `out/` – `tablemate_silent.mp4` (captions only) and `tablemate_partial_vo.mp4` (captions + voiceover lines generated so far).
+- `out/` – `tablemate_final.mp4` (captions + voiceover) and `tablemate_silent.mp4` (captions only).
 
 ## Real vs staged screens
 Real recordings: guest menu/ordering/help sheet, staff orders + requests + Bangla toggle + Tables grid, owner dashboard cards
@@ -19,23 +19,16 @@ Real recordings: guest menu/ordering/help sheet, staff orders + requests + Bangl
 Staged (clearly tagged "Demo data" in the video): the stamp card at 4→5→6 – the real Rewards UI fed demo data via a
 network mock, so no guest account or SMS was created.
 
-## Finishing the voiceover
-Voice: ElevenLabs "Noah – Confident Canadian Narrator" (`9hb1f7xQcMLB90qbYSY3`), model `eleven_v4`.
-Done: scene 9, 10, 12, 13. Still to generate (save as the file names in `stage/vo.json`):
-| file | text |
-|---|---|
-| v01_team_cant.mp3 | Your team can't be at every table, every minute. |
-| v02_menu_can.mp3 | But your menu can be. |
-| v03_scan_menu.mp3 | Guests scan the QR on their table… and see your full menu, with prices, options and your guest favourites. |
-| v04_order_live.mp3 | They order in a few taps… and it lands live on your team's screen, in Bangla or English. |
-| v05_stamp.mp3 | While they wait, guests can join your stamp card. Every served order earns a stamp. |
-| v08_call.mp3 | Need a server, or the bill? One tap, and your team gets the request. |
-| v11_easy_start.mp3 | It works alongside your POS, payments stay with you, and you print your QR codes once. |
-| v14_dm_us.mp3 | DM us to book a demo. |
-
-Then: update the `dur` / `off` of each cue in `stage/vo.json` from the real clip lengths (for the two-part clips 3 and 4, set
-the second cue's `off` to where the "…" pause ends), re-run `render.js` if scene lengths change, then
-`python3 build_audio.py && ffmpeg -i out/tablemate_silent.mp4 -i audio/vo_track.wav -c:v copy -c:a aac -b:a 192k -shortest out/tablemate_final.mp4`.
+## Voiceover (complete)
+Voice: ElevenLabs "Noah – Confident Canadian Narrator" (`9hb1f7xQcMLB90qbYSY3`), model `eleven_v4`, one take per line.
+All 12 lines are in `audio/` (`v04` is split at its "…" pause into `v04a`/`v04b` so "Bangla or English" lands on the Bangla flip).
+`stage/vo.json` holds each cue's text, audio file, offset inside its scene and duration; the caption pill follows it.
+To re-mix after any change: `python3 build_audio.py` (loudness-normalised to about -16 LUFS), then
+`ffmpeg -i out/tablemate_silent.mp4 -i audio/vo_track.wav -c:v copy -c:a aac -b:a 192k -shortest out/tablemate_final.mp4`.
+To re-render the picture after changing `stage/`: `node render.js full <frames-dir> 0 2256 3`, then
+`ffmpeg -framerate 30 -i <frames-dir>/%05d.jpg -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -movflags +faststart out/tablemate_silent.mp4`.
+(`render.js` reads the screen-recording frame sequences from the scratchpad path at the top of the file; those sequences are rebuilt
+by `work/build_seq.py` from the raw captures made by the `work/capture_*.js` scripts.)
 
 ## Notes
 - Staff recordings cut the app's 2–4 s server spinners and speed up dead time; taps are overlaid from the logged click events.

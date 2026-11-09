@@ -17,6 +17,6 @@ for c in vo['cues']:
     ins+=['-i',p]; flt.append(f'[{n}:a]aresample=44100,aformat=channel_layouts=mono,adelay={int(start*1000)}:all=1,volume=1.0[a{n}]'); labels.append(f'[a{n}]'); n+=1
     print(f"  scene {c['s']:>2} @ {start:6.2f}s  {f}")
 if n==0: sys.exit('no audio clips found')
-flt.append(''.join(labels)+f'amix=inputs={n}:normalize=0:duration=longest,apad=whole_dur={total},atrim=0:{total},alimiter=limit=0.95[m]')
+flt.append(''.join(labels)+f'amix=inputs={n}:normalize=0:duration=longest,apad=whole_dur={total},atrim=0:{total},loudnorm=I=-16:TP=-1.5:LRA=9,aresample=44100[m]')
 cmd=['ffmpeg','-v','error','-y']+ins+['-filter_complex',';'.join(flt),'-map','[m]','-ar','44100','-ac','1',out]
 subprocess.run(cmd,check=True); print('wrote',out,'(%d clips, %.1fs)'%(n,total))
