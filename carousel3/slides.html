@@ -1,0 +1,131 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../motion/assets/fonts.css">
+<style>
+:root{--cream:#FBF3E1;--ink:#233730;--green:#12685e;--g2:#1FB57A;--tom:#D9432B;--line:#E6DCC4;--muted:#5d6b62}
+*{box-sizing:border-box;margin:0}body{font-family:'DM Sans';color:var(--ink);background:#777}
+.s{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--cream);margin-bottom:20px}
+.h{font:800 84px/1.02 Manrope;letter-spacing:-3px;position:absolute;left:60px;width:960px}
+.tag{position:absolute;left:70px;top:58px;font:800 24px Manrope;letter-spacing:1px;color:var(--green);display:flex;align-items:center;gap:12px}
+.tag i{width:34px;height:34px;border-radius:10px;background:var(--green);display:grid;place-items:center}
+.src{position:absolute;font:600 25px 'DM Sans';color:var(--muted)}
+.dots{position:absolute;bottom:40px;left:0;right:0;display:flex;justify-content:center;gap:12px}
+.dots b{width:14px;height:14px;border-radius:50%;background:#2337301f}.dots b.on{width:40px;border-radius:8px;background:var(--green)}
+.pill{position:absolute;font:800 32px Manrope;border-radius:60px}
+svg.a{position:absolute;left:0;top:0}
+.card{position:absolute;background:#fff;border:2px solid var(--line);border-radius:32px;box-shadow:0 10px 0 #EFE3C8}
+</style></head><body>
+<div class="s" id="s1"><svg class="a" id="a1" width="1080" height="1350"></svg>
+ <div class="h" style="top:56px;font-size:88px">7% of guests. <span style="color:var(--green)">Up to 50% of orders.</span></div>
+ <div class="src" style="left:62px;top:322px">Toast &amp; Resy, The Regulars Report 2026 (US restaurant data)</div>
+ <div class="pill" style="right:50px;bottom:46px;background:var(--ink);color:#fff;padding:20px 38px">Who are they? Swipe →</div></div>
+
+<div class="s" id="s2">
+ <div class="tag"><i id="lg2"></i>TABLEMATE</div>
+ <div class="h" style="top:118px;font-size:92px">They’re your <span style="color:var(--green)">regulars.</span></div>
+ <div style="position:absolute;left:70px;top:236px;width:940px;font:500 34px/1.32 'DM Sans'">The guests who come back again and again, the ones your staff greet before they’ve even sat down.</div>
+ <div class="card" style="left:70px;top:414px;width:940px;height:262px;padding:30px 40px">
+  <div style="font:700 28px 'DM Sans';color:var(--green);letter-spacing:.5px">What makes regulars feel valued?</div>
+  <div style="display:flex;gap:34px;align-items:center;margin-top:10px"><div style="font:800 128px/1 Manrope;letter-spacing:-6px;color:var(--green)">48%</div>
+  <div style="font:600 33px/1.25 'DM Sans'"><b style="font:800 40px Manrope;letter-spacing:-1px">Being remembered.</b><br>of guests surveyed said staff remembering their name or usual order matters most.</div></div></div>
+ <div style="position:absolute;left:74px;top:706px;font:700 31px 'DM Sans';color:var(--tom)">Only 30% said they always feel recognised.</div>
+ <svg class="a" id="a2" width="1080" height="1350"></svg>
+ <div class="src" style="left:72px;top:1262px">Source: Toast survey of 1,500 US adults, April 2026</div>
+ <div class="dots"><b></b><b class="on"></b><b></b><b></b></div></div>
+
+<div class="s" id="s3">
+ <div class="tag"><i id="lg3"></i>TABLEMATE</div>
+ <div class="h" style="top:118px;font-size:92px">Do you know who <span style="color:var(--tom)">your 7%</span> are?</div>
+ <div style="position:absolute;left:70px;top:330px;width:940px;font:500 34px/1.32 'DM Sans'">Most restaurants don’t, not really. If you can’t see who your regulars are:</div>
+ <div id="x3" style="position:absolute;left:70px;top:430px;width:940px"></div>
+ <svg class="a" id="a3" width="1080" height="1350"></svg>
+ <div class="dots"><b></b><b></b><b class="on"></b><b></b></div></div>
+
+<div class="s" id="s4">
+ <div class="tag"><i id="lg4"></i>TABLEMATE</div>
+ <div class="h" style="top:108px;font-size:76px">See your regulars. <span style="color:var(--green)">Keep your regulars.</span></div>
+ <svg class="a" id="a4" width="1080" height="1350"></svg>
+ <div id="reg" class="card" style="left:560px;top:340px;width:450px;height:318px;padding:22px 24px"></div>
+ <div id="f4" style="position:absolute;left:70px;top:700px;width:940px"></div>
+ <div class="pill" style="left:70px;top:1088px;width:940px;background:var(--green);color:#fff;padding:34px 0;text-align:center;font-size:48px;box-shadow:0 10px 0 #0c4f47">DM us to book a demo</div>
+ <div style="position:absolute;left:0;right:0;top:1250px;text-align:center;font:700 28px 'DM Sans';color:var(--green)">TableMate · Built by Zavino</div>
+ <div class="dots" style="bottom:30px"><b></b><b></b><b></b><b class="on"></b></div></div>
+
+<script>
+const NS='http://www.w3.org/2000/svg';
+const E=(p,t,a,x)=>{const n=document.createElementNS(NS,t);for(const k in a)n.setAttribute(k,a[k]);if(x!=null)n.textContent=x;p.appendChild(n);return n};
+const LOGO='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8"/><path d="M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7"/><path d="m2.1 21.8 6.4-6.3"/><path d="m19 5-7 7"/></svg>';
+['lg2','lg3','lg4'].forEach(i=>document.getElementById(i).innerHTML=LOGO);
+const SEVEN=[7,26,38,52,63,81,95];
+const defs=(svg)=>{const d=E(svg,'defs',{});const f=E(d,'filter',{id:'gl',x:'-200%',y:'-200%',width:'500%',height:'500%'});E(f,'feGaussianBlur',{stdDeviation:6});return d};
+/* room: returns guest positions */
+function room(svg,x,y,w,h,cols,rows,mode){
+ E(svg,'rect',{x,y,width:w,height:h,rx:34,fill:'#fff',stroke:'#E6DCC4','stroke-width':3});
+ E(svg,'rect',{x:x+10,y:y+10,width:w-20,height:h-20,rx:26,fill:'#FBF6EA'});
+ const cw=w/cols,ch=h/rows,m=Math.min(cw,ch),pos=[];const g=E(svg,'g',{});let n=0;
+ const glow=[],guests=[];
+ for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+  const cx=x+cw*(c+.5),cy=y+ch*(r+.5);
+  E(g,'circle',{cx,cy,r:m*.17,fill:'#E9DDC0'});E(g,'circle',{cx,cy,r:m*.17-3,fill:'#F4EBD2'});
+  for(let k=0;k<5;k++){const a=-Math.PI/2+k*2*Math.PI/5+(r+c)*.3;const gx=cx+Math.cos(a)*m*.31,gy=cy+Math.sin(a)*m*.31;guests.push([gx,gy,n++,a])}}
+ guests.forEach(([gx,gy,i,a])=>{
+  const sel=mode==='green'&&SEVEN.includes(i);const col=sel?'#12685e':'#BDBFB8';const rr=m*.075;
+  if(sel){E(g,'circle',{cx:gx,cy:gy,r:rr*2.6,fill:'#1FB57A',opacity:.55,filter:'url(#gl)'})}
+  E(g,'ellipse',{cx:gx-Math.cos(a)*0,cy:gy,rx:rr*1.35,ry:rr*.9,fill:col,opacity:sel?1:.8,transform:`rotate(${a*57.3+90} ${gx} ${gy})`});
+  E(g,'circle',{cx:gx,cy:gy,r:rr,fill:sel?'#1FB57A':'#D3D5CF',stroke:sel?'#fff':'none','stroke-width':2});
+  if(sel)pos.push([gx,gy,rr]);});
+ return pos;
+}
+/* ---- slide 1 ---- */
+(function(){const s=document.getElementById('a1');defs(s);
+ const pos=room(s,40,400,560,730,5,4,'green');
+ const px=850,py=760,R=175;
+ E(s,'circle',{cx:px+10,cy:py+18,r:R+8,fill:'#B99B63',opacity:.25});
+ E(s,'circle',{cx:px,cy:py,r:R,fill:'#fff',stroke:'#E3D8BE','stroke-width':4});
+ E(s,'circle',{cx:px,cy:py,r:R-26,fill:'#F4EEDD'});
+ E(s,'path',{d:`M${px} ${py-R+26} A${R-26} ${R-26} 0 0 1 ${px} ${py+R-26} L${px} ${py} Z`,fill:'#12685e'});
+ E(s,'circle',{cx:px,cy:py,r:R-26,fill:'none',stroke:'#fff','stroke-width':3});
+ E(s,'text',{x:px+62,y:py+14,'text-anchor':'middle','font-family':'Manrope','font-weight':800,'font-size':50,fill:'#fff'},'50%');
+ E(s,'text',{x:px,y:py+R+66,'text-anchor':'middle','font-family':'Manrope','font-weight':800,'font-size':32,fill:'#233730'},'of orders');
+ E(s,'text',{x:320,y:1172,'text-anchor':'middle','font-family':'Manrope','font-weight':800,'font-size':32,fill:'#12685e'},'7 of 100 guests');
+ pos.forEach(([x,y],i)=>{const ex=px-R+20+Math.cos((i-3)*.3)*0,ey=py+(i-3)*38;
+  E(s,'path',{d:`M${x} ${y} C ${x+120} ${y-60}, ${px-R-120} ${ey+60}, ${px-R+30} ${ey}`,fill:'none',stroke:'#1FB57A','stroke-width':2.5,opacity:.8});});
+})();
+/* ---- slide 2 : server + guest at door ---- */
+(function(){const s=E(document.getElementById('a2'),'g',{transform:'translate(540 1215) scale(.72) translate(-540 -1215)'});
+ // door
+ E(s,'rect',{x:690,y:820,width:260,height:400,rx:20,fill:'#8A5A3A'});E(s,'rect',{x:708,y:838,width:224,height:382,rx:12,fill:'#F3D7A0'});
+ E(s,'rect',{x:60,y:1215,width:960,height:10,rx:5,fill:'#E3D8BE'});
+ const person=(cx,base,skin,shirt,hair,wave,apron)=>{
+  E(s,'rect',{x:cx-34,y:base-170,width:30,height:170,rx:14,fill:'#2B4C7E'});E(s,'rect',{x:cx+4,y:base-170,width:30,height:170,rx:14,fill:'#2B4C7E'});
+  E(s,'rect',{x:cx-62,y:base-420,width:124,height:270,rx:50,fill:shirt});
+  if(apron)E(s,'rect',{x:cx-50,y:base-310,width:100,height:150,rx:18,fill:'#fff',opacity:.95});
+  E(s,'circle',{cx,cy:base-470,r:50,fill:skin});E(s,'path',{d:`M${cx-52} ${base-480} Q${cx} ${base-560} ${cx+52} ${base-480} Q${cx} ${base-505} ${cx-52} ${base-480}Z`,fill:hair});
+  E(s,'circle',{cx:cx-16,cy:base-466,r:4.5,fill:'#233730'});E(s,'circle',{cx:cx+16,cy:base-466,r:4.5,fill:'#233730'});
+  E(s,'path',{d:`M${cx-16} ${base-446} q16 14 32 0`,fill:'none',stroke:'#233730','stroke-width':4,'stroke-linecap':'round'});
+  if(wave){E(s,'path',{d:`M${cx+50} ${base-380} L${cx+120} ${base-470} L${cx+110} ${base-540}`,fill:'none',stroke:shirt,'stroke-width':36,'stroke-linecap':'round','stroke-linejoin':'round'});E(s,'circle',{cx:cx+108,cy:base-556,r:26,fill:skin});
+   E(s,'path',{d:`M${cx+150} ${base-570} l24 -18 M${cx+158} ${base-540} l30 -4 M${cx+146} ${base-600} l14 -26`,stroke:'#233730','stroke-width':5,'stroke-linecap':'round'});}
+  else{E(s,'path',{d:`M${cx-50} ${base-380} L${cx-64} ${base-250}`,fill:'none',stroke:shirt,'stroke-width':36,'stroke-linecap':'round'});E(s,'path',{d:`M${cx+50} ${base-380} L${cx+64} ${base-250}`,fill:'none',stroke:shirt,'stroke-width':36,'stroke-linecap':'round'});}
+ };
+ person(820,1215,'#E6B08A','#12685e','#2A1A12',false,false);
+ E(s,'rect',{x:866,y:1010,width:70,height:70,rx:12,fill:'#E4482A'});
+ person(300,1215,'#C98B62','#16513C','#2A1A12',true,true);
+ // bubble
+ E(s,'path',{d:'M470 760 L560 850 L440 850Z',fill:'#fff',stroke:'#233730','stroke-width':5,'stroke-linejoin':'round'});
+ E(s,'rect',{x:370,y:760,width:330,height:100,rx:50,fill:'#fff',stroke:'#233730','stroke-width':5});
+ E(s,'rect',{x:470,y:752,width:80,height:20,fill:'#fff'});
+ E(s,'text',{x:535,y:826,'text-anchor':'middle','font-family':'Manrope','font-weight':800,'font-size':46,fill:'#233730'},'“The usual?”');
+})();
+/* ---- slide 3 ---- */
+(function(){const s=document.getElementById('a3');defs(s);
+ [['You can’t thank them.'],['You can’t reward them.'],['You won’t notice when they stop coming.']].forEach(([t])=>document.getElementById('x3').insertAdjacentHTML('beforeend',`<div style="display:flex;gap:22px;align-items:center;margin-bottom:20px;font:800 40px Manrope;letter-spacing:-1px"><div style="width:58px;height:58px;border-radius:50%;background:#D9432B;display:grid;place-items:center;flex:none"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></div>${t}</div>`));
+ room(s,40,740,1000,520,8,3,'grey');
+ [[180,860,80,-8],[520,1010,120,6],[850,900,90,10],[700,1150,70,-10]].forEach(([x,y,z,r])=>E(s,'text',{x,y,'font-family':'Manrope','font-weight':800,'font-size':z*1.6,fill:'#D9432B',opacity:.9,transform:`rotate(${r} ${x} ${y})`},'?'));
+})();
+/* ---- slide 4 ---- */
+(function(){const s=document.getElementById('a4');defs(s);
+ const pos=room(s,40,340,500,320,5,3,'green');
+ pos.forEach(([x,y])=>{const g=E(s,'g',{transform:`translate(${x-17} ${y-44})`});E(g,'rect',{width:34,height:26,rx:7,fill:'#F7A81B',stroke:'#fff','stroke-width':2});
+  [8,17,26].forEach(cx=>E(g,'circle',{cx:cx-2,cy:13,r:3.2,fill:'#fff'}));});
+ document.getElementById('reg').innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><div style="font:800 30px Manrope;letter-spacing:-.8px">Your regulars</div><div style="background:#233730;color:#fff;font:700 17px 'DM Sans';letter-spacing:1px;padding:6px 14px;border-radius:20px">DEMO DATA</div></div><div style="display:flex;font:600 17px 'DM Sans';color:#5d6b62;margin:12px 0 4px"><span style="flex:1">Guest</span><span style="width:96px">Orders</span><span style="width:96px">Stamps</span></div>`+[['Nadia R.',14,'5/6'],['Imran H.',11,'3/6'],['Sadia K.',9,'6/6']].map(([n,o,st],i)=>`<div style="display:flex;align-items:center;padding:12px 0;border-top:1.5px solid #E6DCC4;font:700 25px 'DM Sans'"><span style="flex:1;display:flex;gap:12px;align-items:center"><span style="width:34px;height:34px;border-radius:50%;background:#EAF4EF;color:#12685e;display:grid;place-items:center;font:800 15px Manrope">${n[0]}</span>${n}</span><span style="width:96px">${o}</span><span style="width:96px;color:#12685e">${st}</span></div>`).join('');
+ [['New vs returning','See how many diners are new and how many come back.'],['Your regulars list','Enrolled guests, their completed orders and stamp balance.'],['A reason to return','A digital stamp card with a reward you choose.']].forEach(([a,b],i)=>document.getElementById('f4').insertAdjacentHTML('beforeend',`<div style="background:#fff;border:2px solid #E6DCC4;border-radius:30px;padding:18px 28px;margin-bottom:14px;display:flex;gap:22px;align-items:center;height:104px;box-shadow:0 8px 0 #EFE3C8"><div style="width:58px;height:58px;border-radius:18px;background:#12685e;color:#fff;display:grid;place-items:center;font:800 30px Manrope;flex:none">${i+1}</div><div><div style="font:800 32px Manrope;letter-spacing:-.9px">${a}</div><div style="font:500 24px/1.25 'DM Sans';color:#4a5a50;margin-top:2px">${b}</div></div></div>`));
+})();
+</script></body></html>
