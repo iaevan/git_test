@@ -33,14 +33,14 @@
   {
    "s": 3,
    "off": 0.2,
-   "dur": 2.7,
+   "dur": 2.03,
    "audio": "v03_scan_menu.mp3",
    "text": "Guests scan the QR on their table…"
   },
   {
    "s": 3,
-   "off": 3.4,
-   "dur": 5.0,
+   "off": 2.62,
+   "dur": 4.27,
    "audio": null,
    "text": "…and see your full menu, with prices, options and your guest favourites."
   },
