@@ -47,15 +47,15 @@
   {
    "s": 5,
    "off": 0.2,
-   "dur": 2.4,
-   "audio": "v04_order_live.mp3",
+   "dur": 1.5,
+   "audio": "v04a_order_taps.mp3",
    "text": "They order in a few taps…"
   },
   {
-   "s": 5,
-   "off": 3.1,
-   "dur": 4.6,
-   "audio": null,
+   "s": 6,
+   "off": 0.95,
+   "dur": 3.62,
+   "audio": "v04b_lands_live.mp3",
    "text": "…and it lands live on your team’s screen, in Bangla or English."
   },
   {
