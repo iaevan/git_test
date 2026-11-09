@@ -1,0 +1,1 @@
+const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();const p=await b.newPage({viewport:{width:1100,height:1400}});await p.goto('file://'+process.cwd()+'/slides.html');await p.waitForTimeout(800);await p.evaluate(()=>document.fonts.ready);for(let i=1;i<=4;i++)await p.locator('#s'+i).screenshot({path:`slide${i}.png`});await b.close()})()
