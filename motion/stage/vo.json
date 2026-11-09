@@ -1,0 +1,118 @@
+{
+ "scenes": [
+  5,
+  4,
+  4,
+  6,
+  5,
+  7.9,
+  6,
+  6.6,
+  5.5,
+  6.5,
+  6.2,
+  4,
+  5,
+  3.5
+ ],
+ "cues": [
+  {
+   "s": 1,
+   "off": 0.3,
+   "dur": 3.3,
+   "audio": "v01_team_cant.mp3",
+   "text": "Your team can’t be at every table, every minute."
+  },
+  {
+   "s": 2,
+   "off": 0.2,
+   "dur": 1.9,
+   "audio": "v02_menu_can.mp3",
+   "text": "But your menu can be."
+  },
+  {
+   "s": 3,
+   "off": 0.2,
+   "dur": 2.7,
+   "audio": "v03_scan_menu.mp3",
+   "text": "Guests scan the QR on their table…"
+  },
+  {
+   "s": 3,
+   "off": 3.4,
+   "dur": 5.0,
+   "audio": null,
+   "text": "…and see your full menu, with prices, options and your guest favourites."
+  },
+  {
+   "s": 5,
+   "off": 0.2,
+   "dur": 2.4,
+   "audio": "v04_order_live.mp3",
+   "text": "They order in a few taps…"
+  },
+  {
+   "s": 5,
+   "off": 3.1,
+   "dur": 4.6,
+   "audio": null,
+   "text": "…and it lands live on your team’s screen, in Bangla or English."
+  },
+  {
+   "s": 7,
+   "off": 0.2,
+   "dur": 5.6,
+   "audio": "v05_stamp.mp3",
+   "text": "While they wait, guests can join your stamp card. Every served order earns a stamp."
+  },
+  {
+   "s": 8,
+   "off": 0.2,
+   "dur": 5.6,
+   "audio": "v08_call.mp3",
+   "text": "Need a server, or the bill? One tap, and your team gets the request."
+  },
+  {
+   "s": 9,
+   "off": 0.2,
+   "dur": 5.49,
+   "audio": "v09_staff_see.mp3",
+   "text": "Your staff see every table, every request and every open bill in one place."
+  },
+  {
+   "s": 10,
+   "off": 0.4,
+   "dur": 4.9,
+   "audio": "v10_owner_numbers.mp3",
+   "text": "And you see what’s selling, when you’re busy, and how fast every table is served."
+  },
+  {
+   "s": 11,
+   "off": 0.2,
+   "dur": 6.0,
+   "audio": "v11_easy_start.mp3",
+   "text": "It works alongside your POS, payments stay with you, and you print your QR codes once."
+  },
+  {
+   "s": 12,
+   "off": 0.3,
+   "dur": 2.85,
+   "audio": "v12_this_is_tablemate.mp3",
+   "text": "This is TableMate, built by Zavino."
+  },
+  {
+   "s": 13,
+   "off": 0.2,
+   "dur": 3.55,
+   "audio": "v13_one_system.mp3",
+   "text": "One system for your guests, your team, and you."
+  },
+  {
+   "s": 14,
+   "off": 0.2,
+   "dur": 1.9,
+   "audio": "v14_dm_us.mp3",
+   "text": "DM us to book a demo."
+  }
+ ]
+}

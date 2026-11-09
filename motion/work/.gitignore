@@ -1,0 +1,9 @@
+creds.local.json
+state_*.json
+*.local.json
+frames/
+raw/
+*.png
+*.jpg
+dry/
+app/

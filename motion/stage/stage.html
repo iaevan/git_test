@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../assets/fonts.css">
+<style>
+:root{--cream:#FBF7EC;--ink:#233730;--green:#12685e;--deep:#0e5a4f;--mint:#EAF4EF;--mint2:#CFE7DA;--peach:#FFE3D1;--line:#DCE5DE;--amber:#d9892b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);position:relative}
+#stage{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:var(--cream)}
+.abs{position:absolute;left:0;top:0;will-change:transform}
+#bg .blob{position:absolute;border-radius:50%;left:0;top:0}
+#prog{position:absolute;left:0;top:0;height:10px;background:var(--green);border-radius:0 6px 6px 0;z-index:90}
+.kick{position:absolute;left:0;top:0;width:1080px;text-align:center;z-index:50}
+.kick span{display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:40px;background:rgba(255,255,255,.75);border:1.5px solid var(--line);font:700 24px 'DM Sans';letter-spacing:3px;color:var(--green);text-transform:uppercase}
+.kick i{width:12px;height:12px;border-radius:50%;background:var(--green);display:inline-block}
+.hl{position:absolute;left:0;top:0;width:1080px;text-align:center;font:800 72px/1.08 'Manrope',sans-serif;letter-spacing:-2px;color:var(--ink);z-index:50}
+.hl .ln{display:block;white-space:nowrap}
+.hl .w{display:inline-block;will-change:transform}
+.hl .g{color:var(--green)}
+#sub{position:absolute;left:70px;width:940px;top:0;z-index:80;display:flex;justify-content:center}
+#sub div{background:rgba(255,255,255,.94);border-radius:64px;padding:24px 46px;font:600 37px/1.3 'DM Sans';color:var(--ink);text-align:center;box-shadow:0 14px 40px rgba(35,55,48,.14);border:1.5px solid rgba(220,229,222,.9)}
+.phone{position:absolute;left:0;top:0;width:487px;height:1017px}
+.phone .frame{position:absolute;inset:0;border-radius:76px;background:#0f1412;box-shadow:0 50px 90px rgba(20,60,48,.28),0 8px 0 rgba(255,255,255,.12) inset}
+.phone .scr{position:absolute;left:16px;top:16px;width:455px;height:985px;border-radius:60px;overflow:hidden;background:#fff}
+.phone .scr img{position:absolute;left:0;top:0;width:455px;height:985px;display:block}
+.phone .isl{position:absolute;left:50%;top:14px;width:128px;height:36px;margin-left:-64px;background:#0f1412;border-radius:20px;z-index:5}
+.tab{position:absolute;left:0;top:0;width:968px;height:968px}
+.tab .frame{position:absolute;inset:0;border-radius:44px;background:#141a18;box-shadow:0 50px 90px rgba(20,60,48,.26)}
+.tab .scr{position:absolute;left:14px;top:14px;width:940px;height:940px;border-radius:30px;overflow:hidden;background:#fff}
+.tab .scr img{position:absolute;left:0;top:0;width:940px;height:940px;display:block}
+.chip{position:absolute;left:0;top:0;display:flex;align-items:center;gap:14px;padding:14px 30px 14px 16px;border-radius:60px;background:#fff;border:1.5px solid var(--line);box-shadow:0 14px 34px rgba(35,55,48,.14);font:700 34px 'DM Sans';color:var(--ink);white-space:nowrap;z-index:60}
+.chip .ic{width:52px;height:52px;border-radius:50%;background:var(--mint);display:grid;place-items:center;flex:none}
+.chip .ic svg{width:28px;height:28px;stroke:var(--green);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tag{position:absolute;left:0;top:0;padding:10px 22px;border-radius:30px;background:var(--ink);color:#fff;font:700 24px 'DM Sans';letter-spacing:1.5px;z-index:70}
+.card{position:absolute;left:0;top:0;background:#fff;border-radius:34px;border:1.5px solid var(--line);box-shadow:0 18px 44px rgba(35,55,48,.14)}
+.brand{display:flex;align-items:center;gap:22px;font:800 112px 'Manrope';letter-spacing:-5px;color:var(--ink)}
+.brand .bi{width:134px;height:134px;border-radius:38px;background:var(--green);display:grid;place-items:center;flex:none}
+.brand .bi svg{width:76px;height:76px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.brand .d{color:var(--green)}
+.fing{position:absolute;left:0;top:0;width:90px;height:90px;z-index:85;pointer-events:none}
+.fing .rip{position:absolute;left:12px;top:12px;width:66px;height:66px;border-radius:50%;border:5px solid rgba(18,104,94,.55);background:rgba(18,104,94,.14)}
+.fing svg{position:absolute;left:6px;top:6px;width:84px;height:84px;filter:drop-shadow(0 6px 8px rgba(0,0,0,.25))}
+</style></head>
+<body><div id="stage">
+<div id="bg"></div>
+<div id="prog"></div>
+<div id="layer"></div>
+<div id="sub"><div id="subt"></div></div>
+</div>
+<script src="stage.js"></script>
+</body></html>

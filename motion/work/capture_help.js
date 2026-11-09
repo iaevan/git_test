@@ -1,0 +1,33 @@
+// Scene 8: guest Help -> Bill -> Call server; staff sees request live, taps "On my way"; guest sheet updates
+const {chromium}=require('playwright');
+const {startRec,sleep}=require('./reclib');
+const URL='https://tablekind.thezavino.workers.dev/t/ce2c02c4dad75b3f3e4972da90d60b38';
+let S,G,b;
+(async()=>{
+ b=await chromium.launch();
+ const sctx=await b.newContext({viewport:{width:1180,height:1180},deviceScaleFactor:1.25,storageState:'state_staff.json',locale:'en-US'});
+ const gctx=await b.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,locale:'en-US'});
+ const sp=await sctx.newPage(), gp=await gctx.newPage();
+ await sp.goto('https://tablekind.thezavino.workers.dev/workspace',{waitUntil:'networkidle'});
+ await sp.getByRole('button',{name:'English'}).click().catch(()=>{});
+ await sleep(800);
+ await gp.goto(URL,{waitUntil:'networkidle'}); await sleep(1200);
+ S=await startRec(sp,'t_request',{quality:90,maxW:1475,maxH:1475});
+ G=await startRec(gp,'g_help',{quality:90,maxW:780,maxH:1688});
+ S.ev('mark',{label:'staff_rec_start'}); G.ev('mark',{label:'guest_rec_start'});
+ await sleep(1500);
+ await G.tap(gp.getByText('Help',{exact:true}).first(),'help'); await gp.getByRole('dialog').waitFor(); G.ev('mark',{label:'sheet_open'}); await sleep(1300);
+ const sel=gp.getByRole('dialog').getByLabel('Reason for calling your server');
+ {const bb=await sel.boundingBox(); G.ev('tap',{x:bb.x+bb.width/2,y:bb.y+bb.height/2,label:'select_reason'});} await sleep(350); await sel.selectOption({label:'Bill'}); G.ev('mark',{label:'bill_selected'}); await sleep(1100);
+ await G.tap(gp.getByRole('dialog').getByRole('button',{name:'Call server'}),'call_server'); G.ev('mark',{label:'call_tap'}); S.ev('mark',{label:'guest_called'});
+ const req=()=>sp.locator('div').filter({has:sp.getByText('Table 05',{exact:true})}).filter({has:sp.getByRole('button',{name:/On my way|Request done/})}).last();
+ await req().waitFor({timeout:40000}); S.ev('mark',{label:'request_arrived'}); await sleep(2600);
+ await S.tap(req().getByRole('button',{name:'On my way'}),'on_my_way',{touch:false}); S.ev('mark',{label:'onmyway_tap'});
+ await req().getByRole('button',{name:'Request done'}).waitFor({timeout:30000}); S.ev('mark',{label:'onmyway_visible'});
+ await gp.getByText('Your server is on the way').first().waitFor({timeout:20000});
+ G.ev('mark',{label:'guest_on_the_way'}); await sleep(2200);
+ await S.tap(req().getByRole('button',{name:'Request done'}),'request_done',{touch:false}); S.ev('mark',{label:'done_tap'}); await sleep(3500); S.ev('mark',{label:'end'});
+ G.ev('mark',{label:'end'});
+ const a=await S.stop(), c=await G.stop(); console.log('frames staff',a,'guest',c);
+ await b.close();
+})().catch(async e=>{console.error('ERR',e.message);try{if(S)await S.stop();if(G)await G.stop();}catch(_){ }try{await b.close()}catch(_){ }process.exit(1)});
