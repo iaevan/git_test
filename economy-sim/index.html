@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Village Economy Sandbox</title>
+<style>
+:root{
+  --bg:#1d212b; --panel:#272c38; --panel2:#2f3542; --line:#3c4352; --text:#e8e6e1; --muted:#9aa1ad;
+  --accent:#f2b75b; --good:#7fc97f; --bad:#ef6f6c; --blue:#6fa8dc; --orange:#f39c4a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:13px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:4px 9px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.on,button.primary{background:var(--accent);color:#222;border-color:var(--accent)}
+button.danger{border-color:#7a3b3b;color:#f3a3a1}
+input,select,textarea{background:#1a1e27;border:1px solid var(--line);border-radius:5px;padding:3px 6px}
+input[type=number]{width:70px}
+input[type=checkbox]{width:auto}
+header{display:flex;align-items:center;gap:14px;padding:8px 14px;background:#161922;border-bottom:1px solid var(--line);flex-wrap:wrap}
+header h1{font-size:15px;margin:0;color:var(--accent);letter-spacing:.3px}
+#clock{font-variant-numeric:tabular-nums;font-weight:600;font-size:15px}
+#hudmoney{color:var(--muted)}
+main{display:flex;gap:12px;padding:12px;align-items:flex-start}
+#left{flex:1 1 60%;min-width:0}
+#right{flex:1 1 40%;min-width:340px;max-width:620px;background:var(--panel);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;max-height:calc(100vh - 80px)}
+@media (max-width:1000px){main{flex-direction:column}#right{max-width:none;width:100%;min-width:0;max-height:none}}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+.bar .sep{width:1px;height:22px;background:var(--line);margin:0 4px}
+.pal{display:inline-flex;align-items:center;gap:4px}
+#mapwrap{position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#3d6b35}
+canvas#map{display:block;width:100%;height:auto;touch-action:none;cursor:crosshair}
+#ticker{margin-top:8px;font-size:12px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px;min-height:96px;font-family:ui-monospace,Menlo,Consolas,monospace;white-space:pre;overflow:hidden}
+nav#tabs{display:flex;flex-wrap:wrap;gap:2px;padding:6px 6px 0;border-bottom:1px solid var(--line)}
+nav#tabs button{border:none;border-radius:6px 6px 0 0;background:transparent;color:var(--muted);padding:6px 9px}
+nav#tabs button.on{background:var(--panel2);color:var(--text)}
+#panel{padding:12px;overflow:auto;flex:1}
+h2{font-size:14px;margin:4px 0 10px;color:var(--accent)}
+h3{font-size:13px;margin:14px 0 6px;color:var(--text)}
+.muted{color:var(--muted)} .good{color:var(--good)} .bad{color:var(--bad)}
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:8px}
+.card .head{display:flex;align-items:center;gap:8px;cursor:pointer}
+.card .head .grow{flex:1}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0}
+.row label{color:var(--muted);font-size:12px}
+.field{display:inline-flex;flex-direction:column;gap:2px}
+.field>span{font-size:11px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th,td{text-align:left;padding:3px 5px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{color:var(--muted);font-weight:500}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.days{display:inline-flex;gap:1px}
+.days button{padding:1px 4px;font-size:11px;min-width:20px;border-radius:4px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 12px}
+.kv div:nth-child(odd){color:var(--muted)}
+.chartbox{background:#1a1e27;border:1px solid var(--line);border-radius:8px;padding:6px;margin:6px 0 10px}
+.chartbox canvas{width:100%;display:block}
+.chartbox .t{font-size:12px;color:var(--muted);margin:0 0 4px 2px}
+.pill{display:inline-block;padding:0 6px;border-radius:9px;font-size:11px;background:#1a1e27;border:1px solid var(--line)}
+textarea{width:100%;min-height:140px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px}
+.small{font-size:11px}
+.rules p,.rules li{color:#d6d3cc}
+.rules code{background:#1a1e27;padding:0 4px;border-radius:4px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🏘️ Village Economy Sandbox</h1>
+  <span id="clock">Day 1 · Mon · 00:00</span>
+  <span id="hudmoney"></span>
+</header>
+<main>
+  <section id="left">
+    <div class="bar" id="tools"></div>
+    <div id="mapwrap"><canvas id="map"></canvas></div>
+    <div class="bar" style="margin-top:8px">
+      <button id="playBtn" class="primary">▶ Play</button>
+      <label class="muted">Speed
+        <select id="speed">
+          <option value="5">Slow · 5 min/s</option>
+          <option value="15" selected>Normal · 15 min/s</option>
+          <option value="60">Fast · 1 h/s</option>
+          <option value="240">Faster · 4 h/s</option>
+          <option value="1440">Max · 1 day/s</option>
+        </select>
+      </label>
+      <span class="sep"></span>
+      <button id="endDayBtn" title="Simulate instantly until the start of the next day">⏭ Finish day</button>
+      <label class="muted">Run <input id="runN" type="number" value="7" min="1" max="365" style="width:56px"> days</label>
+      <button id="runBtn">⏩ Run</button>
+      <span class="sep"></span>
+      <button id="resetBtn" class="danger" title="Restart from Day 1 with the current setup (keeps your map & settings)">↺ Reset sim</button>
+      <span id="runStatus" class="muted"></span>
+    </div>
+    <div id="ticker"></div>
+  </section>
+  <section id="right">
+    <nav id="tabs"></nav>
+    <div id="panel"></div>
+  </section>
+</main>
+
+<script>
+'use strict';
+/* =====================================================================
+   Village Economy Sandbox
+   - World (config) = products, building types, placed buildings,
+     villagers, traveller types, settings. Saved to browser + JSON export.
+   - Sim (state)    = clock, cash, stock, agents, logs, daily history.
+   One tick = one game minute. Prices are constant (set per product).
+   ===================================================================== */
+const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const TILE=32;
+const STORE_KEY='village-econ-world-v1', PIN_KEY='village-econ-pins-v1';
+const REASONS={'not sold':'No building in the village sells it','closed':'Every seller was closed','out of stock':'Every open seller was out of stock','no money':'Could not afford it','no trip':'Routine never took them shopping (or nothing was due when they went)','no time':'Traveller left before buying it'};
+const COLORS=['#6fa8dc','#f2b75b','#7fc97f','#ef6f6c','#b39ddb','#4dd0e1','#ffb74d','#f48fb1','#aed581','#90a4ae','#ce93d8','#80cbc4'];
+
+const $=s=>document.querySelector(s);
+function h(tag,attrs,...kids){
+  const el=document.createElement(tag), props={};
+  for(const k in attrs||{}){const v=attrs[k]; if(v==null||v===false) continue;
+    if(k==='class') el.className=v; else if(k==='style') el.style.cssText=v; else if(k==='html') el.innerHTML=v;
+    else if(k.startsWith('on')) el.addEventListener(k.slice(2),v);
+    else if(k==='value'||k==='checked') props[k]=v; else el.setAttribute(k,v===true?'':v);}
+  for(const c of kids.flat(Infinity)) if(c!=null&&c!==false) el.append(c instanceof Node?c:String(c));
+  Object.assign(el,props); return el;
+}
+const toMin=s=>{const [a,b]=String(s||'0:0').split(':').map(Number); return ((a||0)*60+(b||0))%1440;};
+const fmtT=m=>String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const g=n=>{n=Math.round(n*100)/100; return (n<0?'−':'')+Math.abs(n).toLocaleString(undefined,{maximumFractionDigits:2})+'g';};
+const uid=p=>p+'_'+Math.random().toString(36).slice(2,8);
+const mask=s=>s.split('').map(c=>c==='1'?1:0);
+const clone=o=>JSON.parse(JSON.stringify(o));
+const sum=a=>a.reduce((x,y)=>x+y,0);
+
+/* ============================ DEFAULT WORLD ============================ */
+function defaultWorld(){
+  const P=(id,name,icon,price,cost,service=false)=>({id,name,icon,price,cost,service});
+  const products=[
+    P('bread','Bread','🍞',12,5), P('croissant','Croissant','🥐',18,7), P('milk','Milk','🥛',8,4),
+    P('eggs','Eggs','🥚',6,3), P('veg','Vegetables','🥕',10,4), P('fruit','Fruit','🍎',9,4),
+    P('cheese','Cheese','🧀',25,12), P('ticket','Museum ticket','🎟️',30,0,true), P('souvenir','Souvenir','🗿',45,18),
+    P('ale','Ale','🍺',14,5), P('stew','Stew','🍲',22,9),
+  ];
+  const T=(id,name,icon,color,kind,w,hh,open,close,jobSlots,startCash,sells)=>({id,name,icon,color,kind,w,h:hh,open,close,jobSlots,startCash,sells:sells.map(([productId,maxStock])=>({productId,maxStock}))});
+  const buildingTypes=[
+    T('gate','Village Gate','🚏','#8d7b68','gate',2,2,'00:00','00:00',0,0,[]),
+    T('house','House','🏠','#c98b5a','house',2,2,'00:00','00:00',0,0,[]),
+    T('grocery','Grocery','🛒','#4f86b8','place',3,2,'08:00','20:00',2,600,[['bread',30],['milk',30],['eggs',40],['veg',30],['cheese',15]]),
+    T('bakery','Bakery','🥖','#d1964a','place',3,2,'06:00','15:00',2,400,[['bread',40],['croissant',30]]),
+    T('market',"Farmer's Market",'🧺','#6aa152','place',3,2,'06:00','13:00',1,300,[['eggs',30],['veg',40],['fruit',40],['cheese',10]]),
+    T('museum','Museum','🏛️','#8f78b8','place',4,3,'10:00','17:00',1,500,[['ticket',0],['souvenir',20]]),
+    T('tavern','Tavern','🍺','#a0582a','place',3,2,'16:00','23:30',2,400,[['ale',60],['stew',30]]),
+  ];
+  const B=(id,typeId,name,x,y)=>({id,typeId,name,x,y});
+  const buildings=[
+    B('b_gate','gate','Village Gate',0,8),
+    B('h1','house','House 1',3,2),B('h2','house','House 2',6,2),B('h3','house','House 3',9,2),
+    B('h4','house','House 4',3,13),B('h5','house','House 5',6,13),B('h6','house','House 6',9,13),
+    B('b_groc','grocery','Grocery',14,2),B('b_bake','bakery','Bakery',19,2),
+    B('b_mkt','market',"Farmer's Market",14,7),B('b_mus','museum','Museum',20,7),B('b_tav','tavern','Tavern',14,13),
+  ];
+  const D=(productId,qty,days)=>({productId,qty,days:mask(days)});
+  const R=(time,action,target,days)=>({time,action,target:target||'',days:mask(days)});
+  const basket=()=>[D('bread',1,'1111111'),D('veg',1,'1111111'),D('fruit',1,'1111111'),D('milk',1,'1010101'),
+    D('eggs',2,'1001000'),D('cheese',1,'0000010'),D('ale',2,'0000110'),D('stew',1,'0000100'),D('ticket',1,'0000001')];
+  const worker=(start,end,homeAt,workDays='1111110')=>{
+    const off=workDays.split('').map(c=>c==='1'?'0':'1').join('');
+    return [R(start,'work','',workDays),R(end,'shop','',workDays),R(homeAt,'home','',workDays),
+      R('10:00','shop','',off),R('11:30','visit','museum',off),R('13:30','home','',off),
+      R('19:00','visit','tavern','0000110'),R('22:30','home','','0000110')];
+  };
+  const V=(id,name,icon,homeId,jobId,wage,otherIncome,startCash,demand,routine)=>({id,name,icon,homeId,jobId,wage,otherIncome,startCash,demand,routine});
+  const villagers=[
+    V('v_ada','Ada','👩‍🍳','h1','b_bake',75,0,200,basket(),worker('05:30','14:30','16:00')),
+    V('v_hana','Hana','👧','h1','b_bake',60,0,150,basket(),worker('06:00','15:00','16:30')),
+    V('v_ben','Ben','👨‍🌾','h2','b_mkt',70,0,200,basket(),worker('05:30','13:00','14:30')),
+    V('v_cora','Cora','👩‍💼','h3','b_groc',70,0,250,basket(),worker('08:00','14:00','15:30')),
+    V('v_dan','Dan','🧑','h4','b_groc',60,0,120,basket(),[
+      R('11:00','shop','','1111110'),R('12:30','home','','1111110'),R('14:00','work','','1111110'),R('20:00','home','','1111110'),
+      R('10:00','shop','','0000001'),R('11:30','visit','museum','0000001'),R('13:30','home','','0000001'),
+      R('20:15','visit','tavern','0000110'),R('23:00','home','','0000110')]),
+    V('v_eli','Eli','🧐','h5','b_mus',75,0,300,[...basket().filter(d=>d.productId!=='ticket'),D('croissant',1,'0000011')],worker('09:30','17:00','18:00','0111111')),
+    V('v_fay','Fay','🧔','h6','b_tav',70,0,200,basket().filter(d=>d.productId!=='ale'&&d.productId!=='stew'),[
+      R('10:00','shop','','1111111'),R('11:30','home','','1111111'),R('15:45','work','','1111111'),R('23:45','home','','1111111')]),
+    V('v_gus','Gus','👴','h6',null,0,35,400,[D('bread',1,'1111111'),D('veg',1,'1111111'),D('milk',1,'1010101'),D('cheese',1,'0000010'),D('ale',1,'1111111'),D('ticket',1,'0000001')],[
+      R('08:30','shop','','1111111'),R('10:00','visit','market','1111110'),R('11:30','home','','1111111'),
+      R('12:00','visit','museum','0000001'),R('14:00','home','','0000001'),
+      R('18:30','visit','tavern','1111111'),R('21:00','home','','1111111')]),
+  ];
+  const W_=(productId,qty,chance)=>({productId,qty,chance});
+  const travellerTypes=[
+    {id:'t_tour',name:'Tourist',icon:'📸',days:mask('1111111'),perDayMin:1,perDayMax:3,arriveFrom:'09:00',arriveTo:'13:00',stayHours:5,cashMin:60,cashMax:180,
+      wants:[W_('ticket',1,.9),W_('souvenir',1,.35),W_('croissant',1,.6),W_('fruit',2,.3)],visits:['museum']},
+    {id:'t_wknd',name:'Weekend tourist',icon:'🧢',days:mask('0000011'),perDayMin:2,perDayMax:5,arriveFrom:'09:30',arriveTo:'14:00',stayHours:5,cashMin:80,cashMax:220,
+      wants:[W_('ticket',1,.9),W_('souvenir',1,.5),W_('croissant',2,.5),W_('stew',1,.3)],visits:['museum']},
+    {id:'t_trade',name:'Trader',icon:'🧳',days:mask('1111100'),perDayMin:0,perDayMax:2,arriveFrom:'07:00',arriveTo:'10:00',stayHours:3,cashMin:150,cashMax:400,
+      wants:[W_('cheese',3,.7),W_('eggs',6,.5),W_('veg',5,.4)],visits:[]},
+    {id:'t_wand',name:'Wanderer',icon:'🎒',days:mask('1111111'),perDayMin:1,perDayMax:2,arriveFrom:'16:00',arriveTo:'19:00',stayHours:4,cashMin:40,cashMax:120,
+      wants:[W_('stew',1,.8),W_('ale',2,.7),W_('bread',1,.3)],visits:['tavern']},
+  ];
+  return {version:1,
+    settings:{seed:42,gridW:28,gridH:18,walkSpeed:0.5,shopMinutes:6,sightseeMinutes:45,retryMinutes:60,startWeekday:0,restockNeedsCash:false,needWorker:false},
+    products,buildingTypes,buildings,villagers,travellerTypes};
+}
+function emptyWorld(){const w=defaultWorld(); w.buildings=w.buildings.filter(b=>b.typeId==='gate'); w.villagers=[]; return w;}
+
+/* ============================ GLOBALS ============================ */
+let W=null, S=null, pins=[];
+let running=false, speed=15, acc=0, tool='select', sel=null, curTab='inspect', dirty=true, hover=null, drag=null, busy=false;
+
+function loadWorld(){
+  try{const s=localStorage.getItem(STORE_KEY); if(s){const w=JSON.parse(s); if(w&&w.products) return fixWorld(w);}}catch(e){}
+  return defaultWorld();
+}
+function fixWorld(w){ // fill missing fields so older/edited JSON still loads
+  const d=defaultWorld(); w.settings=Object.assign({},d.settings,w.settings||{});
+  for(const k of ['products','buildingTypes','buildings','villagers','travellerTypes']) if(!Array.isArray(w[k])) w[k]=[];
+  for(const v of w.villagers){v.demand=v.demand||[]; v.routine=v.routine||[];}
+  for(const t of w.travellerTypes){t.wants=t.wants||[]; t.visits=t.visits||[]; t.days=t.days||mask('1111111');}
+  for(const t of w.buildingTypes){t.sells=t.sells||[];}
+  return w;
+}
+function saveWorld(){try{localStorage.setItem(STORE_KEY,JSON.stringify(W));}catch(e){}}
+function loadPins(){try{pins=JSON.parse(localStorage.getItem(PIN_KEY)||'[]')||[];}catch(e){pins=[];}}
+function savePins(){try{localStorage.setItem(PIN_KEY,JSON.stringify(pins));}catch(e){}}
+
+/* ============================ LOOKUPS ============================ */
+const prod=id=>W.products.find(p=>p.id===id);
+const btype=id=>W.buildingTypes.find(t=>t.id===id);
+const bById=id=>id?W.buildings.find(b=>b.id===id):null;
+const typeOf=b=>btype(b.typeId);
+const vilOf=a=>W.villagers.find(v=>v.id===a.vid);
+const agentOf=vid=>S.agents.find(a=>a.vid===vid);
+const weekday=()=>(S.day-1+(Number(W.settings.startWeekday)||0))%7;
+function door(b){const t=typeOf(b)||{w:2,h:2}; return {x:b.x+t.w/2,y:Math.min(W.settings.gridH-0.3,b.y+t.h+0.35)};}
+const dist=(p,q)=>Math.hypot(p.x-q.x,p.y-q.y);
+const gate=()=>W.buildings.find(b=>typeOf(b)?.kind==='gate');
+const sells=(b,pid)=>!!typeOf(b)?.sells.some(s=>s.productId===pid);
+function isOpenAt(b,m){const t=typeOf(b); if(!t) return false; const o=toMin(t.open),c=toMin(t.close);
+  if(o===c) return true; return o<c? (m>=o&&m<c) : (m>=o||m<c);}
+function staffed(b){return S.agents.some(a=>a.at===b.id&&a.steps[0]&&a.steps[0].t==='idle'&&a.steps[0].work);}
+function canSell(b){const t=typeOf(b); if(!isOpenAt(b,S.minute)) return false;
+  if(W.settings.needWorker&&t&&t.jobSlots>0&&!staffed(b)) return false; return true;}
+function nearestOfType(from,typeId){let best=null,bd=1e9; for(const b of W.buildings){ if(b.typeId!==typeId) continue; const d=dist(from,door(b)); if(d<bd){bd=d;best=b;} } return best;}
+function villageMoney(){return sum(S.agents.filter(a=>a.kind==='vil').map(a=>a.cash))+sum(Object.values(S.bs).map(b=>b.cash));}
+
+/* ============================ RNG (seeded) ============================ */
+function rnd(){S.rng=(S.rng+0x6D2B79F5)|0; let t=S.rng; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return ((t^t>>>14)>>>0)/4294967296;}
+function rint(a,b){a=Math.round(+a||0);b=Math.round(+b||0); if(b<a)[a,b]=[b,a]; return a+Math.floor(rnd()*(b-a+1));}
+
+/* ============================ SIM STATE ============================ */
+function newT(){return {startMoney:villageMoney(),sales:{},salesBP:{},revByB:{},wagesByB:{},restockByB:{},unmet:{},travellers:0,travSpend:0,travCashIn:0,travCashOut:0,otherIncome:0,wages:0,restock:0,villagerSpend:0,adjust:0};}
+function resetSim(){
+  S={day:1,minute:0,rng:(Number(W.settings.seed)>>>0)||1,bs:{},agents:[],spawnQ:[],log:[],history:[],T:null,started:false,dayStarted:false,travCounter:0,agentCounter:0,initialMoney:0,totals:{in:0,out:0,adj:0}};
+  S.T={adjust:0};
+  syncState();
+  S.initialMoney=villageMoney();
+  startDay(); S.started=true;
+  running=false; updatePlay(); dirty=true;
+}
+function adjust(amount,why){ if(!amount) return; if(S.started){S.T.adjust+=amount; S.totals.adj+=amount; logTx('adjust',amount>0?'(you)':why,amount>0?why:'(you)',Math.abs(amount),amount>0?'money added by an edit':'money removed by an edit');} }
+function computeNeed(v,wd){const need={}; for(const d of v.demand){ if(d.days&&d.days[wd]&&d.qty>0&&prod(d.productId)) need[d.productId]=(need[d.productId]||0)+(+d.qty);} return need;}
+function syncState(){
+  // buildings
+  for(const b of W.buildings){ if(!S.bs[b.id]){ const t=typeOf(b); S.bs[b.id]={cash:+(t?.startCash)||0,stock:{},life:{rev:0,wages:0,restock:0}}; adjust(+(t?.startCash)||0,b.name); } }
+  // starting inventory: a new building (or a product newly added to a type) starts with full shelves, free of charge
+  for(const b of W.buildings){ const t=typeOf(b), bs=S.bs[b.id]; if(!t) continue;
+    for(const s_ of t.sells){ if(!(s_.productId in bs.stock)) bs.stock[s_.productId]=Math.max(0,Math.floor(+s_.maxStock||0)); } }
+  for(const id of Object.keys(S.bs)) if(!bById(id)){ adjust(-S.bs[id].cash,'(removed building)'); delete S.bs[id]; }
+  // villagers -> agents
+  for(const v of W.villagers){ let a=agentOf(v.id);
+    if(!a){ const hb=bById(v.homeId); const p=hb?door(hb):{x:W.settings.gridW/2,y:W.settings.gridH/2};
+      a={id:'a'+(++S.agentCounter),kind:'vil',vid:v.id,name:v.name,icon:v.icon,x:p.x,y:p.y,px:p.x,py:p.y,cash:+v.startCash||0,
+        steps:hb?[{t:'idle',b:hb.id,label:'at home in'}]:[{t:'idle',b:null}],pending:[],at:hb?hb.id:null,base:hb?hb.id:null,
+        need:{},bought:{},lastFail:{},worked:false,spentToday:0,earnedToday:0};
+      S.agents.push(a); adjust(a.cash,v.name); }
+    a.name=v.name; a.icon=v.icon; a.need=computeNeed(v,weekday()); }
+  for(const a of [...S.agents]) if(a.kind==='vil'&&!vilOf(a)){ adjust(-a.cash,'(removed villager)'); S.agents.splice(S.agents.indexOf(a),1); }
+  // clean dangling references
+  for(const a of S.agents){ if(a.base&&!bById(a.base)) a.base=null; if(a.at&&!bById(a.at)) a.at=null;
+    if(a.steps.some(s=>s.b&&!bById(s.b))) a.steps=a.kind==='vil'?[]:[{t:'idle',b:null}]; }
+}
+function logTx(type,from,to,amt,note){S.log.push({d:S.day,m:S.minute,type,from,to,amt,note}); if(S.log.length>6000) S.log.splice(0,1000);}
+function addUnmet(pid,reason,n){ if(n<=0) return; const u=S.T.unmet[pid]||(S.T.unmet[pid]={}); u[reason]=(u[reason]||0)+n; }
+function remaining(a){return Object.keys(a.need).filter(p=>prod(p)&&a.need[p]-(a.bought[p]||0)>0);}
+
+/* ============================ DAY CYCLE ============================ */
+function startDay(){
+  S.T=newT(); S.T.adjust=0; S.dayStarted=true;
+  const wd=weekday();
+  for(const a of S.agents) if(a.kind==='vil'){ const v=vilOf(a); a.need=v?computeNeed(v,wd):{}; a.bought={}; a.lastFail={}; a.worked=false; a.spentToday=0; a.earnedToday=0; }
+  S.spawnQ=[];
+  for(const tt of W.travellerTypes){ if(!tt.days||!tt.days[wd]) continue;
+    const n=rint(tt.perDayMin,tt.perDayMax);
+    for(let i=0;i<n;i++){ const at=rint(toMin(tt.arriveFrom),Math.max(toMin(tt.arriveFrom),toMin(tt.arriveTo))); const cash=rint(tt.cashMin,tt.cashMax);
+      const need={}; for(const w of tt.wants){ if(rnd()<(+w.chance)) need[w.productId]=(need[w.productId]||0)+(+w.qty); }
+      S.spawnQ.push({ttid:tt.id,at,cash,need}); } }
+  S.spawnQ.sort((a,b)=>a.at-b.at);
+}
+function endDay(){
+  const T=S.T;
+  for(const a of S.agents.filter(a=>a.kind==='trav')) travLeave(a);
+  for(const a of S.agents){ for(const pid of remaining(a)) addUnmet(pid,a.lastFail[pid]||'no trip',a.need[pid]-(a.bought[pid]||0)); }
+  // payroll + outside income (paid at midnight)
+  for(const a of S.agents){ const v=vilOf(a); if(!v) continue;
+    const jb=bById(v.jobId);
+    if(a.worked&&jb&&+v.wage>0){ const bs=S.bs[jb.id]; const amt=+v.wage; bs.cash-=amt; a.cash+=amt; a.earnedToday+=amt; bs.life.wages+=amt;
+      T.wages+=amt; T.wagesByB[jb.id]=(T.wagesByB[jb.id]||0)+amt; logTx('wage',jb.name,v.name,amt,'daily wage'); }
+    if(+v.otherIncome>0){ const amt=+v.otherIncome; a.cash+=amt; a.earnedToday+=amt; T.otherIncome+=amt; S.totals.in+=amt; logTx('income','Outside',v.name,amt,'outside income'); } }
+  const vc=sum(S.agents.filter(a=>a.kind==='vil').map(a=>a.cash)), bc=sum(Object.values(S.bs).map(b=>b.cash));
+  const bCash={}; for(const id in S.bs) bCash[id]=S.bs[id].cash;
+  const revenue=sum(Object.values(T.sales).map(s=>s.rev)), salesQty=sum(Object.values(T.sales).map(s=>s.qty));
+  const unmetTotal=sum(Object.values(T.unmet).map(u=>sum(Object.values(u))));
+  S.history.push({day:S.day,wd:weekday(),villagerCash:vc,buildingCash:bc,villageMoney:vc+bc,startMoney:T.startMoney,revenue,salesQty,unmetTotal,
+    travSpend:T.travSpend,villagerSpend:T.villagerSpend,travellers:T.travellers,wages:T.wages,restock:T.restock,otherIncome:T.otherIncome,
+    inflow:T.travSpend+T.otherIncome,outflow:T.restock,adjust:T.adjust,bCash,revByB:{...T.revByB},sales:clone(T.sales),unmet:clone(T.unmet)});
+  S.dayStarted=false;
+}
+function restock(b){
+  const t=typeOf(b), bs=S.bs[b.id]; if(!t||!bs) return;
+  for(const s of t.sells){ const p=prod(s.productId); if(!p||p.service) continue;
+    let n=Math.max(0,Math.floor(+s.maxStock||0)-(bs.stock[p.id]||0));
+    if(W.settings.restockNeedsCash&&+p.cost>0) n=Math.min(n,Math.max(0,Math.floor(bs.cash/ +p.cost)));
+    if(n<=0) continue; const c=n*(+p.cost||0);
+    bs.cash-=c; bs.stock[p.id]=(bs.stock[p.id]||0)+n; bs.life.restock+=c;
+    S.T.restock+=c; S.T.restockByB[b.id]=(S.T.restockByB[b.id]||0)+c; S.totals.out+=c;
+    logTx('restock',b.name,'Outside',c,`${n}× ${p.icon} ${p.name}`); }
+}
+function tick(){
+  if(S.minute===0&&!S.dayStarted) startDay();
+  const m=S.minute;
+  for(const b of W.buildings){ const t=typeOf(b); if(t&&t.sells.length&&toMin(t.open)===m) restock(b); }
+  while(S.spawnQ.length&&S.spawnQ[0].at<=m) spawnTraveller(S.spawnQ.shift());
+  const wd=weekday();
+  for(const a of S.agents){ if(a.kind!=='vil') continue; const v=vilOf(a); if(!v) continue;
+    for(const r of v.routine) if(r.days&&r.days[wd]&&toMin(r.time)===m) a.pending.push(r); }
+  for(const a of [...S.agents]) stepAgent(a);
+  S.minute++;
+  if(S.minute>=1440){ endDay(); S.minute=0; S.day++; startDay(); }
+}
+
+/* ============================ AGENTS ============================ */
+function chooseSeller(a,pid){
+  const p=prod(pid); const sellers=W.buildings.filter(b=>sells(b,pid));
+  if(!sellers.length) return {fail:'not sold'};
+  sellers.sort((x,y)=>dist(a,door(x))-dist(a,door(y)));
+  const open=sellers.filter(canSell); if(!open.length) return {fail:'closed'};
+  const stocked=open.filter(b=>p.service||(S.bs[b.id]?.stock[pid]||0)>0); if(!stocked.length) return {fail:'out of stock'};
+  return {b:stocked[0]};
+}
+function planTrip(a,pids){
+  const groups=new Map();
+  for(const pid of pids){ const r=chooseSeller(a,pid); if(r.fail){a.lastFail[pid]=r.fail; continue;} groups.set(r.b.id,r.b); }
+  const list=[...groups.values()], steps=[]; let pos={x:a.x,y:a.y};
+  while(list.length){ list.sort((p,q)=>dist(pos,door(p))-dist(pos,door(q))); const b=list.shift();
+    steps.push({t:'walk',b:b.id},{t:'wait',left:+W.settings.shopMinutes||1,b:b.id,label:'shopping'},{t:'buy',b:b.id}); pos=door(b); }
+  return steps;
+}
+function doBuy(a,bid){
+  const b=bById(bid); if(!b) return; const bs=S.bs[b.id]; const ok=canSell(b);
+  for(const pid of remaining(a)){ if(!sells(b,pid)) continue;
+    if(!ok){a.lastFail[pid]='closed'; continue;}
+    const p=prod(pid), need=a.need[pid]-(a.bought[pid]||0), price=+p.price||0;
+    const avail=p.service?Infinity:(bs.stock[pid]||0), afford=price>0?Math.floor(a.cash/price+1e-9):Infinity;
+    const n=Math.min(need,avail,afford);
+    if(n>0){ const amt=n*price; a.cash-=amt; bs.cash+=amt; bs.life.rev+=amt; if(!p.service) bs.stock[pid]-=n;
+      a.bought[pid]=(a.bought[pid]||0)+n; a.spentToday=(a.spentToday||0)+amt;
+      const s=S.T.sales[pid]||(S.T.sales[pid]={qty:0,rev:0}); s.qty+=n; s.rev+=amt;
+      S.T.revByB[b.id]=(S.T.revByB[b.id]||0)+amt; const bp=S.T.salesBP[b.id]||(S.T.salesBP[b.id]={}); bp[pid]=(bp[pid]||0)+n;
+      if(a.kind==='trav'){S.T.travSpend+=amt; S.totals.in+=amt;} else S.T.villagerSpend+=amt;
+      logTx('sale',a.name,b.name,amt,`${n}× ${p.icon} ${p.name}`); }
+    if(n<need) a.lastFail[pid]=avail<need?'out of stock':'no money';
+  }
+}
+function returnToBase(a){
+  const v=vilOf(a); let base=bById(a.base)||bById(v?.homeId);
+  if(!base){a.steps=[{t:'idle',b:null}]; return;}
+  const lbl=base.id===v?.homeId?'at home in':(base.id===v?.jobId&&a.worked?'working at':'hanging around');
+  const idle={t:'idle',b:base.id,label:lbl,work:lbl==='working at'};
+  a.steps=a.at===base.id?[idle]:[{t:'walk',b:base.id},idle];
+}
+function startAction(a,r){
+  const v=vilOf(a); if(!v) return;
+  if(r.action==='home'){ const hb=bById(v.homeId); a.base=hb?hb.id:null; a.steps=hb?[{t:'walk',b:hb.id},{t:'idle',b:hb.id,label:'at home in'}]:[{t:'idle',b:null}]; }
+  else if(r.action==='work'){ const jb=bById(v.jobId); if(!jb) return; a.base=jb.id; a.steps=[{t:'walk',b:jb.id},{t:'work'},{t:'idle',b:jb.id,label:'working at',work:true}]; }
+  else if(r.action==='visit'){ const tb=nearestOfType(a,r.target); if(!tb) return; a.base=tb.id;
+    a.steps=[{t:'walk',b:tb.id},{t:'wait',left:+W.settings.shopMinutes||1,b:tb.id,label:'browsing'},{t:'buy',b:tb.id},{t:'idle',b:tb.id,label:'visiting'}]; }
+  else if(r.action==='shop'){ a.steps=planTrip(a,remaining(a)); }
+}
+function spawnTraveller(sp){
+  const tt=W.travellerTypes.find(t=>t.id===sp.ttid); if(!tt) return;
+  const gt=gate(); const p=gt?door(gt):{x:0.5,y:W.settings.gridH/2};
+  const a={id:'a'+(++S.agentCounter),kind:'trav',ttid:tt.id,name:`${tt.name} #${++S.travCounter}`,icon:tt.icon,x:p.x,y:p.y,px:p.x,py:p.y,
+    cash:sp.cash,startCash:sp.cash,need:sp.need,bought:{},lastFail:{},steps:[],pending:[],at:gt?gt.id:null,
+    departAt:Math.min(1439,sp.at+Math.round((+tt.stayHours||1)*60)),retryAt:S.minute+(+W.settings.retryMinutes||60),spentToday:0,leaving:false};
+  const steps=planTrip(a,remaining(a));
+  let pos=steps.length?door(bById(steps[steps.length-1].b)):p, lastB=steps.length?steps[steps.length-1].b:(gt&&gt.id);
+  for(const vt of tt.visits||[]){ const b=nearestOfType(pos,vt); if(!b) continue;
+    steps.push({t:'walk',b:b.id},{t:'wait',left:+W.settings.sightseeMinutes||30,b:b.id,label:'sightseeing'},{t:'buy',b:b.id}); pos=door(b); lastB=b.id; }
+  steps.push({t:'idle',b:lastB||null,label:'strolling near'});
+  a.steps=steps; S.agents.push(a); S.T.travellers++; S.T.travCashIn+=a.cash;
+  logTx('arrive','Outside',a.name,a.cash,'arrives carrying cash');
+}
+function travLeave(a){
+  for(const pid of remaining(a)) addUnmet(pid,a.lastFail[pid]||'no time',a.need[pid]-(a.bought[pid]||0));
+  S.T.travCashOut+=a.cash; logTx('leave',a.name,'Outside',a.cash,`leaves (spent ${g(a.startCash-a.cash)})`);
+  const i=S.agents.indexOf(a); if(i>=0) S.agents.splice(i,1);
+}
+function stepAgent(a){
+  a.px=a.x; a.py=a.y; const m=S.minute;
+  if(a.kind==='trav'){
+    if(!a.leaving&&m>=a.departAt){ a.leaving=true; const gt=gate(); a.steps=gt?[{t:'walk',b:gt.id},{t:'leave'}]:[{t:'walkxy',x:0.3,y:W.settings.gridH/2},{t:'leave'}]; }
+    else if(!a.leaving){ const s=a.steps[0];
+      if((!s||s.t==='idle')&&m>=a.retryAt){ a.retryAt=m+(+W.settings.retryMinutes||60); const rem=remaining(a);
+        if(rem.length){ const trip=planTrip(a,rem); if(trip.length) a.steps=[...trip,{t:'idle',b:trip[trip.length-1].b,label:'strolling near'}]; } } }
+  } else {
+    const s=a.steps[0];
+    if((!s||s.t==='idle')&&a.pending.length) startAction(a,a.pending.shift());
+    if(!a.steps.length) returnToBase(a);
+  }
+  for(let guard=0;guard<8;guard++){
+    const s=a.steps[0]; if(!s) return;
+    switch(s.t){
+      case 'walk': case 'walkxy': {
+        let tx,ty; if(s.t==='walk'){const b=bById(s.b); if(!b){a.steps.shift(); continue;} ({x:tx,y:ty}=door(b));} else {tx=s.x;ty=s.y;}
+        a.at=null; const dx=tx-a.x,dy=ty-a.y,d=Math.hypot(dx,dy),sp=+W.settings.walkSpeed||0.5;
+        if(d<=sp){a.x=tx;a.y=ty;a.at=s.t==='walk'?s.b:null;a.steps.shift();} else {a.x+=dx/d*sp;a.y+=dy/d*sp;}
+        return; }
+      case 'wait': if(--s.left<=0) a.steps.shift(); return;
+      case 'idle': return;
+      case 'buy': doBuy(a,s.b); a.steps.shift(); continue;
+      case 'work': a.worked=true; a.steps.shift(); continue;
+      case 'leave': travLeave(a); return;
+      default: a.steps.shift();
+    }
+  }
+}
+function statusOf(a){
+  const s=a.steps[0]; const bn=id=>bById(id)?.name||'?';
+  if(!s) return 'idle';
+  switch(s.t){case 'walk': return (a.leaving?'leaving via ':'walking to ')+bn(s.b); case 'walkxy': return 'leaving the village';
+    case 'wait': return `${s.label} at ${bn(s.b)}`; case 'idle': return s.b?`${s.label||'at'} ${bn(s.b)}`:'standing around'; default: return s.t;}
+}
+const visible=a=>!(a.at&&a.steps[0]&&a.steps[0].t!=='walk'&&a.steps[0].t!=='walkxy');
+
+/* ============================ RUN CONTROL ============================ */
+function updatePlay(){const b=$('#playBtn'); b.textContent=running?'⏸ Pause':'▶ Play'; b.classList.toggle('primary',!running);}
+function runDays(n,done){
+  if(busy) return; busy=true; running=false; updatePlay();
+  const target=S.day+n; const st=$('#runStatus');
+  const chunk=()=>{ const t0=performance.now();
+    while(S.day<target&&performance.now()-t0<40) for(let i=0;i<60&&S.day<target;i++) tick();
+    st.textContent=S.day<target?`simulating… day ${S.day}/${target}`:'';
+    dirty=true; if(S.day<target) setTimeout(chunk,0); else {busy=false; done&&done();} };
+  chunk();
+}
+
+/* ============================ MAP RENDERING ============================ */
+const cv=$('#map'), ctx=cv.getContext('2d'); let bg=null;
+function sizeCanvas(){const dpr=Math.min(2,window.devicePixelRatio||1); cv.width=W.settings.gridW*TILE*dpr; cv.height=W.settings.gridH*TILE*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); bg=null;}
+function makeBg(){
+  const c=document.createElement('canvas'); c.width=W.settings.gridW*TILE; c.height=W.settings.gridH*TILE; const x=c.getContext('2d');
+  let seed=7; const r=()=>{seed=(seed*16807)%2147483647; return seed/2147483647;};
+  for(let i=0;i<W.settings.gridW;i++) for(let j=0;j<W.settings.gridH;j++){ x.fillStyle=(i+j)%2?'#4a7c3f':'#4f8343'; x.fillRect(i*TILE,j*TILE,TILE,TILE);
+    if(r()<.25){x.fillStyle='rgba(255,255,255,.06)'; x.fillRect(i*TILE+r()*28,j*TILE+r()*28,3,3);} }
+  x.strokeStyle='rgba(0,0,0,.08)'; for(let i=0;i<=W.settings.gridW;i++){x.beginPath();x.moveTo(i*TILE+.5,0);x.lineTo(i*TILE+.5,c.height);x.stroke();}
+  for(let j=0;j<=W.settings.gridH;j++){x.beginPath();x.moveTo(0,j*TILE+.5);x.lineTo(c.width,j*TILE+.5);x.stroke();}
+  return c;
+}
+function rr(c,x,y,w,h_,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h_,r);c.arcTo(x+w,y+h_,x,y+h_,r);c.arcTo(x,y+h_,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function darkness(m){if(m<300) return .5; if(m<420) return .5*(1-(m-300)/120); if(m<1140) return 0; if(m<1320) return .5*(m-1140)/180; return .5;}
+function draw(){
+  if(!bg) bg=makeBg(); const Wp=W.settings.gridW*TILE,Hp=W.settings.gridH*TILE;
+  ctx.drawImage(bg,0,0);
+  // door paths
+  ctx.fillStyle='rgba(214,190,140,.35)';
+  for(const b of W.buildings){const d=door(b); ctx.beginPath(); ctx.arc(d.x*TILE,d.y*TILE,6,0,7); ctx.fill();}
+  const inside={}; for(const a of S.agents) if(!visible(a)&&a.at) inside[a.at]=(inside[a.at]||0)+1;
+  for(const b of W.buildings){ const t=typeOf(b); if(!t) continue; drawBuilding(b,t,inside[b.id]||0); }
+  const frac=running&&!busy?acc:1;
+  for(const a of S.agents){ if(!visible(a)) continue;
+    const x=(a.px+(a.x-a.px)*frac)*TILE, y=(a.py+(a.y-a.py)*frac)*TILE;
+    ctx.fillStyle='rgba(0,0,0,.25)'; ctx.beginPath(); ctx.ellipse(x,y+9,8,3,0,0,7); ctx.fill();
+    ctx.fillStyle=a.kind==='vil'?'#dfe9f5':'#fde3c8'; ctx.strokeStyle=a.kind==='vil'?'#3d7bc4':'#e0761f'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(x,y,10,0,7); ctx.fill(); ctx.stroke();
+    ctx.font='13px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(a.icon||'🙂',x,y+1);
+    if(sel&&sel.kind==='a'&&sel.id===a.id){ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,14,0,7);ctx.stroke();}
+  }
+  const dk=darkness(S.minute); if(dk>0){ctx.fillStyle=`rgba(12,18,55,${dk})`; ctx.fillRect(0,0,Wp,Hp);}
+  // ghost for placement / drag
+  let gh=null;
+  if(tool.startsWith('place:')&&hover){const t=btype(tool.slice(6)); if(t) gh={typeId:t.id,x:hover.tx-Math.floor((t.w-1)/2),y:hover.ty-Math.floor((t.h-1)/2),t};}
+  if(gh){const ok=validSpot(gh,null); ctx.fillStyle=ok?'rgba(255,255,255,.25)':'rgba(239,111,108,.4)'; ctx.fillRect(gh.x*TILE,gh.y*TILE,gh.t.w*TILE,gh.t.h*TILE);
+    ctx.font='22px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(gh.t.icon,(gh.x+gh.t.w/2)*TILE,(gh.y+gh.t.h/2)*TILE);}
+  if(tool==='delete'&&hover){const b=buildingAt(hover.tx,hover.ty); if(b){const t=typeOf(b); ctx.strokeStyle='#ef6f6c'; ctx.lineWidth=3; ctx.strokeRect(b.x*TILE+2,b.y*TILE+2,t.w*TILE-4,t.h*TILE-4);}}
+}
+function drawBuilding(b,t,inside){
+  const x=b.x*TILE,y=b.y*TILE,w=t.w*TILE,hh=t.h*TILE; const open=t.kind!=='place'||canSell(b);
+  ctx.fillStyle='rgba(0,0,0,.25)'; rr(ctx,x+4,y+5,w-4,hh-4,7); ctx.fill();
+  ctx.fillStyle=t.color||'#888'; rr(ctx,x+2,y+2,w-4,hh-4,7); ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.12)'; rr(ctx,x+2,y+2,w-4,(hh-4)*0.35,7); ctx.fill();
+  if(!open){ctx.fillStyle='rgba(0,0,0,.38)'; rr(ctx,x+2,y+2,w-4,hh-4,7); ctx.fill();}
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.font=`${t.w>=3?22:18}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`; ctx.fillText(t.icon||'🏠',x+w/2,y+hh/2-6);
+  ctx.font='600 10px system-ui,sans-serif'; ctx.fillStyle='#fff'; let name=b.name; while(ctx.measureText(name).width>w-8&&name.length>3) name=name.slice(0,-2)+'…';
+  ctx.fillText(name,x+w/2,y+hh-11);
+  if(!open&&t.kind==='place'){ctx.font='700 8px system-ui';ctx.fillStyle='#ffd7a8';ctx.fillText('CLOSED',x+w/2,y+9);}
+  if(t.kind==='place'){const bs=S.bs[b.id]; if(bs&&t.sells.some(s=>{const p=prod(s.productId); return p&&!p.service&&(bs.stock[p.id]||0)<=0;})){ctx.fillStyle='#ef6f6c';ctx.beginPath();ctx.arc(x+9,y+9,4,0,7);ctx.fill();}
+    if(bs&&bs.cash<0){ctx.strokeStyle='#ef6f6c';ctx.lineWidth=2;ctx.setLineDash([5,3]);rr(ctx,x+3,y+3,w-6,hh-6,6);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='#ef6f6c';ctx.beginPath();rr(ctx,x+w-34,y+hh-30,28,11,3);ctx.fill();ctx.fillStyle='#fff';ctx.font='700 8px system-ui';ctx.fillText('DEBT',x+w-20,y+hh-24.5);}}
+  if(inside){ctx.fillStyle='#1d212b'; ctx.beginPath(); ctx.arc(x+w-9,y+9,8,0,7); ctx.fill(); ctx.fillStyle='#fff'; ctx.font='700 10px system-ui'; ctx.fillText(inside,x+w-9,y+9.5);}
+  if(sel&&((sel.kind==='b'&&sel.id===b.id)||(sel.kind==='a'&&S.agents.find(a=>a.id===sel.id&&a.at===b.id&&!visible(a))))){ctx.strokeStyle='#fff';ctx.lineWidth=2;rr(ctx,x+1,y+1,w-2,hh-2,8);ctx.stroke();}
+}
+function buildingAt(tx,ty){for(let i=W.buildings.length-1;i>=0;i--){const b=W.buildings[i],t=typeOf(b); if(t&&tx>=b.x&&tx<b.x+t.w&&ty>=b.y&&ty<b.y+t.h) return b;} return null;}
+function validSpot(o,ignoreId){const t=btype(o.typeId); if(!t) return false;
+  if(o.x<0||o.y<0||o.x+t.w>W.settings.gridW||o.y+t.h>W.settings.gridH) return false;
+  for(const b of W.buildings){ if(b.id===ignoreId) continue; const u=typeOf(b); if(!u) continue;
+    if(o.x<b.x+u.w&&o.x+t.w>b.x&&o.y<b.y+u.h&&o.y+t.h>b.y) return false; } return true;}
+
+/* ============================ MAP INPUT ============================ */
+function evTile(e){const r=cv.getBoundingClientRect(); const px=(e.clientX-r.left)/r.width*W.settings.gridW*TILE, py=(e.clientY-r.top)/r.height*W.settings.gridH*TILE; return {px,py,tx:Math.floor(px/TILE),ty:Math.floor(py/TILE)};}
+cv.addEventListener('pointermove',e=>{hover=evTile(e);
+  if(drag){const nx=hover.tx-drag.ox, ny=hover.ty-drag.oy; if(nx!==drag.b.x||ny!==drag.b.y){drag.moved=true; drag.b.x=nx; drag.b.y=ny;}}});
+cv.addEventListener('pointerleave',()=>{hover=null;});
+cv.addEventListener('pointerdown',e=>{
+  const p=evTile(e); hover=p;
+  if(tool==='select'){
+    let best=null,bd=14; for(const a of S.agents){ if(!visible(a)) continue; const d=Math.hypot(a.x*TILE-p.px,a.y*TILE-p.py); if(d<bd){bd=d;best=a;} }
+    if(best){select({kind:'a',id:best.id}); return;}
+    const b=buildingAt(p.tx,p.ty); if(b){select({kind:'b',id:b.id}); drag={b,ox:p.tx-b.x,oy:p.ty-b.y,x0:b.x,y0:b.y,moved:false}; cv.setPointerCapture(e.pointerId);} else select(null);
+  } else if(tool==='delete'){ const b=buildingAt(p.tx,p.ty); if(b) removeBuilding(b); }
+  else if(tool.startsWith('place:')){ const t=btype(tool.slice(6)); if(!t) return;
+    const o={typeId:t.id,x:p.tx-Math.floor((t.w-1)/2),y:p.ty-Math.floor((t.h-1)/2)}; if(!validSpot(o,null)) return;
+    const n=W.buildings.filter(b=>b.typeId===t.id).length;
+    const b={id:uid('b'),typeId:t.id,name:t.name+(n?' '+(n+1):''),x:o.x,y:o.y}; W.buildings.push(b); worldChanged(); select({kind:'b',id:b.id},false); }
+});
+cv.addEventListener('pointerup',()=>{ if(drag){ if(drag.moved&&!validSpot(drag.b,drag.b.id)){drag.b.x=drag.x0;drag.b.y=drag.y0;} if(drag.moved) worldChanged(); drag=null; } });
+function removeBuilding(b){
+  W.buildings=W.buildings.filter(x=>x!==b);
+  for(const v of W.villagers){ if(v.homeId===b.id) v.homeId=null; if(v.jobId===b.id) v.jobId=null; }
+  if(sel&&sel.kind==='b'&&sel.id===b.id) sel=null; worldChanged(true);
+}
+function select(s,switchTab=true){sel=s; if(switchTab||curTab==='inspect') showTab('inspect'); dirty=true;}
+
+/* ============================ TOOLBAR ============================ */
+function renderTools(){
+  const el=$('#tools'); el.innerHTML='';
+  const tb=(id,label,title)=>h('button',{class:tool===id?'on':'',title,onclick:()=>{tool=id;renderTools();}},label);
+  el.append(tb('select','👆 Select / move','Click buildings or people to inspect. Drag buildings to move them.'),tb('delete','🗑️ Remove','Click a building to remove it'),h('span',{class:'sep'}),h('span',{class:'muted small'},'Place:'));
+  for(const t of W.buildingTypes) el.append(tb('place:'+t.id,`${t.icon} ${t.name}`,`Place a ${t.name} (${t.w}×${t.h})`));
+}
+
+/* ============================ EDIT HELPERS ============================ */
+function worldChanged(structural){ saveWorld(); syncState(); dirty=true; if(structural){renderTools(); showTab(curTab,true);} }
+function num(o,k,opt={}){return h('input',{type:'number',value:o[k]??0,step:opt.step||'any',min:opt.min,style:opt.w?`width:${opt.w}px`:null,title:opt.title,
+  onchange:e=>{o[k]=parseFloat(e.target.value); if(isNaN(o[k])) o[k]=0; worldChanged(opt.structural);}});}
+function txt(o,k,opt={}){return h('input',{type:'text',value:o[k]??'',style:`width:${opt.w||120}px`,placeholder:opt.ph,onchange:e=>{o[k]=e.target.value; worldChanged(opt.structural);}});}
+function tm(o,k){return h('input',{type:'time',style:'width:96px',value:o[k]||'00:00',onchange:e=>{o[k]=e.target.value||'00:00'; worldChanged();}});}
+function chk(o,k,structural){return h('input',{type:'checkbox',checked:!!o[k],onchange:e=>{o[k]=e.target.checked; worldChanged(structural);}});}
+function sel_(o,k,options,opt={}){
+  if(options.length&&!options.some(([v])=>String(v??'')===String(o[k]??''))){o[k]=options[0][0]; saveWorld();}
+  return h('select',{value:o[k]??'',style:opt.w?`width:${opt.w}px`:null,onchange:e=>{o[k]=e.target.value===''?null:e.target.value; worldChanged(opt.structural);}},
+  options.map(([v,l])=>h('option',{value:v??''},l)));}
+function dayToggles(arr){return h('span',{class:'days'},DAYS.map((d,i)=>h('button',{class:arr[i]?'on':'',title:d,onclick:e=>{arr[i]=arr[i]?0:1; e.currentTarget.classList.toggle('on',!!arr[i]); worldChanged();}},d.slice(0,2))));}
+function field(label,el){return h('label',{class:'field'},h('span',null,label),el);}
+function confirmBtn(label,fn){return h('button',{class:'danger',onclick:e=>{const b=e.currentTarget; if(b.dataset.arm){fn();} else {b.dataset.arm=1; b.textContent='Click again to confirm'; setTimeout(()=>{if(b.isConnected){delete b.dataset.arm; b.textContent=label;}},2500);}}},label);}
+const prodOpts=()=>W.products.map(p=>[p.id,`${p.icon} ${p.name}`]);
+const typeOpts=(f=()=>true)=>W.buildingTypes.filter(f).map(t=>[t.id,`${t.icon} ${t.name}`]);
+const open={};
+
+/* ============================ PANELS ============================ */
+const TABS=[['inspect','🔍 Inspect'],['stats','📊 Stats'],['villagers','🧑 Villagers'],['travellers','🧳 Travellers'],['buildings','🏪 Buildings'],['products','📦 Products'],['log','📜 Log'],['save','💾 Save & settings'],['rules','📖 Rules']];
+function renderTabs(){const n=$('#tabs'); n.innerHTML=''; for(const [id,l] of TABS) n.append(h('button',{class:curTab===id?'on':'',onclick:()=>showTab(id)},l));}
+let liveFn=null;
+function showTab(id,keepScroll){const p=$('#panel'); const sc=p.scrollTop; curTab=id; renderTabs(); p.innerHTML=''; liveFn=null; PANELS[id](p); if(keepScroll) p.scrollTop=sc; dirty=true;}
+const PANELS={};
+
+/* ---------- Inspect ---------- */
+PANELS.inspect=p=>{
+  if(sel&&sel.kind==='b'&&bById(sel.id)){ const b=bById(sel.id), t=typeOf(b);
+    p.append(h('h2',null,`${t.icon} ${b.name}`),
+      h('div',{class:'row'},field('Name',txt(b,'name',{w:160,structural:true})),field('Type',sel_(b,'typeId',typeOpts(),{structural:true})),
+        h('span',{style:'flex:1'}),confirmBtn('Remove building',()=>removeBuilding(b))),
+      h('p',{class:'muted small'},`Type settings (hours, products, stock size, starting cash) are edited in the 🏪 Buildings tab and apply to every ${t.name}.`));
+    const live=h('div'); p.append(live);
+    const cashBox=h('div',{class:'row'}); p.append(h('h3',null,'Manual cash adjustment'),h('p',{class:'muted small'},'For experiments. Logged as an "adjust" so the money check still balances.'),cashBox);
+    const amt=h('input',{type:'number',value:100,style:'width:90px'});
+    cashBox.append(amt,h('button',{onclick:()=>{const v=+amt.value||0; S.bs[b.id].cash+=v; adjust(v,b.name); dirty=true;}},'Add'),h('button',{onclick:()=>{const v=+amt.value||0; S.bs[b.id].cash-=v; adjust(-v,b.name); dirty=true;}},'Remove'));
+    liveFn=()=>{ const bs=S.bs[b.id]; if(!bs){live.innerHTML='';return;} const T=S.T;
+      const workers=W.villagers.filter(v=>v.jobId===b.id), residents=W.villagers.filter(v=>v.homeId===b.id);
+      const here=S.agents.filter(a=>a.at===b.id&&!visible(a));
+      live.innerHTML='';
+      live.append(h('div',{class:'kv'},
+        h('div',null,'Status'),h('div',null,t.kind==='place'?(canSell(b)?h('span',{class:'good'},'Open'):h('span',{class:'bad'},'Closed')):'—',t.kind==='place'?` (hours ${t.open}–${t.close})`:''),
+        h('div',null,'Cash'),h('div',{class:bs.cash<0?'bad':''},g(bs.cash)),
+        h('div',null,'Today'),h('div',null,`revenue ${g(T.revByB[b.id]||0)} · restock ${g(T.restockByB[b.id]||0)} · wages are paid at midnight`),
+        h('div',null,'Lifetime'),h('div',null,`revenue ${g(bs.life.rev)} · wages ${g(bs.life.wages)} · restock ${g(bs.life.restock)} · profit `,h('b',{class:bs.life.rev-bs.life.wages-bs.life.restock<0?'bad':'good'},g(bs.life.rev-bs.life.wages-bs.life.restock))),
+        h('div',null,'Workers'),h('div',null,t.kind==='place'?`${workers.length}/${t.jobSlots} — ${workers.map(v=>`${v.icon}${v.name} (${g(v.wage)}/day)`).join(', ')||'none'}`:'—'),
+        t.kind==='house'?[h('div',null,'Residents'),h('div',null,residents.map(v=>v.icon+v.name).join(', ')||'none')]:null,
+        h('div',null,'Inside now'),h('div',null,here.map(a=>a.icon+a.name).join(', ')||'nobody')));
+      if(t.sells.length){ live.append(h('h3',null,'Stock'),h('table',null,h('tr',null,h('th',null,'Product'),h('th',{class:'n'},'Price'),h('th',{class:'n'},'Stock'),h('th',{class:'n'},'Sold today')),
+        t.sells.map(s=>{const pr=prod(s.productId); if(!pr) return null; const st=pr.service?'∞ (service)':`${bs.stock[pr.id]||0} / ${s.maxStock}`;
+          return h('tr',null,h('td',null,pr.icon+' '+pr.name),h('td',{class:'n'},g(pr.price)),h('td',{class:'n '+(!pr.service&&!(bs.stock[pr.id]>0)?'bad':'')},st),h('td',{class:'n'},String(T.salesBP[b.id]?.[pr.id]||0)));}))); }
+    };
+    return;
+  }
+  if(sel&&sel.kind==='a'){ const a=S.agents.find(x=>x.id===sel.id);
+    if(!a){p.append(h('h2',null,'Gone'),h('p',{class:'muted'},'This traveller has left the village.')); return;}
+    const v=vilOf(a);
+    p.append(h('h2',null,`${a.icon} ${a.name}`),h('div',{class:'muted'},a.kind==='vil'?'Villager':'Traveller (from outside)'));
+    if(v) p.append(h('div',{class:'row'},h('button',{onclick:()=>{open['v_'+v.id]=true; showTab('villagers');}},'✏️ Edit this villager')));
+    const live=h('div'); p.append(live);
+    liveFn=()=>{ live.innerHTML='';
+      const jb=v&&bById(v.jobId), hb=v&&bById(v.homeId);
+      live.append(h('div',{class:'kv',style:'margin-top:8px'},
+        h('div',null,'Cash'),h('div',{class:a.cash<0?'bad':''},g(a.cash)),
+        h('div',null,'Doing'),h('div',null,statusOf(a)),
+        v?[h('div',null,'Home'),h('div',null,hb?hb.name:'— none —'),h('div',null,'Job'),h('div',null,jb?`${jb.name} · ${g(v.wage)}/day ${a.worked?'(worked today ✔)':''}`:'— none —'),
+          h('div',null,'Outside income'),h('div',null,g(v.otherIncome||0)+'/day'),h('div',null,'Today'),h('div',null,`spent ${g(a.spentToday||0)} · queued actions: ${a.pending.length}`)]:
+          [h('div',null,'Arrived with'),h('div',null,g(a.startCash)),h('div',null,'Leaves at'),h('div',null,fmtT(a.departAt))]));
+      const keys=Object.keys(a.need);
+      live.append(h('h3',null,a.kind==='vil'?"Today's shopping list (from demand)":'Wants'));
+      if(!keys.length) live.append(h('div',{class:'muted'},'Nothing today.'));
+      else live.append(h('table',null,h('tr',null,h('th',null,'Product'),h('th',{class:'n'},'Need'),h('th',{class:'n'},'Bought'),h('th',null,'Last problem')),
+        keys.map(pid=>{const pr=prod(pid); if(!pr) return null; const done=(a.bought[pid]||0)>=a.need[pid];
+          return h('tr',null,h('td',null,pr.icon+' '+pr.name),h('td',{class:'n'},a.need[pid]),h('td',{class:'n '+(done?'good':'')},a.bought[pid]||0),h('td',{class:'muted',title:REASONS[a.lastFail[pid]]||''},done?'':(a.lastFail[pid]||'')));})));
+      if(v){ const wd=weekday(); live.append(h('h3',null,`Routine today (${DAYS[wd]})`),
+        h('div',null,v.routine.filter(r=>r.days[wd]).sort((x,y)=>toMin(x.time)-toMin(y.time)).map(r=>h('div',{class:toMin(r.time)<=S.minute?'muted':''},`${r.time}  ${r.action}${r.action==='visit'?' '+(btype(r.target)?.name||'?'):''}`)))); }
+    };
+    return;
+  }
+  // overview
+  p.append(h('h2',null,'Village overview'),h('p',{class:'muted'},'Click a building or a person on the map to inspect it. Pick a building from the toolbar to place it.'));
+  const live=h('div'); p.append(live);
+  liveFn=()=>{ live.innerHTML=''; const T=S.T; const vils=S.agents.filter(a=>a.kind==='vil'), travs=S.agents.filter(a=>a.kind==='trav');
+    live.append(h('div',{class:'kv'},
+      h('div',null,'Village money'),h('div',null,h('b',null,g(villageMoney())),' (villagers + buildings)'),
+      h('div',null,'Villagers hold'),h('div',null,g(sum(vils.map(a=>a.cash)))),
+      h('div',null,'Buildings hold'),h('div',null,g(sum(Object.values(S.bs).map(b=>b.cash)))),
+      h('div',null,'Travellers today'),h('div',null,`${T.travellers} arrived · ${travs.length} in town · ${S.spawnQ.length} still coming`),
+      h('div',null,'Sales today'),h('div',null,g(sum(Object.values(T.sales).map(s=>s.rev))),` (travellers: ${g(T.travSpend)})`),
+      h('div',null,'Restock paid today'),h('div',null,g(T.restock))));
+    live.append(h('h3',null,'People'),h('table',null,h('tr',null,h('th',null,'Who'),h('th',{class:'n'},'Cash'),h('th',null,'Doing')),
+      S.agents.map(a=>h('tr',{style:'cursor:pointer',onclick:()=>select({kind:'a',id:a.id})},h('td',null,`${a.icon} ${a.name}`),h('td',{class:'n'},g(a.cash)),h('td',{class:'muted'},statusOf(a))))));
+  };
+};
+
+/* ---------- Villagers ---------- */
+PANELS.villagers=p=>{
+  p.append(h('h2',null,'Villagers'),h('p',{class:'muted small'},'Each villager has income (a job wage paid by the workplace at midnight if they showed up, and/or outside income), a demand list (what they want to buy on which weekdays) and a routine (when they go to work, shop, visit places, go home). A "shop" step buys everything still due today; a "visit" step also buys anything due that the place sells.'));
+  p.append(h('div',{class:'row'},h('button',{class:'primary',onclick:()=>{const v={id:uid('v'),name:'New villager',icon:'🙂',homeId:W.buildings.find(b=>typeOf(b)?.kind==='house')?.id||null,jobId:null,wage:60,otherIncome:0,startCash:150,
+    demand:[{productId:W.products[0]?.id,qty:1,days:mask('1111111')}],routine:[{time:'08:00',action:'work',target:'',days:mask('1111110')},{time:'16:00',action:'shop',target:'',days:mask('1111111')},{time:'18:00',action:'home',target:'',days:mask('1111111')}]};
+    W.villagers.push(v); open['v_'+v.id]=true; worldChanged(true);}},'+ Add villager')));
+  const houses=[[null,'— no home —'],...W.buildings.filter(b=>typeOf(b)?.kind==='house').map(b=>[b.id,b.name])];
+  const jobs=[[null,'— no job —'],...W.buildings.filter(b=>typeOf(b)?.kind==='place').map(b=>{const t=typeOf(b); const n=W.villagers.filter(v=>v.jobId===b.id).length; return [b.id,`${t.icon} ${b.name} (${n}/${t.jobSlots})`];})];
+  for(const v of W.villagers){ const key='v_'+v.id; const a=agentOf(v.id);
+    const body=h('div',{style:open[key]?'':'display:none'});
+    const card=h('div',{class:'card'},h('div',{class:'head',onclick:()=>{open[key]=!open[key]; body.style.display=open[key]?'':'none';}},
+      h('b',null,`${v.icon} ${v.name}`),h('span',{class:'grow muted small'},`${bById(v.jobId)?.name||'no job'} · ${g(v.wage||0)}/day${v.otherIncome?` + ${g(v.otherIncome)} outside`:''}`),h('span',{class:'pill'},a?g(a.cash):'')),body);
+    body.append(h('div',{class:'row'},field('Name',txt(v,'name',{w:110})),field('Icon',txt(v,'icon',{w:46})),field('Home',sel_(v,'homeId',houses)),field('Job',sel_(v,'jobId',jobs,{structural:true}))),
+      h('div',{class:'row'},field('Wage / day worked',num(v,'wage',{w:80})),field('Outside income / day',num(v,'otherIncome',{w:80})),field('Starting cash',num(v,'startCash',{w:80,title:'Used on reset'}))));
+    body.append(h('h3',null,'Demand (what they buy, and on which days)'));
+    const dt=h('table',null,h('tr',null,h('th',null,'Product'),h('th',null,'Qty'),h('th',null,'Days'),h('th')));
+    v.demand.forEach((d,i)=>dt.append(h('tr',null,h('td',null,sel_(d,'productId',prodOpts())),h('td',null,num(d,'qty',{w:50,min:0})),h('td',null,dayToggles(d.days)),h('td',null,h('button',{onclick:()=>{v.demand.splice(i,1); worldChanged(true);}},'✕')))));
+    body.append(dt,h('button',{onclick:()=>{v.demand.push({productId:W.products[0]?.id,qty:1,days:mask('1111111')}); worldChanged(true);}},'+ demand'));
+    body.append(h('h3',null,'Routine (what they do, when)'));
+    const rt=h('table',null,h('tr',null,h('th',null,'Time'),h('th',null,'Action'),h('th',null,'Where'),h('th',null,'Days'),h('th')));
+    v.routine.slice().sort((x,y)=>toMin(x.time)-toMin(y.time)).forEach(r=>{
+      const where=r.action==='visit'?sel_(r,'target',typeOpts(t=>t.kind!=='house')):h('span',{class:'muted small'},r.action==='work'?'job':r.action==='home'?'home':'nearest sellers');
+      rt.append(h('tr',null,h('td',null,tm(r,'time')),h('td',null,sel_(r,'action',[['work','🔨 work'],['shop','🛍️ shop'],['visit','📍 visit'],['home','🏠 home']],{structural:true})),h('td',null,where),h('td',null,dayToggles(r.days)),
+        h('td',null,h('button',{onclick:()=>{v.routine.splice(v.routine.indexOf(r),1); worldChanged(true);}},'✕'))));});
+    body.append(rt,h('button',{onclick:()=>{v.routine.push({time:'12:00',action:'shop',target:'',days:mask('1111111')}); worldChanged(true);}},'+ routine step'));
+    body.append(h('div',{class:'row',style:'margin-top:10px'},h('button',{onclick:()=>{const c=clone(v); c.id=uid('v'); c.name=v.name+' (copy)'; W.villagers.push(c); open['v_'+c.id]=true; worldChanged(true);}},'⧉ Duplicate'),
+      a?h('button',{onclick:()=>select({kind:'a',id:a.id})},'🔍 Inspect live'):null, h('span',{style:'flex:1'}),confirmBtn('Delete villager',()=>{W.villagers=W.villagers.filter(x=>x!==v); worldChanged(true);})));
+    p.append(card);
+  }
+};
+
+/* ---------- Travellers ---------- */
+PANELS.travellers=p=>{
+  p.append(h('h2',null,'Traveller types'),h('p',{class:'muted small'},'Travellers come from outside through the Village Gate, carrying cash. Each day, for each type active that weekday, a random number between min and max arrive at a random time in the window. Each "want" is rolled with its chance. They shop at the nearest open sellers, visit the listed places, retry missed items every few hours, and leave when their stay is over — taking unspent cash with them.'));
+  p.append(h('div',{class:'row'},h('button',{class:'primary',onclick:()=>{const t={id:uid('t'),name:'New traveller',icon:'🚶',days:mask('1111111'),perDayMin:1,perDayMax:2,arriveFrom:'10:00',arriveTo:'14:00',stayHours:3,cashMin:50,cashMax:100,wants:[],visits:[]}; W.travellerTypes.push(t); open['t_'+t.id]=true; worldChanged(true);}},'+ Add traveller type')));
+  for(const t of W.travellerTypes){ const key='t_'+t.id; const body=h('div',{style:open[key]?'':'display:none'});
+    p.append(h('div',{class:'card'},h('div',{class:'head',onclick:()=>{open[key]=!open[key]; body.style.display=open[key]?'':'none';}},h('b',null,`${t.icon} ${t.name}`),h('span',{class:'grow muted small'},`${t.perDayMin}–${t.perDayMax}/day · ${g(t.cashMin)}–${g(t.cashMax)}`)),body));
+    body.append(h('div',{class:'row'},field('Name',txt(t,'name',{w:120})),field('Icon',txt(t,'icon',{w:46})),field('Active days',dayToggles(t.days))),
+      h('div',{class:'row'},field('Min / day',num(t,'perDayMin',{w:60,min:0})),field('Max / day',num(t,'perDayMax',{w:60,min:0})),field('Arrive from',tm(t,'arriveFrom')),field('Arrive until',tm(t,'arriveTo')),field('Stay (hours)',num(t,'stayHours',{w:60,min:0}))),
+      h('div',{class:'row'},field('Cash min',num(t,'cashMin',{w:80})),field('Cash max',num(t,'cashMax',{w:80}))));
+    body.append(h('h3',null,'Wants'));
+    const wt=h('table',null,h('tr',null,h('th',null,'Product'),h('th',null,'Qty'),h('th',null,'Chance (0–1)'),h('th')));
+    t.wants.forEach((w,i)=>wt.append(h('tr',null,h('td',null,sel_(w,'productId',prodOpts())),h('td',null,num(w,'qty',{w:50,min:0})),h('td',null,num(w,'chance',{w:60,step:0.05,min:0})),h('td',null,h('button',{onclick:()=>{t.wants.splice(i,1); worldChanged(true);}},'✕')))));
+    body.append(wt,h('button',{onclick:()=>{t.wants.push({productId:W.products[0]?.id,qty:1,chance:0.5}); worldChanged(true);}},'+ want'));
+    body.append(h('h3',null,'Places they sightsee'));
+    t.visits.forEach((vt,i)=>body.append(h('div',{class:'row'},h('select',{value:vt,onchange:e=>{t.visits[i]=e.target.value; worldChanged();}},typeOpts(x=>x.kind!=='house').map(([v,l])=>h('option',{value:v},l))),h('button',{onclick:()=>{t.visits.splice(i,1); worldChanged(true);}},'✕'))));
+    body.append(h('button',{onclick:()=>{const f=W.buildingTypes.find(x=>x.kind==='place'); if(f){t.visits.push(f.id); worldChanged(true);}}},'+ place'));
+    body.append(h('div',{class:'row',style:'margin-top:10px'},h('button',{onclick:()=>{const c=clone(t); c.id=uid('t'); c.name+=' (copy)'; W.travellerTypes.push(c); open['t_'+c.id]=true; worldChanged(true);}},'⧉ Duplicate'),h('span',{style:'flex:1'}),confirmBtn('Delete type',()=>{W.travellerTypes=W.travellerTypes.filter(x=>x!==t); worldChanged(true);})));
+  }
+};
+
+/* ---------- Building types ---------- */
+PANELS.buildings=p=>{
+  p.append(h('h2',null,'Building types'),h('p',{class:'muted small'},'Kinds: "place" = shop / workplace / attraction, "house" = where villagers live, "gate" = where travellers enter and leave. A place restocks every product up to its max stock at opening time, buying from the Outside at the product\'s cost (stock 0 for a service like a ticket).'));
+  p.append(h('div',{class:'row'},h('button',{class:'primary',onclick:()=>{const t={id:uid('bt'),name:'New place',icon:'🏪',color:COLORS[W.buildingTypes.length%COLORS.length],kind:'place',w:3,h:2,open:'09:00',close:'17:00',jobSlots:1,startCash:300,sells:[]}; W.buildingTypes.push(t); open['bt_'+t.id]=true; worldChanged(true);}},'+ Add building type')));
+  for(const t of W.buildingTypes){ const key='bt_'+t.id; const body=h('div',{style:open[key]?'':'display:none'}); const count=W.buildings.filter(b=>b.typeId===t.id).length;
+    p.append(h('div',{class:'card'},h('div',{class:'head',onclick:()=>{open[key]=!open[key]; body.style.display=open[key]?'':'none';}},h('b',null,`${t.icon} ${t.name}`),h('span',{class:'grow muted small'},`${t.kind} · ${count} placed${t.kind==='place'?` · ${t.open}–${t.close}`:''}`)),body));
+    body.append(h('div',{class:'row'},field('Name',txt(t,'name',{w:120,structural:true})),field('Icon',txt(t,'icon',{w:46,structural:true})),field('Color',h('input',{type:'color',value:t.color,onchange:e=>{t.color=e.target.value; worldChanged();}})),
+      field('Kind',sel_(t,'kind',[['place','place (shop/work)'],['house','house'],['gate','gate']],{structural:true}))),
+      h('div',{class:'row'},field('Width',num(t,'w',{w:50,min:1})),field('Height',num(t,'h',{w:50,min:1}))));
+    if(t.kind==='place'){
+      body.append(h('div',{class:'row'},field('Opens',tm(t,'open')),field('Closes',tm(t,'close')),field('Job slots',num(t,'jobSlots',{w:50,min:0})),field('Starting cash',num(t,'startCash',{w:80}))),
+        h('div',{class:'muted small'},'Same open & close time = open 24h.'));
+      body.append(h('h3',null,'Sells'));
+      const st=h('table',null,h('tr',null,h('th',null,'Product'),h('th',null,'Max stock'),h('th',{class:'n'},'Price'),h('th')));
+      t.sells.forEach((s,i)=>st.append(h('tr',null,h('td',null,sel_(s,'productId',prodOpts(),{structural:true})),h('td',null,prod(s.productId)?.service?h('span',{class:'muted'},'service ∞'):num(s,'maxStock',{w:60,min:0})),h('td',{class:'n'},g(prod(s.productId)?.price||0)),
+        h('td',null,h('button',{onclick:()=>{t.sells.splice(i,1); worldChanged(true);}},'✕')))));
+      body.append(st,h('button',{onclick:()=>{const f=W.products.find(pr=>!t.sells.some(s=>s.productId===pr.id)); if(f){t.sells.push({productId:f.id,maxStock:20}); worldChanged(true);}}},'+ product'));
+    }
+    body.append(h('div',{class:'row',style:'margin-top:10px'},h('button',{onclick:()=>{tool='place:'+t.id; renderTools();}},'📍 Place one'),h('span',{style:'flex:1'}),
+      confirmBtn(`Delete type${count?` (+${count} placed)`:''}`,()=>{W.buildingTypes=W.buildingTypes.filter(x=>x!==t); for(const b of W.buildings.filter(b=>b.typeId===t.id)) removeBuilding(b);
+        for(const v of W.travellerTypes) v.visits=v.visits.filter(x=>x!==t.id); for(const v of W.villagers) v.routine=v.routine.filter(r=>!(r.action==='visit'&&r.target===t.id)); if(tool==='place:'+t.id) tool='select'; worldChanged(true);})));
+  }
+};
+
+/* ---------- Products ---------- */
+PANELS.products=p=>{
+  p.append(h('h2',null,'Products'),h('p',{class:'muted small'},'Prices are constant. "Cost" is what a shop pays the Outside per unit when restocking. A "service" (e.g. a ticket) has unlimited stock and needs no restocking.'));
+  const tb=h('table',null,h('tr',null,h('th',null,'Icon'),h('th',null,'Name'),h('th',null,'Price'),h('th',null,'Cost'),h('th',{class:'n'},'Margin'),h('th',null,'Service'),h('th',null,'Sold at'),h('th')));
+  for(const pr of W.products){ tb.append(h('tr',null,h('td',null,txt(pr,'icon',{w:40,structural:true})),h('td',null,txt(pr,'name',{w:110,structural:true})),h('td',null,num(pr,'price',{w:60,structural:true})),h('td',null,num(pr,'cost',{w:60,structural:true})),
+    h('td',{class:'n '+(pr.price-pr.cost<0?'bad':'')},g(pr.price-pr.cost)),h('td',null,chk(pr,'service',true)),
+    h('td',{class:'small muted'},W.buildingTypes.filter(t=>t.sells.some(s=>s.productId===pr.id)).map(t=>t.icon).join(' ')||'—'),
+    h('td',null,confirmBtn('✕',()=>{W.products=W.products.filter(x=>x!==pr); for(const t of W.buildingTypes) t.sells=t.sells.filter(s=>s.productId!==pr.id);
+      for(const v of W.villagers) v.demand=v.demand.filter(d=>d.productId!==pr.id); for(const t of W.travellerTypes) t.wants=t.wants.filter(w=>w.productId!==pr.id); worldChanged(true);}))));}
+  p.append(tb,h('div',{class:'row'},h('button',{class:'primary',onclick:()=>{W.products.push({id:uid('p'),name:'New product',icon:'📦',price:10,cost:5,service:false}); worldChanged(true);}},'+ Add product')));
+};
+
+/* ---------- Stats ---------- */
+function chart(cv_,series,opt={}){
+  const dpr=Math.min(2,window.devicePixelRatio||1), Wc=cv_.clientWidth||400, Hc=opt.h||170; cv_.width=Wc*dpr; cv_.height=Hc*dpr; cv_.style.height=Hc+'px';
+  const c=cv_.getContext('2d'); c.setTransform(dpr,0,0,dpr,0,0); c.clearRect(0,0,Wc,Hc); c.font='11px system-ui';
+  const n=Math.max(0,...series.map(s=>s.data.length));
+  if(!n){c.fillStyle='#9aa1ad'; c.fillText('No completed days yet — play or run the sim.',10,Hc/2); return;}
+  let lo=0,hi=0; for(const s of series) for(const v of s.data){ if(v<lo) lo=v; if(v>hi) hi=v; } if(hi===lo) hi=lo+1; const span=hi-lo; hi+=span*.05; if(lo<0) lo-=span*.05;
+  const legendRows=Math.ceil(series.length/4), L=52,R=8,Tp=8,B=18+legendRows*14, pw=Wc-L-R, ph=Hc-Tp-B;
+  const X=i=>L+(n===1?pw/2:i/(n-1)*pw), Y=v=>Tp+ph-(v-lo)/(hi-lo)*ph;
+  c.strokeStyle='#3c4352'; c.fillStyle='#9aa1ad'; c.textAlign='right'; c.textBaseline='middle';
+  for(let i=0;i<=4;i++){const v=lo+(hi-lo)*i/4, y=Y(v); c.beginPath(); c.moveTo(L,y); c.lineTo(Wc-R,y); c.stroke(); c.fillText(Math.round(v).toLocaleString(),L-4,y);}
+  if(lo<0&&hi>0){c.strokeStyle='#777'; c.beginPath(); c.moveTo(L,Y(0)); c.lineTo(Wc-R,Y(0)); c.stroke();}
+  c.textAlign='center'; c.textBaseline='top'; const x0=opt.x0||1; const step=Math.max(1,Math.ceil(n/8));
+  for(let i=0;i<n;i+=step) c.fillText('d'+(x0+i),X(i),Tp+ph+3);
+  for(const s of series){ c.strokeStyle=s.color; c.lineWidth=2; c.beginPath(); s.data.forEach((v,i)=>i?c.lineTo(X(i),Y(v)):c.moveTo(X(i),Y(v))); c.stroke();
+    if(n<=40){c.fillStyle=s.color; s.data.forEach((v,i)=>{c.beginPath(); c.arc(X(i),Y(v),2.2,0,7); c.fill();});} }
+  c.textAlign='left'; c.textBaseline='middle'; const colW=(Wc-L)/4;
+  series.forEach((s,i)=>{const lx=L+(i%4)*colW, ly=Hc-legendRows*14+Math.floor(i/4)*14+5; c.fillStyle=s.color; c.fillRect(lx,ly-4,10,8); c.fillStyle='#cfd3da';
+    let name=s.name; while(c.measureText(name).width>colW-18&&name.length>3) name=name.slice(0,-2)+'…'; c.fillText(name,lx+14,ly);});
+}
+function chartBox(title,fn,hgt){const cvs=h('canvas'); const box=h('div',{class:'chartbox'},h('div',{class:'t'},title),cvs); box._draw=()=>fn(cvs,hgt); return box;}
+PANELS.stats=p=>{
+  p.append(h('h2',null,'Statistics'));
+  const top=h('div'); p.append(top);
+  const H=()=>S.history;
+  const boxes=[
+    chartBox('Money held at end of each day',c=>chart(c,[{name:'Village total',color:'#f2b75b',data:H().map(d=>d.villageMoney)},{name:'Villagers',color:'#6fa8dc',data:H().map(d=>d.villagerCash)},{name:'Buildings',color:'#7fc97f',data:H().map(d=>d.buildingCash)}])),
+    chartBox('Cash per building (end of day)',c=>chart(c,W.buildings.filter(b=>typeOf(b)?.kind==='place').map((b,i)=>({name:b.name,color:COLORS[i%COLORS.length],data:H().map(d=>d.bCash[b.id]??0)})))),
+    chartBox('Money flows per day',c=>chart(c,[{name:'Sales revenue',color:'#f2b75b',data:H().map(d=>d.revenue)},{name:'…from travellers',color:'#f39c4a',data:H().map(d=>d.travSpend)},{name:'Wages',color:'#6fa8dc',data:H().map(d=>d.wages)},{name:'Restock (→ outside)',color:'#ef6f6c',data:H().map(d=>d.restock)},{name:'Outside income',color:'#b39ddb',data:H().map(d=>d.otherIncome)}])),
+    chartBox('Demand per day: units sold vs. unmet',c=>chart(c,[{name:'Units sold',color:'#7fc97f',data:H().map(d=>d.salesQty)},{name:'Units unmet',color:'#ef6f6c',data:H().map(d=>d.unmetTotal)}])),
+  ];
+  const lastBox=h('div'); const pinBox=h('div');
+  p.append(...boxes,lastBox,pinBox);
+  let lastLen=-1;
+  const drawPins=()=>{ pinBox.innerHTML='';
+    pinBox.append(h('h3',null,'📌 Compare runs'),h('p',{class:'muted small'},'Pin the current run, change something (a price, a wage, a new shop…), press Reset, run the same number of days, and compare. Same seed = same random travellers, so differences come from your change.'));
+    const label=h('input',{type:'text',placeholder:'label, e.g. "bread 15g"',style:'width:180px'});
+    pinBox.append(h('div',{class:'row'},label,h('button',{onclick:()=>{ if(!S.history.length) return; pins.push({label:label.value||`Run ${pins.length+1}`,when:new Date().toLocaleString(),
+      days:S.history.map(d=>({villageMoney:d.villageMoney,villagerCash:d.villagerCash,buildingCash:d.buildingCash,revenue:d.revenue,travSpend:d.travSpend,unmetTotal:d.unmetTotal,salesQty:d.salesQty,wages:d.wages,restock:d.restock}))}); savePins(); drawPins();}},'📌 Pin current run')));
+    if(!pins.length) return;
+    const metrics=[['villageMoney','Village money'],['villagerCash','Villagers\' cash'],['buildingCash','Buildings\' cash'],['revenue','Sales revenue / day'],['travSpend','Traveller spend / day'],['unmetTotal','Unmet units / day'],['salesQty','Units sold / day']];
+    const ms=h('select',null,metrics.map(([v,l])=>h('option',{value:v},l))); ms.value=pinBox._metric||'villageMoney';
+    const box=chartBox('',c=>{const k=ms.value; const series=pins.map((r,i)=>({name:r.label,color:COLORS[i%COLORS.length],data:r.days.map(d=>d[k])}));
+      if(S.history.length) series.push({name:'(current)',color:'#ffffff',data:S.history.map(d=>d[k])}); chart(c,series);},200);
+    ms.onchange=()=>{pinBox._metric=ms.value; box._draw();};
+    const avg=(r,k)=>r.days.length?sum(r.days.map(d=>d[k]))/r.days.length:0;
+    pinBox.append(h('div',{class:'row'},h('span',{class:'muted'},'Metric'),ms),box,
+      h('table',null,h('tr',null,h('th',null,'Run'),h('th',{class:'n'},'Days'),h('th',{class:'n'},'Final village $'),h('th',{class:'n'},'Final villagers $'),h('th',{class:'n'},'Avg revenue'),h('th',{class:'n'},'Avg unmet'),h('th')),
+        pins.map((r,i)=>{const L_=r.days[r.days.length-1]||{}; return h('tr',null,h('td',null,h('span',{style:`color:${COLORS[i%COLORS.length]}`},'■ '),r.label),h('td',{class:'n'},r.days.length),h('td',{class:'n'},g(L_.villageMoney||0)),h('td',{class:'n'},g(L_.villagerCash||0)),
+          h('td',{class:'n'},g(avg(r,'revenue'))),h('td',{class:'n'},avg(r,'unmetTotal').toFixed(1)),h('td',null,h('button',{onclick:()=>{pins.splice(i,1); savePins(); drawPins();}},'✕')));})));
+    requestAnimationFrame(()=>box._draw());
+  };
+  drawPins();
+  liveFn=()=>{
+    const T=S.T, vm=villageMoney(); const expected=S.initialMoney+S.totals.in-S.totals.out+S.totals.adj; const ok=Math.abs(expected-vm)<0.01;
+    top.innerHTML='';
+    top.append(h('div',{class:'kv'},
+      h('div',null,'Village money now'),h('div',null,h('b',null,g(vm))),
+      h('div',null,'Money check'),h('div',null,`start ${g(S.initialMoney)} + in ${g(S.totals.in)} − out ${g(S.totals.out)} ${S.totals.adj?`± edits ${g(S.totals.adj)} `:''}= ${g(expected)} `,h('span',{class:ok?'good':'bad'},ok?'✔ balanced':'✘ mismatch')),
+      h('div',null,'Money in from outside'),h('div',null,'traveller purchases + outside income'),
+      h('div',null,'Money out to outside'),h('div',null,'shop restocking (wholesale)'),
+      h('div',null,'Today so far'),h('div',null,`sales ${g(sum(Object.values(T.sales).map(s=>s.rev)))} · travellers ${T.travellers} spent ${g(T.travSpend)} · restock ${g(T.restock)}`)));
+    if(S.history.length!==lastLen){ lastLen=S.history.length; boxes.forEach(b=>b._draw()); drawLast(); }
+  };
+  const drawLast=()=>{ lastBox.innerHTML=''; const d=S.history[S.history.length-1]; if(!d) return;
+    lastBox.append(h('h3',null,`Last completed day: Day ${d.day} (${DAYS[d.wd]})`),
+      h('div',{class:'kv'},h('div',null,'Village money'),h('div',null,`${g(d.startMoney)} → ${g(d.villageMoney)} (${d.villageMoney-d.startMoney>=0?'+':''}${g(d.villageMoney-d.startMoney)})`),
+        h('div',null,'In / out'),h('div',null,`in ${g(d.inflow)} · out ${g(d.outflow)}`),h('div',null,'Travellers'),h('div',null,`${d.travellers} visited, spent ${g(d.travSpend)}`),
+        h('div',null,'Villagers spent'),h('div',null,g(d.villagerSpend)),h('div',null,'Wages paid'),h('div',null,g(d.wages))));
+    const pids=[...new Set([...Object.keys(d.sales),...Object.keys(d.unmet)])].filter(prod);
+    const reasons=Object.keys(REASONS);
+    lastBox.append(h('h3',null,'Per product (sold / unmet, with reasons)'),h('table',null,h('tr',null,h('th',null,'Product'),h('th',{class:'n'},'Sold'),h('th',{class:'n'},'Revenue'),h('th',{class:'n'},'Unmet'),h('th',null,'Why unmet')),
+      pids.map(pid=>{const pr=prod(pid), s=d.sales[pid]||{qty:0,rev:0}, u=d.unmet[pid]||{}; const ut=sum(Object.values(u));
+        return h('tr',null,h('td',null,pr.icon+' '+pr.name),h('td',{class:'n'},s.qty),h('td',{class:'n'},g(s.rev)),h('td',{class:'n '+(ut?'bad':'')},ut),h('td',{class:'small muted'},reasons.filter(r=>u[r]).map(r=>h('span',{title:REASONS[r]},`${r} ${u[r]}  `))));})));
+    lastBox.append(h('h3',null,'Per building (lifetime)'),h('table',null,h('tr',null,h('th',null,'Building'),h('th',{class:'n'},'Cash'),h('th',{class:'n'},'Revenue'),h('th',{class:'n'},'Wages'),h('th',{class:'n'},'Restock'),h('th',{class:'n'},'Profit')),
+      W.buildings.filter(b=>typeOf(b)?.kind==='place').map(b=>{const bs=S.bs[b.id]; if(!bs) return null; const pf=bs.life.rev-bs.life.wages-bs.life.restock;
+        return h('tr',null,h('td',null,typeOf(b).icon+' '+b.name),h('td',{class:'n '+(bs.cash<0?'bad':'')},g(bs.cash)),h('td',{class:'n'},g(bs.life.rev)),h('td',{class:'n'},g(bs.life.wages)),h('td',{class:'n'},g(bs.life.restock)),h('td',{class:'n '+(pf<0?'bad':'good')},g(pf)));})));
+    lastBox.append(h('h3',null,'Villagers'),h('table',null,h('tr',null,h('th',null,'Villager'),h('th',{class:'n'},'Cash'),h('th',{class:'n'},'Start'),h('th',{class:'n'},'Change')),
+      S.agents.filter(a=>a.kind==='vil').map(a=>{const v=vilOf(a); const ch=a.cash-(+v.startCash||0); return h('tr',{style:'cursor:pointer',onclick:()=>select({kind:'a',id:a.id})},h('td',null,a.icon+' '+a.name),h('td',{class:'n '+(a.cash<=0?'bad':'')},g(a.cash)),h('td',{class:'n'},g(v.startCash||0)),h('td',{class:'n '+(ch<0?'bad':'good')},g(ch)));})));
+    const rows=S.history.slice(-14).reverse();
+    lastBox.append(h('h3',null,'Recent days'),h('table',null,h('tr',null,h('th',null,'Day'),h('th',{class:'n'},'Village $'),h('th',{class:'n'},'Revenue'),h('th',{class:'n'},'Travellers'),h('th',{class:'n'},'Wages'),h('th',{class:'n'},'Restock'),h('th',{class:'n'},'Unmet')),
+      rows.map(r=>h('tr',null,h('td',null,`${r.day} ${DAYS[r.wd]}`),h('td',{class:'n'},g(r.villageMoney)),h('td',{class:'n'},g(r.revenue)),h('td',{class:'n'},`${r.travellers} / ${g(r.travSpend)}`),h('td',{class:'n'},g(r.wages)),h('td',{class:'n'},g(r.restock)),h('td',{class:'n'},r.unmetTotal)))));
+  };
+};
+
+/* ---------- Log ---------- */
+PANELS.log=p=>{
+  p.append(h('h2',null,'Transaction log'));
+  const f=h('input',{type:'text',placeholder:'filter (name, product…)',style:'width:200px'}); const ty=h('select',null,['all','sale','wage','restock','income','arrive','leave','adjust'].map(x=>h('option',{value:x},x)));
+  const out=h('div',{style:'font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;white-space:pre'});
+  p.append(h('div',{class:'row'},f,ty,h('span',{class:'muted small'},'newest first · last 400 matches')),out);
+  let last=null; const draw_=()=>{const q=f.value.toLowerCase(), t=ty.value, res=[];
+    for(let i=S.log.length-1;i>=0&&res.length<400;i--){const l=S.log[i]; if(t!=='all'&&l.type!==t) continue; const line=fmtLog(l); if(q&&!line.toLowerCase().includes(q)) continue; res.push(line);}
+    out.textContent=res.join('\n')||'(nothing yet)';};
+  f.oninput=draw_; ty.onchange=draw_;
+  liveFn=()=>{ const k=S.log.length+':'+S.day; if(k!==last){last=k; draw_();} };
+};
+function fmtLog(l){return `D${l.d} ${fmtT(l.m)} ${l.type.padEnd(7)} ${l.from} → ${l.to}  ${g(l.amt)}  ${l.note||''}`;}
+
+/* ---------- Save & settings ---------- */
+PANELS.save=p=>{
+  const s=W.settings;
+  p.append(h('h2',null,'Simulation settings'),
+    h('div',{class:'row'},field('Random seed',num(s,'seed',{w:90})),field('Walk speed (tiles/min)',num(s,'walkSpeed',{w:70,step:0.05})),field('Minutes per shop visit',num(s,'shopMinutes',{w:60,min:1})),field('Sightseeing minutes',num(s,'sightseeMinutes',{w:60,min:1})),field('Traveller retry every (min)',num(s,'retryMinutes',{w:60,min:5}))),
+    h('div',{class:'row'},field('Day 1 is a',sel_(s,'startWeekday',DAYS.map((d,i)=>[i,d])))),
+    h('div',{class:'row'},h('label',null,chk(s,'restockNeedsCash'),' Shops can only restock what they can afford (otherwise they go into debt)')),
+    h('div',{class:'row'},h('label',null,chk(s,'needWorker'),' Shops only sell while at least one worker is present')),
+    h('p',{class:'muted small'},'Seed/weekday changes take effect after ↺ Reset sim.'));
+  p.append(h('h2',{style:'margin-top:18px'},'Save / load your village'),
+    h('p',{class:'muted small'},'Your setup (map, products, villagers, travellers, settings) autosaves in this browser after every change. The running sim itself is not saved — Reset rebuilds it from the setup. To keep a setup safely or move it elsewhere, copy the JSON below into a file; you can also paste it to Claude when you want new mechanics added.'));
+  const ta=h('textarea',{spellcheck:'false'}); ta.value=JSON.stringify(W,null,1);
+  const msg=h('span',{class:'muted small'});
+  const fileIn=h('input',{type:'file',accept:'.json,application/json',style:'display:none',onchange:async e=>{const f=e.target.files[0]; if(!f) return; ta.value=await f.text(); loadFromText(ta.value,msg);}});
+  p.append(h('div',{class:'row'},
+    h('button',{onclick:async()=>{ta.value=JSON.stringify(W,null,1); try{await navigator.clipboard.writeText(ta.value); msg.textContent='Copied to clipboard ✔';}catch(e){ta.select(); msg.textContent='Select-all done — press Ctrl/Cmd+C';}}},'📋 Copy JSON'),
+    h('button',{onclick:()=>{try{const a=h('a',{href:URL.createObjectURL(new Blob([JSON.stringify(W,null,1)],{type:'application/json'})),download:'village-economy.json'}); document.body.append(a); a.click(); a.remove(); msg.textContent='Download started (if your viewer allows downloads).';}catch(e){msg.textContent='Downloads are blocked here — use Copy JSON.';}}},'⬇ Download'),
+    h('button',{onclick:()=>fileIn.click()},'📂 Open file…'),fileIn,
+    h('button',{class:'primary',onclick:()=>loadFromText(ta.value,msg)},'⬆ Load JSON from box'),msg),ta);
+  p.append(h('h3',null,'Start over'),h('div',{class:'row'},confirmBtn('Load default village',()=>{W=defaultWorld(); afterWorldReplace();}),confirmBtn('Empty map (keep products & types)',()=>{const w=emptyWorld(); w.products=W.products; w.buildingTypes=W.buildingTypes; w.travellerTypes=W.travellerTypes; w.settings=W.settings; w.buildings=[]; W=w; afterWorldReplace();})));
+};
+function loadFromText(t,msg){try{const w=JSON.parse(t); if(!w||!Array.isArray(w.products)) throw new Error('not a village JSON'); W=fixWorld(w); afterWorldReplace(); msg.textContent='Loaded ✔';}catch(e){msg.textContent='Could not load: '+e.message;}}
+function afterWorldReplace(){saveWorld(); sel=null; tool='select'; sizeCanvas(); resetSim(); renderTools(); showTab(curTab);}
+
+/* ---------- Rules ---------- */
+PANELS.rules=p=>{p.append(h('div',{class:'rules',html:`
+<h2>How this simulation works (v1 – constant prices)</h2>
+<p>Everything below is a placeholder rule you can question and replace. The sim is deliberately simple so you can see each mechanic in isolation.</p>
+<h3>Time</h3><ul><li>1 tick = 1 game minute; a day is 00:00–23:59. Day 1 is a Monday (changeable).</li><li>Wages and outside income are paid at midnight. Daily statistics are recorded at midnight.</li></ul>
+<h3>Money accounts</h3><ul><li><b>Villagers</b> each have a wallet. <b>Buildings</b> each have a till. Together these are the <b>village money</b>.</li>
+<li><b>Outside</b> is everything beyond the village. Money only enters the village from <i>traveller purchases</i> and <i>villager outside income</i>, and only leaves through <i>shop restocking</i>. The Stats tab checks that this always adds up.</li>
+<li>Villager purchases and wages just move money around inside the village.</li></ul>
+<h3>Buildings</h3><ul><li><b>Places</b> sell products during opening hours. They start with full shelves (free). Every day at opening time they refill every product to its max stock, paying the product's <code>cost</code> per unit to the Outside. They may go into debt (unless the setting says otherwise).</li>
+<li>Place profits just accumulate in the till — nobody owns the building yet. (A candidate for your next mechanic!)</li>
+<li><b>Houses</b> are where villagers live. The <b>Gate</b> is where travellers enter/leave.</li></ul>
+<h3>Villagers</h3><ul><li><b>Demand</b>: each item says product, quantity and weekdays. On a given day the due items form today's shopping list.</li>
+<li><b>Routine</b>: steps at set times and weekdays. <code>work</code> = go to job (counts as worked today). <code>shop</code> = go to the nearest open seller with stock for each item still due, buy, then return to where they were based (home/work/visit). <code>visit</code> = go to the nearest building of a type, buy anything due that it sells, and stay. <code>home</code> = go home.</li>
+<li>If a step fires while they are busy, it waits in a queue until they finish.</li>
+<li>Purchases: buy as many as needed, limited by stock and cash. Anything not bought by midnight is recorded as <b>unmet demand</b> with a reason.</li></ul>
+<h3>Travellers</h3><ul><li>Per traveller type and weekday: a random count (min–max) arrive at random times in the window with random cash. Each "want" is rolled with its chance.</li>
+<li>They shop on arrival, then sightsee the listed places, retry missing items every hour, and leave when their stay ends (or at midnight). Unspent cash leaves with them.</li></ul>
+<h3>Unmet-demand reasons</h3><ul>${Object.entries(REASONS).map(([k,v])=>`<li><code>${k}</code> — ${v}</li>`).join('')}</ul>
+<h3>Things that are NOT simulated yet</h3><ul><li>Dynamic prices, production chains (bakery making bread from wheat), building ownership/profits, rent, savings decisions, hunger/substitution, the player.</li></ul>`}));};
+
+/* ============================ MAIN LOOP ============================ */
+function hud(){
+  $('#clock').textContent=`Day ${S.day} · ${DAYS[weekday()]} · ${fmtT(S.minute)}`;
+  $('#hudmoney').textContent=`Village money ${g(villageMoney())} · ${S.agents.filter(a=>a.kind==='trav').length} travellers in town`;
+  const lines=[]; for(let i=S.log.length-1;i>=0&&lines.length<6;i--) lines.push(fmtLog(S.log[i])); $('#ticker').textContent=lines.join('\n')||'Press ▶ Play to start the day.';
+}
+let lastT=performance.now(), lastLive=0;
+function frame(now){
+  const dt=Math.min(0.25,(now-lastT)/1000); lastT=now;
+  if(running&&!busy){ acc+=dt*speed; let n=Math.floor(acc); acc-=n; if(n>0){ for(let i=0;i<n;i++) tick(); dirty=true; } }
+  draw();
+  if(dirty&&now-lastLive>250){ lastLive=now; dirty=false; hud(); if(liveFn) try{liveFn();}catch(e){console.error(e);} }
+  requestAnimationFrame(frame);
+}
+$('#playBtn').onclick=()=>{running=!running; updatePlay();};
+$('#speed').onchange=e=>{speed=+e.target.value;};
+$('#endDayBtn').onclick=()=>runDays(1);
+$('#runBtn').onclick=()=>runDays(Math.max(1,Math.min(365,+$('#runN').value||1)));
+$('#resetBtn').onclick=()=>{resetSim(); showTab(curTab);};
+window.addEventListener('resize',()=>{dirty=true; if(curTab==='stats') showTab('stats',true);});
+
+W=loadWorld(); loadPins(); sizeCanvas(); resetSim(); renderTools(); showTab('inspect'); requestAnimationFrame(frame);
+window.sim={get W(){return W;},get S(){return S;},runDays,tick,resetSim,villageMoney};
+</script>
+</body>
+</html>
